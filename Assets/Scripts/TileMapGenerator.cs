@@ -45,6 +45,10 @@ public class TileMapGenerator : MonoBehaviour {
         {
             visitedTileSet.Add(tile);
 
+            // Paint myself
+            GameObject instantiatedGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            instantiatedGameObject.transform.position = position;
+
             // TODO: Remove the direction where we come from!
             foreach (Model.Tile.Direction neighbourDirection in System.Enum.GetValues(typeof(Model.Tile.Direction)))
             {
@@ -56,9 +60,6 @@ public class TileMapGenerator : MonoBehaviour {
                 }
             }
 
-            // Paint myself
-            GameObject instantiatedGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            instantiatedGameObject.transform.position = position;
         }
     }
 
@@ -80,11 +81,26 @@ public class TileMapGenerator : MonoBehaviour {
 
     private static Vector2 MoveVectorToDirection(Vector2 origin, Model.Tile.Direction direction)
     {
-        Vector2 newPosition = new Vector2();
+        Vector2 newPosition = new Vector2(origin.x, origin.y);
 
         int intDirection = (int)direction;
-        newPosition.x = origin.x + ((intDirection) & 0x1 * (intDirection - 2)); // Awesome!
-        newPosition.y = origin.y + ((intDirection + 1) & 0x1 * (intDirection - 1)) * -1; // Awesomer!
+        switch (direction)
+        {
+            case Model.Tile.Direction.EAST:
+                newPosition.x += 1;
+                break;
+            case Model.Tile.Direction.WEST:
+                newPosition.x -= 1;
+                break;
+            case Model.Tile.Direction.NORTH:
+                newPosition.y += 1;
+                break;
+            case Model.Tile.Direction.SOUTH:
+                newPosition.y -= 1;
+                break;
+        }
+        //newPosition.x = origin.x + ((intDirection) & 0x1 * (intDirection - 2));
+        //newPosition.y = origin.y + ((intDirection + 1) & 0x1 * (intDirection - 1));
 
         return newPosition;
     }

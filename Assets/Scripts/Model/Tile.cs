@@ -8,7 +8,7 @@ namespace Model
 
         public enum Direction
         {
-            NORTH = 0, WEST, SOUTH, EAST
+            NORTH = 0, EAST, SOUTH, WEST
         }
 
         public void SetNeighbour(Tile neighbour, Direction directionFromMe)
