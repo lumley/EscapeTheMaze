@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[ExecuteInEditMode]
 public class TileMapGenerator : MonoBehaviour {
 
     public Vector2 startingPoint;
@@ -47,7 +48,8 @@ public class TileMapGenerator : MonoBehaviour {
 
             // Paint myself
             GameObject instantiatedGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            instantiatedGameObject.transform.position = position;
+            Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y) + transform.position;
+            instantiatedGameObject.transform.position = gameObjectPosition;
 
             // TODO: Remove the direction where we come from!
             foreach (Model.Tile.Direction neighbourDirection in System.Enum.GetValues(typeof(Model.Tile.Direction)))
@@ -59,7 +61,6 @@ public class TileMapGenerator : MonoBehaviour {
                     DrawAllTiles(neighbour, neighbourPosition, visitedTileSet);
                 }
             }
-
         }
     }
 
