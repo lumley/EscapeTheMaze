@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Character : MonoBehaviour {
 	private NavMeshAgent agent;
@@ -24,4 +23,5 @@ public class Character : MonoBehaviour {
 		Debug.Log ("V "+Input.GetAxis ("Vertical")+" H "+Input.GetAxis ("Horizontal"));
 		agent.Move(movingDirection);
 	}
+
 }

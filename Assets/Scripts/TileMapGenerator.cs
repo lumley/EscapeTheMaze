@@ -1,0 +1,97 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class TileMapGenerator : MonoBehaviour {
+
+    public Vector2 startingPoint;
+    public List<int> endingPointLenghtFromStarting;
+
+    public int width;
+    public int height;
+
+    public Seed seedProvider;
+
+	// Use this for initialization
+	void Start () {
+        this.GenerateMap();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+
+    public void GenerateMap()
+    {
+        Random.seed = seedProvider.seed;
+        Dictionary<int, Model.Tile> createdTileMap = new Dictionary<int, Model.Tile>();
+        Model.Tile startingTile = new Model.Tile();
+        createdTileMap.Add(Vector2Int(startingPoint, this.width), startingTile);
+
+        // For each ending, generate a path to it
+        foreach(int maxSteps in endingPointLenghtFromStarting){
+            GenerateRandomPath(Model.Tile.Direction.SOUTH, new Vector2(startingPoint.x, startingPoint.y), maxSteps, startingTile, createdTileMap);
+        }
+
+        HashSet<Model.Tile> visitedTileSet = new HashSet<Model.Tile>();
+        DrawAllTiles(startingTile, startingPoint, visitedTileSet);
+
+    }
+
+    private void DrawAllTiles(Model.Tile tile, Vector2 position, HashSet<Model.Tile> visitedTileSet)
+    {
+        if (!visitedTileSet.Contains(tile))
+        {
+            visitedTileSet.Add(tile);
+
+            // TODO: Remove the direction where we come from!
+            foreach (Model.Tile.Direction neighbourDirection in System.Enum.GetValues(typeof(Model.Tile.Direction)))
+            {
+                Model.Tile neighbour = tile.GetNeighbour(neighbourDirection);
+                if (neighbour != null)
+                {
+                    Vector2 neighbourPosition = MoveVectorToDirection(position, neighbourDirection);
+                    DrawAllTiles(neighbour, neighbourPosition, visitedTileSet);
+                }
+            }
+
+            // Paint myself
+            GameObject instantiatedGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            instantiatedGameObject.transform.position = position;
+        }
+    }
+
+    private void GenerateRandomPath(Model.Tile.Direction directionFromLastGeneratedTile, Vector2 lastPosition, int stepsLeft, Model.Tile lastGeneratedTile, Dictionary<int, Model.Tile> createdTileMap)
+    {
+        Model.Tile generatedTile = new Model.Tile();
+        lastGeneratedTile.SetNeighbour(generatedTile, directionFromLastGeneratedTile);
+        generatedTile.SetNeighbour(lastGeneratedTile, (Model.Tile.Direction)(((int)directionFromLastGeneratedTile + 2) % 4));
+
+        Vector2 newPosition = MoveVectorToDirection(lastPosition, directionFromLastGeneratedTile);
+
+        createdTileMap.Add(Vector2Int(newPosition, width), generatedTile);
+
+        if (stepsLeft > 1)
+        {
+            GenerateRandomPath(Model.Tile.Direction.WEST, newPosition, stepsLeft - 1, generatedTile, createdTileMap);
+        }
+    }
+
+    private static Vector2 MoveVectorToDirection(Vector2 origin, Model.Tile.Direction direction)
+    {
+        Vector2 newPosition = new Vector2();
+
+        int intDirection = (int)direction;
+        newPosition.x = origin.x + ((intDirection) & 0x1 * (intDirection - 2)); // Awesome!
+        newPosition.y = origin.y + ((intDirection + 1) & 0x1 * (intDirection - 1)) * -1; // Awesomer!
+
+        return newPosition;
+    }
+
+    private static int Vector2Int(Vector2 vector, int width)
+    {
+        return (int)vector.y * width + (int)vector.x;
+    }
+
+}
