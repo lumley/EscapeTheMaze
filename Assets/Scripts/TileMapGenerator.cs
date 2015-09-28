@@ -2,11 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class TileMapGenerator : MonoBehaviour {
 
     public Vector2 startingPoint;
-    public List<int> endingPointLenghtFromStarting;
+	private Model.Tile startingTile;
+	public Model.Tile StartingTile{
+		get
+		{
+			return startingTile;
+		}
+	}
+    
+	public List<int> endingPointLenghtFromStarting;
 
     public int width;
     public int height;
@@ -14,7 +22,7 @@ public class TileMapGenerator : MonoBehaviour {
     public Seed seedProvider;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         this.GenerateMap();
 	}
 	
@@ -27,7 +35,7 @@ public class TileMapGenerator : MonoBehaviour {
     {
         Random.seed = seedProvider.seed;
         Dictionary<int, Model.Tile> createdTileMap = new Dictionary<int, Model.Tile>();
-        Model.Tile startingTile = new Model.Tile();
+        startingTile = new Model.Tile();
         createdTileMap.Add(Vector2Int(startingPoint, this.width), startingTile);
 
         // For each ending, generate a path to it
