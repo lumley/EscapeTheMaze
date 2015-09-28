@@ -11,7 +11,7 @@ public class TileMapGenerator : MonoBehaviour {
     public int width;
     public int height;
 
-    public Seed seedProvider;
+    public RandomProvider seedProvider;
 
 	// Use this for initialization
 	void Start () {
@@ -31,8 +31,9 @@ public class TileMapGenerator : MonoBehaviour {
         createdTileMap.Add(Vector2Int(startingPoint, this.width), startingTile);
 
         // For each ending, generate a path to it
-        foreach(int maxSteps in endingPointLenghtFromStarting){
-            GenerateRandomPath(Model.Tile.Direction.SOUTH, new Vector2(startingPoint.x, startingPoint.y), maxSteps, startingTile, createdTileMap);
+        Model.Tile.Direction[] directions = (Model.Tile.Direction[]) System.Enum.GetValues(typeof(Model.Tile.Direction));
+        foreach (int maxSteps in endingPointLenghtFromStarting){
+            GenerateRandomPath(seedProvider.GetRandomElement(directions), new Vector2(startingPoint.x, startingPoint.y), maxSteps, startingTile, createdTileMap);
         }
 
         HashSet<Model.Tile> visitedTileSet = new HashSet<Model.Tile>();
