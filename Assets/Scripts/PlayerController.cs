@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (Input.GetAxisRaw ("Vertical")<0) {
-			MoveBackwards();
+			MoveBackward();
 		} else if (Input.GetAxisRaw ("Vertical")>0){
 			MoveForward();
 		}
@@ -35,26 +35,52 @@ public class PlayerController : MonoBehaviour {
 
 
 	private void MoveLeft(){
-		MoveToTile(GetLeftTile());
+		Move(RelativeDirection.LEFT);
 	}
 
 	private void MoveRight(){
-		MoveToTile(GetRightTile());
+		Move(RelativeDirection.RIGHT);
 	}
 	
 	private void MoveForward(){
-		MoveToTile(GetFrontTile());
+		Move(RelativeDirection.FORWARD);
 	}
 	
-	private void MoveBackwards(){
-		MoveToTile(GetBackTile());
+	private void MoveBackward(){
+		Move(RelativeDirection.BACKWARD);
+	}
+
+
+	private void Move(RelativeDirection direction){
+		Tile destinationTile=GetTileInDirection(direction);
+		MoveToTile(destinationTile);
+
+		// TODO replace this by the coordinates that will be stored later on in the tiles
+		switch (GetCardinalDirectionAtRelativeDirection(direction)){
+			case Tile.Direction.NORTH:
+				transform.position+=Vector3.forward;
+				break;
+			case Tile.Direction.EAST:
+				transform.position+=Vector3.left;
+				break;
+			case Tile.Direction.SOUTH:
+				transform.position+=Vector3.back;
+				break;
+			case Tile.Direction.WEST:
+				transform.position+=Vector3.right;
+				break;
+		}
+
 	}
 
 	private void MoveToTile(Model.Tile tile){
 		if (tile!= null){
-			// move!
+			currentTile=tile;
+			// TODO move to coordinates defined by tile
 		}
 	}
+
+
 
 	private Tile GetLeftTile() {
 		return GetTileInDirection(RelativeDirection.LEFT);
@@ -72,7 +98,6 @@ public class PlayerController : MonoBehaviour {
 		return GetTileInDirection(RelativeDirection.BACKWARD);
 	}
 
-
 	private Model.Tile GetTileInDirection(RelativeDirection direction){
 		return currentTile.GetNeighbour(GetCardinalDirectionAtRelativeDirection(direction));
 	}
@@ -83,6 +108,7 @@ public class PlayerController : MonoBehaviour {
 			case RelativeDirection.RIGHT:		return GetRightCardinalDirection();
 			case RelativeDirection.FORWARD:		return GetCardinalDirection();
 			case RelativeDirection.BACKWARD:	return GetBackwardCardinalDirection();
+			default:							throw new InvalidDirectionException();
 		}
 	}
 
@@ -92,6 +118,7 @@ public class PlayerController : MonoBehaviour {
 			case Tile.Direction.EAST:	return Tile.Direction.NORTH;
 			case Tile.Direction.SOUTH:	return Tile.Direction.EAST;
 			case Tile.Direction.WEST:	return Tile.Direction.SOUTH;
+			default:					throw new InvalidDirectionException();
 		}
 	}
 
@@ -101,6 +128,7 @@ public class PlayerController : MonoBehaviour {
 			case Tile.Direction.EAST:	return Tile.Direction.SOUTH;
 			case Tile.Direction.SOUTH:	return Tile.Direction.WEST;
 			case Tile.Direction.WEST:	return Tile.Direction.NORTH;
+			default:					throw new InvalidDirectionException();
 		}
 	}
 
@@ -110,6 +138,7 @@ public class PlayerController : MonoBehaviour {
 			case Tile.Direction.EAST:	return Tile.Direction.WEST;
 			case Tile.Direction.SOUTH:	return Tile.Direction.NORTH;
 			case Tile.Direction.WEST:	return Tile.Direction.EAST;
+			default:					throw new InvalidDirectionException();
 		}
 	}
 		
