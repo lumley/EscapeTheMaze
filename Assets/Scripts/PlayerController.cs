@@ -19,15 +19,17 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		Model.Tile destinationTile;
-		if (Input.GetAxisRaw ("Horizontal")<0) {
+
+		if (Input.GetKeyUp (KeyCode.A)|| Input.GetKeyUp (KeyCode.LeftArrow)) {
 			MoveLeft();
-		} else if (Input.GetAxisRaw ("Horizontal")>0){
+		}
+		if (Input.GetKeyUp (KeyCode.D)|| Input.GetKeyUp (KeyCode.RightArrow)){
 			MoveRight();
 		}
-
-		if (Input.GetAxisRaw ("Vertical")<0) {
+		if (Input.GetKeyUp(KeyCode.S)|| Input.GetKeyUp (KeyCode.DownArrow)) {
 			MoveBackward();
-		} else if (Input.GetAxisRaw ("Vertical")>0){
+		} 
+		if (Input.GetKeyUp(KeyCode.W)|| Input.GetKeyUp (KeyCode.UpArrow)){
 			MoveForward();
 		}
 	}
@@ -55,20 +57,22 @@ public class PlayerController : MonoBehaviour {
 		Tile destinationTile=GetTileInDirection(direction);
 		MoveToTile(destinationTile);
 
-		// TODO replace this by the coordinates that will be stored later on in the tiles
-		switch (GetCardinalDirectionAtRelativeDirection(direction)){
-			case Tile.Direction.NORTH:
-				transform.position+=Vector3.forward;
-				break;
-			case Tile.Direction.EAST:
-				transform.position+=Vector3.left;
-				break;
-			case Tile.Direction.SOUTH:
-				transform.position+=Vector3.back;
-				break;
-			case Tile.Direction.WEST:
-				transform.position+=Vector3.right;
-				break;
+		// TODO move and replace this by the coordinates that will be stored later on in the tiles
+		if (destinationTile!= null){
+			switch (GetCardinalDirectionAtRelativeDirection(direction)){
+				case Tile.Direction.NORTH:
+					transform.position+=Vector3.forward;
+					break;
+				case Tile.Direction.EAST:
+					transform.position+=Vector3.right;
+					break;
+				case Tile.Direction.SOUTH:
+					transform.position+=Vector3.back;
+					break;
+				case Tile.Direction.WEST:
+					transform.position+=Vector3.left;
+					break;
+			}
 		}
 
 	}
@@ -160,7 +164,7 @@ public class PlayerController : MonoBehaviour {
 
 	private bool isPlayerFacingIntoTheDirectionOf(Vector3 direction){
 		float angle =Vector3.Angle(transform.forward, direction);
-		return angle>=22.5f && angle<=22.5f;
+		return angle>=-22.5f && angle<=22.5f;
 	}
 
 	public class InvalidDirectionException : System.Exception
