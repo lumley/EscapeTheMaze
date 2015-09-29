@@ -37,13 +37,10 @@ public class PlayerController : MonoBehaviour {
 
 		//Rotation
 		float yRotation = Input.GetAxis ("Mouse X") * mouseSensitivity;
-		float xRotation = Input.GetAxis ("Mouse Y") * mouseSensitivity;
 		transform.Rotate (0, yRotation, 0);
 
 
 	}
-
-
 
 	private void MoveLeft(){
 		Move(RelativeDirection.LEFT);
