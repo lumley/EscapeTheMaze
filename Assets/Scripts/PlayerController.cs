@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		currentTile = ((TileMapGenerator)tileMap.GetComponent<TileMapGenerator> ()).StartingTile;
+		Screen.lockCursor = true;
 	}
 	
 	// Update is called once per frame
@@ -31,6 +32,11 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKeyUp(KeyCode.W)|| Input.GetKeyUp (KeyCode.UpArrow)){
 			MoveForward();
 		}
+
+		//Rotation
+		float rotY = Input.GetAxis ("Mouse X") * 2.0f;
+		transform.Rotate (0, rotY, 0);
+
 	}
 
 
