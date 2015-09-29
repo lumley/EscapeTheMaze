@@ -5,6 +5,7 @@ using Model;
 public class PlayerController : MonoBehaviour {
 
 	public GameObject tileMap;
+	public float mouseSensitivity=3.0f;
 	private Model.Tile currentTile;
 
 	public enum RelativeDirection{
@@ -14,7 +15,8 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		currentTile = ((TileMapGenerator)tileMap.GetComponent<TileMapGenerator> ()).StartingTile;
-		Screen.lockCursor = true;
+		Cursor.lockState= CursorLockMode.Locked;
+		Cursor.visible=false;
 	}
 	
 	// Update is called once per frame
@@ -34,8 +36,10 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		//Rotation
-		float rotY = Input.GetAxis ("Mouse X") * 2.0f;
-		transform.Rotate (0, rotY, 0);
+		float yRotation = Input.GetAxis ("Mouse X") * mouseSensitivity;
+		float xRotation = Input.GetAxis ("Mouse Y") * mouseSensitivity;
+		transform.Rotate (0, yRotation, 0);
+
 
 	}
 
@@ -169,7 +173,7 @@ public class PlayerController : MonoBehaviour {
 
 	private bool isPlayerFacingIntoTheDirectionOf(Vector3 direction){
 		float angle =Vector3.Angle(transform.forward, direction);
-		return angle>=-22.5f && angle<=22.5f;
+		return angle>=-45.0f && angle<=45.0f;
 	}
 
 	public class InvalidDirectionException : System.Exception

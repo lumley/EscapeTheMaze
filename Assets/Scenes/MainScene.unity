@@ -208,7 +208,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470184, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: seedProvider
@@ -352,6 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileMap: {fileID: 1661069464}
+  mouseSensitivity: 3
 --- !u!23 &2006981423
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -403,7 +404,7 @@ Transform:
   m_GameObject: {fileID: 2006981421}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children:
   - {fileID: 127058137}
   m_Father: {fileID: 0}
