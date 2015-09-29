@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Model.Tile destinationTile;
 
 		if (Input.GetKeyUp (KeyCode.A)|| Input.GetKeyUp (KeyCode.LeftArrow)) {
 			MoveLeft();
