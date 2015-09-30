@@ -6,7 +6,13 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject tileMap;
 	public float mouseSensitivity=3.0f;
+
 	private Model.Tile currentTile;
+
+	private bool isMoving=false;
+	// determinates how quick the player should move.
+	// The unit expected here is tiles per second
+	private float speed=5.0f;
 
 	public enum RelativeDirection{
 		FORWARD, RIGHT, BACKWARD, LEFT
@@ -21,18 +27,19 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-		if (Input.GetKeyUp (KeyCode.A)|| Input.GetKeyUp (KeyCode.LeftArrow)) {
-			MoveLeft();
-		}
-		if (Input.GetKeyUp (KeyCode.D)|| Input.GetKeyUp (KeyCode.RightArrow)){
-			MoveRight();
-		}
-		if (Input.GetKeyUp(KeyCode.S)|| Input.GetKeyUp (KeyCode.DownArrow)) {
-			MoveBackward();
-		} 
-		if (Input.GetKeyUp(KeyCode.W)|| Input.GetKeyUp (KeyCode.UpArrow)){
-			MoveForward();
+		if (isMoving == false){
+			if (Input.GetKeyUp (KeyCode.A)|| Input.GetKeyUp (KeyCode.LeftArrow)) {
+				MoveLeft();
+			}
+			if (Input.GetKeyUp (KeyCode.D)|| Input.GetKeyUp (KeyCode.RightArrow)){
+				MoveRight();
+			}
+			if (Input.GetKeyUp(KeyCode.S)|| Input.GetKeyUp (KeyCode.DownArrow)) {
+				MoveBackward();
+			} 
+			if (Input.GetKeyUp(KeyCode.W)|| Input.GetKeyUp (KeyCode.UpArrow)){
+				MoveForward();
+			}
 		}
 
 		//Rotation
@@ -63,34 +70,58 @@ public class PlayerController : MonoBehaviour {
 		Tile destinationTile=GetTileInDirection(direction);
 		MoveToTile(destinationTile);
 
-		// TODO move and replace this by the coordinates that will be stored later on in the tiles
 		if (destinationTile!= null){
-			switch (GetCardinalDirectionAtRelativeDirection(direction)){
-				case Tile.Direction.NORTH:
-					transform.position+=Vector3.forward;
-					break;
-				case Tile.Direction.EAST:
-					transform.position+=Vector3.right;
-					break;
-				case Tile.Direction.SOUTH:
-					transform.position+=Vector3.back;
-					break;
-				case Tile.Direction.WEST:
-					transform.position+=Vector3.left;
-					break;
-			}
+			StartCoroutine(AnimateMovementIntoDirection(direction));
 		}
 
+	}
+
+	private IEnumerator AnimateMovementIntoDirection(RelativeDirection direction){
+
+		Vector3 start = transform.position;
+		Vector3 finish = Vector3.zero;
+
+		float t=0.0f;
+		float totalDelta=0.0f;
+
+		switch (GetCardinalDirectionAtRelativeDirection(direction)){
+			case Tile.Direction.NORTH:
+				finish+=start+Vector3.forward;
+				break;
+			case Tile.Direction.EAST:
+				finish+=start+Vector3.right;
+				break;
+			case Tile.Direction.SOUTH:
+				finish+=start+Vector3.back;
+				break;
+			case Tile.Direction.WEST:
+				finish+=start+Vector3.left;
+				break;
+		}
+
+		while (t < 1f) {
+			// calculate the state of the transition from start to finish aka the interpolant
+			t += Time.deltaTime * speed;
+
+			// the interpolated vector between start and finish is the
+			transform.position = Vector3.Lerp(start, finish, t);
+			yield return null;
+		}
+		
+		isMoving = false;
+
+		//NOTES:
+		// we could abort the iteration anytime with
+		// yield break;
+		// We could pass the result of each iteration to the consumer of the enumerator by calling 
+		// yield return 0;
 	}
 
 	private void MoveToTile(Model.Tile tile){
 		if (tile!= null){
 			currentTile=tile;
-			// TODO move to coordinates defined by tile
 		}
 	}
-
-
 
 	private Tile GetLeftTile() {
 		return GetTileInDirection(RelativeDirection.LEFT);
@@ -153,22 +184,22 @@ public class PlayerController : MonoBehaviour {
 	}
 		
 	private Tile.Direction GetCardinalDirection(){
-		if (isPlayerFacingIntoTheDirectionOf(Vector3.forward)){
+		if (IsPlayerFacingIntoTheDirectionOf(Vector3.forward)){
 			return Tile.Direction.NORTH;
 		}
-		if (isPlayerFacingIntoTheDirectionOf(Vector3.back)){
+		if (IsPlayerFacingIntoTheDirectionOf(Vector3.back)){
 			return Tile.Direction.SOUTH;
 		}
-		if (isPlayerFacingIntoTheDirectionOf(Vector3.right)){
+		if (IsPlayerFacingIntoTheDirectionOf(Vector3.right)){
 			return Tile.Direction.EAST;
 		}
-		if (isPlayerFacingIntoTheDirectionOf(Vector3.left)){
+		if (IsPlayerFacingIntoTheDirectionOf(Vector3.left)){
 			return Tile.Direction.WEST;
 		}
 		throw new InvalidDirectionException();
 	}
 
-	private bool isPlayerFacingIntoTheDirectionOf(Vector3 direction){
+	private bool IsPlayerFacingIntoTheDirectionOf(Vector3 direction){
 		float angle =Vector3.Angle(transform.forward, direction);
 		return angle>=-45.0f && angle<=45.0f;
 	}
