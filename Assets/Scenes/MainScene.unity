@@ -234,7 +234,7 @@ Prefab:
       objectReference: {fileID: 762815669}
     - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: endingPointLenghtFromStarting.Array.data[0]
-      value: 5
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11288270950e641ffbab82fa35996a04, type: 2}

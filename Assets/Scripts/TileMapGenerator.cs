@@ -64,7 +64,7 @@ public class TileMapGenerator : MonoBehaviour {
             instantiatedGameObject.transform.position = gameObjectPosition;
 
             // TODO: Remove the direction where we come from!
-            foreach (Model.Tile.Direction neighbourDirection in System.Enum.GetValues(typeof(Model.Tile.Direction)))
+            foreach (Model.Tile.Direction neighbourDirection in Model.Direction.Utils.GetAllDirections())
             {
                 Model.Tile neighbour = tile.GetNeighbour(neighbourDirection);
                 if (neighbour != null)
@@ -76,22 +76,39 @@ public class TileMapGenerator : MonoBehaviour {
         }
     }
 
+    /**
+     * It generates a random path that can collide with parts of the already generated path
+     */
     private void GenerateRandomPath(Model.Tile.Direction directionFromLastGeneratedTile, Vector2 lastPosition, int stepsLeft, Model.Tile lastGeneratedTile, Dictionary<int, Model.Tile> createdTileMap)
     {
-        Model.Tile.Direction reversedDirection = (Model.Tile.Direction)(((int)directionFromLastGeneratedTile + 2) % 4);
-        Model.Tile generatedTile = new Model.Tile();
-        lastGeneratedTile.SetNeighbour(generatedTile, directionFromLastGeneratedTile);
-        generatedTile.SetNeighbour(lastGeneratedTile, reversedDirection);
+        Vector2 currentPosition = MoveVectorToDirection(lastPosition, directionFromLastGeneratedTile);
+        int currentPositionIdentifier = Vector2Int(currentPosition, width);
+        Model.Tile currentTile;
+        if(!createdTileMap.TryGetValue(currentPositionIdentifier, out currentTile))
+        {
+            currentTile = new Model.Tile();
+            createdTileMap.Add(currentPositionIdentifier, currentTile);
+        }
 
-        Vector2 newPosition = MoveVectorToDirection(lastPosition, directionFromLastGeneratedTile);
-
-        createdTileMap.Add(Vector2Int(newPosition, width), generatedTile);
+        // Link my position with every position around me
+        Model.Tile.Direction[] directions = Model.Direction.Utils.GetAllDirections();
+        foreach (Model.Tile.Direction direction in directions)
+        {
+            Vector2 neighbourPosition = MoveVectorToDirection(currentPosition, direction);
+            Model.Tile neighbour;
+            if(createdTileMap.TryGetValue(Vector2Int(neighbourPosition, width), out neighbour))
+            {
+                currentTile.SetNeighbour(neighbour, direction);
+                Model.Tile.Direction reversedDirection = Model.Direction.Utils.Reverse(direction);
+                neighbour.SetNeighbour(currentTile, reversedDirection);
+            }
+        }
 
         if (stepsLeft > 1)
         {
-            Model.Tile.Direction[] directions = (Model.Tile.Direction[])System.Enum.GetValues(typeof(Model.Tile.Direction));
+            Model.Tile.Direction reversedDirection = Model.Direction.Utils.Reverse(directionFromLastGeneratedTile);
             Model.Tile.Direction nextDirection = seedProvider.GetRandomElementExcluding(directions, reversedDirection);
-            GenerateRandomPath(nextDirection, newPosition, stepsLeft - 1, generatedTile, createdTileMap);
+            GenerateRandomPath(nextDirection, currentPosition, stepsLeft - 1, currentTile, createdTileMap);
         }
     }
 
