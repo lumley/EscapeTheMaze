@@ -28,16 +28,16 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isMoving == false){
-			if (Input.GetKeyUp (KeyCode.A)|| Input.GetKeyUp (KeyCode.LeftArrow)) {
+			if (Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.LeftArrow)) {
 				MoveLeft();
 			}
-			if (Input.GetKeyUp (KeyCode.D)|| Input.GetKeyUp (KeyCode.RightArrow)){
+			if (Input.GetKey(KeyCode.D)|| Input.GetKey(KeyCode.RightArrow)){
 				MoveRight();
 			}
-			if (Input.GetKeyUp(KeyCode.S)|| Input.GetKeyUp (KeyCode.DownArrow)) {
+			if (Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.DownArrow)) {
 				MoveBackward();
 			} 
-			if (Input.GetKeyUp(KeyCode.W)|| Input.GetKeyUp (KeyCode.UpArrow)){
+			if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow)){
 				MoveForward();
 			}
 		}
@@ -68,9 +68,11 @@ public class PlayerController : MonoBehaviour {
 
 	private void Move(RelativeDirection direction){
 		Tile destinationTile=GetTileInDirection(direction);
-		MoveToTile(destinationTile);
 
-		if (destinationTile!= null){
+
+		if (destinationTile!= null && isMoving==false){
+			//Debug.Log("Moving "+direction);
+			MoveToTile(destinationTile);
 			StartCoroutine(AnimateMovementIntoDirection(direction));
 		}
 
@@ -78,24 +80,25 @@ public class PlayerController : MonoBehaviour {
 
 	private IEnumerator AnimateMovementIntoDirection(RelativeDirection direction){
 
+		isMoving=true;
+
 		Vector3 start = transform.position;
-		Vector3 finish = Vector3.zero;
+		Vector3 finish = transform.position;
 
 		float t=0.0f;
-		float totalDelta=0.0f;
 
 		switch (GetCardinalDirectionAtRelativeDirection(direction)){
 			case Tile.Direction.NORTH:
-				finish+=start+Vector3.forward;
+				finish+=Vector3.forward;
 				break;
 			case Tile.Direction.EAST:
-				finish+=start+Vector3.right;
+				finish+=Vector3.right;
 				break;
 			case Tile.Direction.SOUTH:
-				finish+=start+Vector3.back;
+				finish+=Vector3.back;
 				break;
 			case Tile.Direction.WEST:
-				finish+=start+Vector3.left;
+				finish+=Vector3.left;
 				break;
 		}
 
@@ -107,9 +110,13 @@ public class PlayerController : MonoBehaviour {
 			transform.position = Vector3.Lerp(start, finish, t);
 			yield return null;
 		}
-		
-		isMoving = false;
 
+		transform.position=finish;
+		isMoving = false;
+		/*Debug.Log("finished to move");
+		Debug.Log("original position: "+ start);
+		Debug.Log("targeted position: "+ finish);
+		Debug.Log("actual position: "+ transform.position);*/
 		//NOTES:
 		// we could abort the iteration anytime with
 		// yield break;

@@ -3,10 +3,6 @@
 public class Character : MonoBehaviour {
 	private NavMeshAgent agent;
 
-	private Vector3 moveDirection = Vector3.zero;
-	private Vector3 forward = Vector3.zero;
-	private Vector3 right = Vector3.zero;
-
 	// Use this for initialization
 	void Start () {
 		agent = GetComponent<NavMeshAgent>();
