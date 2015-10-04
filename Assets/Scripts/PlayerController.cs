@@ -9,13 +9,21 @@ public class PlayerController : MonoBehaviour {
 
 	private Model.Tile currentTile;
 
-	private bool isMoving=false;
 	// determinates how quick the player should move.
 	// The unit expected here is tiles per second
-	private float speed=5.0f;
+	private float speed=2.0f;
+
+	private float t=1.0f;
+
+	private Vector3 start=Vector3.zero;
+	private Vector3 finish=Vector3.zero;
 
 	public enum RelativeDirection{
 		FORWARD, RIGHT, BACKWARD, LEFT
+	}
+
+	void Awake(){
+		Application.targetFrameRate=60;
 	}
 
 	// Use this for initialization
@@ -24,23 +32,33 @@ public class PlayerController : MonoBehaviour {
 		Cursor.lockState= CursorLockMode.Locked;
 		Cursor.visible=false;
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () {
-		if (isMoving == false){
-			if (Input.GetKey(KeyCode.A)|| Input.GetKey(KeyCode.LeftArrow)) {
+		if (IsMoving()){
+			//			Debug.Log ("t: "+t);
+			t += Time.smoothDeltaTime * speed;
+			// the interpolated vector between start and finish is the
+			transform.position = Vector3.Lerp(start, finish, t);
+		}
+
+		if (IsMoving()==false){
+			if (Input.GetAxisRaw("Horizontal")<0) {
 				MoveLeft();
-			}
-			if (Input.GetKey(KeyCode.D)|| Input.GetKey(KeyCode.RightArrow)){
+			} else if (Input.GetAxisRaw("Horizontal")>0){
 				MoveRight();
-			}
-			if (Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.DownArrow)) {
+			} else if (Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.DownArrow)) {
 				MoveBackward();
-			} 
-			if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow)){
+			} else if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow)){
 				MoveForward();
+			} else {
+				t=1.0f;
 			}
 		}
+
+
+
 
 		//Rotation
 		float yRotation = Input.GetAxis ("Mouse X") * mouseSensitivity;
@@ -48,6 +66,12 @@ public class PlayerController : MonoBehaviour {
 
 
 	}
+
+	private bool IsMoving(){
+		return t<1.0f;
+	}
+
+	
 
 	private void MoveLeft(){
 		Move(RelativeDirection.LEFT);
@@ -67,61 +91,34 @@ public class PlayerController : MonoBehaviour {
 
 
 	private void Move(RelativeDirection direction){
+
 		Tile destinationTile=GetTileInDirection(direction);
-
-
-		if (destinationTile!= null && isMoving==false){
-			//Debug.Log("Moving "+direction);
+		if (destinationTile!= null ){
 			MoveToTile(destinationTile);
-			StartCoroutine(AnimateMovementIntoDirection(direction));
+			// to avoid stuttering it is needed to start with the interpolant overflow of the previous movement
+			if (t>1.0f)
+				t-=1.0f;
+			else {
+				t=0.0f;
+			}
+
+			start=transform.position;
+			finish=transform.position;
+			switch (GetCardinalDirectionAtRelativeDirection(direction)){
+				case Tile.Direction.NORTH:
+					finish+=Vector3.forward;
+					break;
+				case Tile.Direction.EAST:
+					finish+=Vector3.right;
+					break;
+				case Tile.Direction.SOUTH:
+					finish+=Vector3.back;
+					break;
+				case Tile.Direction.WEST:
+					finish+=Vector3.left;
+					break;
+			}
 		}
-
-	}
-
-	private IEnumerator AnimateMovementIntoDirection(RelativeDirection direction){
-
-		isMoving=true;
-
-		Vector3 start = transform.position;
-		Vector3 finish = transform.position;
-
-		float t=0.0f;
-
-		switch (GetCardinalDirectionAtRelativeDirection(direction)){
-			case Tile.Direction.NORTH:
-				finish+=Vector3.forward;
-				break;
-			case Tile.Direction.EAST:
-				finish+=Vector3.right;
-				break;
-			case Tile.Direction.SOUTH:
-				finish+=Vector3.back;
-				break;
-			case Tile.Direction.WEST:
-				finish+=Vector3.left;
-				break;
-		}
-
-		while (t < 1f) {
-			// calculate the state of the transition from start to finish aka the interpolant
-			t += Time.deltaTime * speed;
-
-			// the interpolated vector between start and finish is the
-			transform.position = Vector3.Lerp(start, finish, t);
-			yield return null;
-		}
-
-		transform.position=finish;
-		isMoving = false;
-		/*Debug.Log("finished to move");
-		Debug.Log("original position: "+ start);
-		Debug.Log("targeted position: "+ finish);
-		Debug.Log("actual position: "+ transform.position);*/
-		//NOTES:
-		// we could abort the iteration anytime with
-		// yield break;
-		// We could pass the result of each iteration to the consumer of the enumerator by calling 
-		// yield return 0;
 	}
 
 	private void MoveToTile(Model.Tile tile){
