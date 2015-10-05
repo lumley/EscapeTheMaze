@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 start=Vector3.zero;
 	private Vector3 finish=Vector3.zero;
 
+	private CharacterController controller;
+
 	public enum RelativeDirection{
 		FORWARD, RIGHT, BACKWARD, LEFT
 	}
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		currentTile = ((TileMapGenerator)tileMap.GetComponent<TileMapGenerator> ()).StartingTile;
+		controller = GetComponent<CharacterController>();
 		Cursor.lockState= CursorLockMode.Locked;
 		Cursor.visible=false;
 	}
@@ -39,7 +42,8 @@ public class PlayerController : MonoBehaviour {
 		if (IsMoving()){
 			interpolant += Time.smoothDeltaTime * speed;
 			// the interpolated vector between start and finish is the
-			transform.position = Vector3.Lerp(start, finish, interpolant);
+			transform.position=Vector3.Lerp(start, finish, interpolant);
+			//controller.SimpleMove(Vector3.Lerp(start, finish, interpolant));
 		}
 
 		if (IsMoving()==false){
@@ -99,20 +103,17 @@ public class PlayerController : MonoBehaviour {
 
 			start=transform.position;
 			finish=transform.position;
-			switch (GetCardinalDirectionAtRelativeDirection(direction)){
-				case Tile.Direction.NORTH:
-					finish+=Vector3.forward;
-					break;
-				case Tile.Direction.EAST:
-					finish+=Vector3.right;
-					break;
-				case Tile.Direction.SOUTH:
-					finish+=Vector3.back;
-					break;
-				case Tile.Direction.WEST:
-					finish+=Vector3.left;
-					break;
-			}
+			finish+=GetDirectionVector(GetCardinalDirectionAtRelativeDirection(direction));
+		}
+	}
+
+	private Vector3 GetDirectionVector(Tile.Direction direction){
+		switch (direction) {
+			case Tile.Direction.NORTH:	return Vector3.forward;
+			case Tile.Direction.EAST:	return Vector3.right;
+			case Tile.Direction.SOUTH:	return Vector3.back;
+			case Tile.Direction.WEST:	return Vector3.left;
+			default: throw new InvalidDirectionException();
 		}
 	}
 
