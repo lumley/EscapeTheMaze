@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 	// The unit expected here is tiles per second
 	private float speed=2.0f;
 
-	private float t=1.0f;
+	private float interpolant=1.0f;
 
 	private Vector3 start=Vector3.zero;
 	private Vector3 finish=Vector3.zero;
@@ -37,10 +37,9 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (IsMoving()){
-			//			Debug.Log ("t: "+t);
-			t += Time.smoothDeltaTime * speed;
+			interpolant += Time.smoothDeltaTime * speed;
 			// the interpolated vector between start and finish is the
-			transform.position = Vector3.Lerp(start, finish, t);
+			transform.position = Vector3.Lerp(start, finish, interpolant);
 		}
 
 		if (IsMoving()==false){
@@ -48,27 +47,23 @@ public class PlayerController : MonoBehaviour {
 				MoveLeft();
 			} else if (Input.GetAxisRaw("Horizontal")>0){
 				MoveRight();
-			} else if (Input.GetKey(KeyCode.S)|| Input.GetKey(KeyCode.DownArrow)) {
+			} else if (Input.GetAxisRaw("Vertical")<0) {
 				MoveBackward();
-			} else if (Input.GetKey(KeyCode.W)|| Input.GetKey(KeyCode.UpArrow)){
+			} else if (Input.GetAxisRaw("Vertical")>0){
 				MoveForward();
 			} else {
-				t=1.0f;
+				interpolant=1.0f;
 			}
 		}
-
-
-
 
 		//Rotation
 		float yRotation = Input.GetAxis ("Mouse X") * mouseSensitivity;
 		transform.Rotate (0, yRotation, 0);
 
-
 	}
 
 	private bool IsMoving(){
-		return t<1.0f;
+		return interpolant<1.0f;
 	}
 
 	
@@ -96,10 +91,10 @@ public class PlayerController : MonoBehaviour {
 		if (destinationTile!= null ){
 			MoveToTile(destinationTile);
 			// to avoid stuttering it is needed to start with the interpolant overflow of the previous movement
-			if (t>1.0f)
-				t-=1.0f;
+			if (interpolant>1.0f)
+				interpolant-=1.0f;
 			else {
-				t=0.0f;
+				interpolant=0.0f;
 			}
 
 			start=transform.position;
