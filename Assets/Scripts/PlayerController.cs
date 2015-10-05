@@ -94,13 +94,7 @@ public class PlayerController : MonoBehaviour {
 		Tile destinationTile=GetTileInDirection(direction);
 		if (destinationTile!= null ){
 			MoveToTile(destinationTile);
-			// to avoid stuttering it is needed to start with the interpolant overflow of the previous movement
-			if (interpolant>1.0f)
-				interpolant-=1.0f;
-			else {
-				interpolant=0.0f;
-			}
-
+			interpolant=0.0f;
 			start=transform.position;
 			finish=transform.position;
 			finish+=GetDirectionVector(GetCardinalDirectionAtRelativeDirection(direction));
