@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 start=Vector3.zero;
 	private Vector3 finish=Vector3.zero;
 
-	private CharacterController controller;
 
 	public enum RelativeDirection{
 		FORWARD, RIGHT, BACKWARD, LEFT
@@ -31,7 +30,6 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		currentTile = ((TileMapGenerator)tileMap.GetComponent<TileMapGenerator> ()).StartingTile;
-		controller = GetComponent<CharacterController>();
 		Cursor.lockState= CursorLockMode.Locked;
 		Cursor.visible=false;
 	}
