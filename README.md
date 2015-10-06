@@ -1,8 +1,8 @@
-# Welcome
+# Escape the Maze
 
 Welcome to Escape the Maze! This is simply a testing project, there is no aim for releasing this product to release, just to learn some basics about Unity3D.
 
-We are not accepting pull requests at the moment, since we are learning even the most basics of C#. In any case, if you are curious enough, feel free to check the goals of this project and fork it if you want (but check out the [license section](#license)!).
+We are not accepting pull requests at the moment, since we are learning even the most basics of C#. In any case, if you are curious enough, feel free to check out the goals of this project and fork it if you want (but remember the [license section](#license)!).
 
 
 
