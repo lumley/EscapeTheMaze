@@ -10,9 +10,6 @@ public class TileMapGenerator : MonoBehaviour {
     public Vector2 startingPoint;
 	public List<int> endingPointLenghtFromStarting;
 
-    public int width;
-    public int height;
-
     public RandomProvider seedProvider;
 
 	public Model.Tile StartingTile{
@@ -25,14 +22,14 @@ public class TileMapGenerator : MonoBehaviour {
     public void GenerateMap()
     {
         Random.seed = seedProvider.seed;
-        Dictionary<int, Model.Tile> createdTileMap = new Dictionary<int, Model.Tile>();
+        Dictionary<Vector2, Model.Tile> createdTileMap = new Dictionary<Vector2, Model.Tile>();
         this.startingTile = new Model.Tile();
-        createdTileMap.Add(Vector2Int(startingPoint, this.width), this.startingTile);
+        createdTileMap.Add(this.startingPoint, this.startingTile);
 
         // For each ending, generate a path to it
         Model.Tile.Direction[] directions = (Model.Tile.Direction[]) System.Enum.GetValues(typeof(Model.Tile.Direction));
         foreach (int maxSteps in endingPointLenghtFromStarting){
-            GenerateRandomPath(seedProvider.GetRandomElement(directions), new Vector2(startingPoint.x, startingPoint.y), maxSteps, this.startingTile, createdTileMap);
+            GenerateRandomPath(seedProvider.GetRandomElement(directions), startingPoint, maxSteps, this.startingTile, createdTileMap);
         }
 
         HashSet<Model.Tile> visitedTileSet = new HashSet<Model.Tile>();
@@ -79,15 +76,14 @@ public class TileMapGenerator : MonoBehaviour {
     /**
      * It generates a random path that can collide with parts of the already generated path
      */
-    private void GenerateRandomPath(Model.Tile.Direction directionFromLastGeneratedTile, Vector2 lastPosition, int stepsLeft, Model.Tile lastGeneratedTile, Dictionary<int, Model.Tile> createdTileMap)
+    private void GenerateRandomPath(Model.Tile.Direction directionFromLastGeneratedTile, Vector2 lastPosition, int stepsLeft, Model.Tile lastGeneratedTile, Dictionary<Vector2, Model.Tile> createdTileMap)
     {
         Vector2 currentPosition = MoveVectorToDirection(lastPosition, directionFromLastGeneratedTile);
-        int currentPositionIdentifier = Vector2Int(currentPosition, width);
         Model.Tile currentTile;
-        if(!createdTileMap.TryGetValue(currentPositionIdentifier, out currentTile))
+        if(!createdTileMap.TryGetValue(currentPosition, out currentTile))
         {
             currentTile = new Model.Tile();
-            createdTileMap.Add(currentPositionIdentifier, currentTile);
+            createdTileMap.Add(currentPosition, currentTile);
         }
 
         // Link my position with every position around me
@@ -96,7 +92,7 @@ public class TileMapGenerator : MonoBehaviour {
         {
             Vector2 neighbourPosition = MoveVectorToDirection(currentPosition, direction);
             Model.Tile neighbour;
-            if(createdTileMap.TryGetValue(Vector2Int(neighbourPosition, width), out neighbour))
+            if(createdTileMap.TryGetValue(neighbourPosition, out neighbour))
             {
                 currentTile.SetNeighbour(neighbour, direction);
                 Model.Tile.Direction reversedDirection = Model.Direction.Utils.Reverse(direction);
@@ -136,11 +132,6 @@ public class TileMapGenerator : MonoBehaviour {
         //newPosition.y = origin.y + ((intDirection + 1) & 0x1 * (intDirection - 1));
 
         return newPosition;
-    }
-
-    private static int Vector2Int(Vector2 vector, int width)
-    {
-        return (int)vector.y * width + (int)vector.x;
     }
 
 }
