@@ -99,12 +99,12 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	private Vector3 GetDirectionVector(Tile.Direction direction){
+	private Vector3 GetDirectionVector(Direction direction){
 		switch (direction) {
-			case Tile.Direction.NORTH:	return Vector3.forward;
-			case Tile.Direction.EAST:	return Vector3.right;
-			case Tile.Direction.SOUTH:	return Vector3.back;
-			case Tile.Direction.WEST:	return Vector3.left;
+			case Direction.NORTH:	return Vector3.forward;
+			case Direction.EAST:	return Vector3.right;
+			case Direction.SOUTH:	return Vector3.back;
+			case Direction.WEST:	return Vector3.left;
 			default: throw new InvalidDirectionException();
 		}
 	}
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour {
 		return currentTile.GetNeighbour(GetCardinalDirectionAtRelativeDirection(direction));
 	}
 
-	private Tile.Direction GetCardinalDirectionAtRelativeDirection(RelativeDirection direction){
+	private Direction GetCardinalDirectionAtRelativeDirection(RelativeDirection direction){
 		switch (direction){
 			case RelativeDirection.LEFT:		return GetLeftCardinalDirection();
 			case RelativeDirection.RIGHT:		return GetRightCardinalDirection();
@@ -145,48 +145,48 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	private Tile.Direction GetLeftCardinalDirection(){
+	private Direction GetLeftCardinalDirection(){
 		switch(GetCardinalDirection()){
-			case Tile.Direction.NORTH:	return Tile.Direction.WEST;
-			case Tile.Direction.EAST:	return Tile.Direction.NORTH;
-			case Tile.Direction.SOUTH:	return Tile.Direction.EAST;
-			case Tile.Direction.WEST:	return Tile.Direction.SOUTH;
+			case Direction.NORTH:	return Direction.WEST;
+			case Direction.EAST:	return Direction.NORTH;
+			case Direction.SOUTH:	return Direction.EAST;
+			case Direction.WEST:	return Direction.SOUTH;
 			default:					throw new InvalidDirectionException();
 		}
 	}
 
-	private Tile.Direction GetRightCardinalDirection(){
+	private Direction GetRightCardinalDirection(){
 		switch(GetCardinalDirection()){
-			case Tile.Direction.NORTH:	return Tile.Direction.EAST;
-			case Tile.Direction.EAST:	return Tile.Direction.SOUTH;
-			case Tile.Direction.SOUTH:	return Tile.Direction.WEST;
-			case Tile.Direction.WEST:	return Tile.Direction.NORTH;
+			case Direction.NORTH:	return Direction.EAST;
+			case Direction.EAST:	return Direction.SOUTH;
+			case Direction.SOUTH:	return Direction.WEST;
+			case Direction.WEST:	return Direction.NORTH;
 			default:					throw new InvalidDirectionException();
 		}
 	}
 
-	private Tile.Direction GetBackwardCardinalDirection(){
+	private Direction GetBackwardCardinalDirection(){
 		switch(GetCardinalDirection()){
-			case Tile.Direction.NORTH:	return Tile.Direction.SOUTH;
-			case Tile.Direction.EAST:	return Tile.Direction.WEST;
-			case Tile.Direction.SOUTH:	return Tile.Direction.NORTH;
-			case Tile.Direction.WEST:	return Tile.Direction.EAST;
+			case Direction.NORTH:	return Direction.SOUTH;
+			case Direction.EAST:	return Direction.WEST;
+			case Direction.SOUTH:	return Direction.NORTH;
+			case Direction.WEST:	return Direction.EAST;
 			default:					throw new InvalidDirectionException();
 		}
 	}
 		
-	private Tile.Direction GetCardinalDirection(){
+	private Direction GetCardinalDirection(){
 		if (IsPlayerFacingIntoTheDirectionOf(Vector3.forward)){
-			return Tile.Direction.NORTH;
+			return Direction.NORTH;
 		}
 		if (IsPlayerFacingIntoTheDirectionOf(Vector3.back)){
-			return Tile.Direction.SOUTH;
+			return Direction.SOUTH;
 		}
 		if (IsPlayerFacingIntoTheDirectionOf(Vector3.right)){
-			return Tile.Direction.EAST;
+			return Direction.EAST;
 		}
 		if (IsPlayerFacingIntoTheDirectionOf(Vector3.left)){
-			return Tile.Direction.WEST;
+			return Direction.WEST;
 		}
 		throw new InvalidDirectionException();
 	}
