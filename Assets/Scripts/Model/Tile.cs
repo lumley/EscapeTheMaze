@@ -28,7 +28,7 @@ namespace Model
             return neighbour;
         }
 
-        public bool HasAttribute<T>(TileAttribute.Type attributeType)
+        public bool HasAttribute(TileAttribute.Type attributeType)
         {
             if (this.attributeMap != null)
             {

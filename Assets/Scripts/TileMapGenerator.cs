@@ -5,28 +5,43 @@ using System.Collections.Generic;
 public class TileMapGenerator : MonoBehaviour {
 
     public Vector2 startingPoint;
-	public List<int> endingPointLenghtFromStarting;
+	public List<int> endingPointLengthFromStarting;
+    public List<int> randomRamificationLength;
     public RandomProvider seedProvider;
     private Model.Tile startingTile;
+    private Dictionary<Vector2, Model.Tile> createdTileMap;
 	public Model.Tile StartingTile{
 		get
 		{
 			return startingTile;
 		}
 	}
+    
+    public System.Collections.Generic.IEnumerable<Model.Tile> Tiles{
+        get {
+            return this.createdTileMap.Values;
+        }
+    }
+    
+    public Dictionary<Vector2, Model.Tile> Map2D {
+        get {
+            return this.createdTileMap;
+        }
+    }
 
     public void GenerateMap()
     {
         Random.seed = seedProvider.seed;
-        Dictionary<Vector2, Model.Tile> createdTileMap = new Dictionary<Vector2, Model.Tile>();
+        this.createdTileMap = new Dictionary<Vector2, Model.Tile>();
         this.startingTile = new Model.Tile();
         this.startingTile.AddAttribute(new Model.TileAttribute.SpawningPoint());
         createdTileMap.Add(this.startingPoint, this.startingTile);
         
         // For each ending, generate a path to it
         Model.Direction[] directions = (Model.Direction[]) System.Enum.GetValues(typeof(Model.Direction));
-        foreach (int maxSteps in endingPointLenghtFromStarting){
-            GenerateRandomPath(seedProvider.GetRandomElement(directions), startingPoint, maxSteps, this.startingTile, createdTileMap);
+        Vector2 scenePosition = new Vector2(transform.position.x, transform.position.z);
+        foreach (int maxSteps in endingPointLengthFromStarting){
+            GenerateRandomPath(seedProvider.GetRandomElement(directions), startingPoint + scenePosition, maxSteps, this.startingTile, createdTileMap);
         }
 
         HashSet<Model.Tile> visitedTileSet = new HashSet<Model.Tile>();
@@ -48,7 +63,7 @@ public class TileMapGenerator : MonoBehaviour {
 
             // Paint myself
             GameObject instantiatedGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y) + transform.position;
+            Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y);
             instantiatedGameObject.transform.position = gameObjectPosition;
 
             // TODO: Remove the direction where we come from!

@@ -19,6 +19,19 @@ public class RandomProvider : MonoBehaviour
         int index = Random.Range(0, elements.Length);
         return elements[index];
     }
+    
+    public T GetRandomElement<T>(System.Collections.Generic.ICollection<T> elements)
+    {
+        int index = Random.Range(0, elements.Count);
+        foreach (T item in elements)
+        {
+            if (index-- <= 0){
+                return item;
+            }
+        }
+        
+        throw new System.ArgumentException("Collection cannot be empty");
+    }
 
     public T GetRandomElementExcluding<T>(T[] elements, params T[] exclusions)
     {
