@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 //[ExecuteInEditMode]
@@ -24,8 +23,9 @@ public class TileMapGenerator : MonoBehaviour {
         Random.seed = seedProvider.seed;
         Dictionary<Vector2, Model.Tile> createdTileMap = new Dictionary<Vector2, Model.Tile>();
         this.startingTile = new Model.Tile();
+        //this.startingTile.AddAttribute(new Model.TileAttribute.SpawningPoint());
         createdTileMap.Add(this.startingPoint, this.startingTile);
-
+        
         // For each ending, generate a path to it
         Model.Direction[] directions = (Model.Direction[]) System.Enum.GetValues(typeof(Model.Direction));
         foreach (int maxSteps in endingPointLenghtFromStarting){
@@ -105,6 +105,8 @@ public class TileMapGenerator : MonoBehaviour {
             Model.Direction reversedDirection = Model.Utils.Reverse(directionFromLastGeneratedTile);
             Model.Direction nextDirection = seedProvider.GetRandomElementExcluding(directions, reversedDirection);
             GenerateRandomPath(nextDirection, currentPosition, stepsLeft - 1, currentTile, createdTileMap);
+        } else {
+            //currentTile.AddAttribute(new Model.TileAttribute.EndingPoint());
         }
     }
 
@@ -127,9 +129,6 @@ public class TileMapGenerator : MonoBehaviour {
                 newPosition.y -= 1;
                 break;
         }
-        //int intDirection = (int)direction;
-        //newPosition.x = origin.x + ((intDirection) & 0x1 * (intDirection - 2));
-        //newPosition.y = origin.y + ((intDirection + 1) & 0x1 * (intDirection - 1));
 
         return newPosition;
     }
