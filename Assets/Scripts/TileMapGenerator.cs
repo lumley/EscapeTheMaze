@@ -4,13 +4,10 @@ using System.Collections.Generic;
 //[ExecuteInEditMode]
 public class TileMapGenerator : MonoBehaviour {
 
-	private Model.Tile startingTile;
-
     public Vector2 startingPoint;
 	public List<int> endingPointLenghtFromStarting;
-
     public RandomProvider seedProvider;
-
+    private Model.Tile startingTile;
 	public Model.Tile StartingTile{
 		get
 		{
@@ -23,7 +20,7 @@ public class TileMapGenerator : MonoBehaviour {
         Random.seed = seedProvider.seed;
         Dictionary<Vector2, Model.Tile> createdTileMap = new Dictionary<Vector2, Model.Tile>();
         this.startingTile = new Model.Tile();
-        //this.startingTile.AddAttribute(new Model.TileAttribute.SpawningPoint());
+        this.startingTile.AddAttribute(new Model.TileAttribute.SpawningPoint());
         createdTileMap.Add(this.startingPoint, this.startingTile);
         
         // For each ending, generate a path to it
@@ -35,12 +32,6 @@ public class TileMapGenerator : MonoBehaviour {
         HashSet<Model.Tile> visitedTileSet = new HashSet<Model.Tile>();
         DrawAllTiles(this.startingTile, startingPoint, visitedTileSet);
 
-    }
-
-    // Use this for initialization
-    void Awake()
-    {
-        this.GenerateMap();
     }
 
     // Update is called once per frame
@@ -106,7 +97,7 @@ public class TileMapGenerator : MonoBehaviour {
             Model.Direction nextDirection = seedProvider.GetRandomElementExcluding(directions, reversedDirection);
             GenerateRandomPath(nextDirection, currentPosition, stepsLeft - 1, currentTile, createdTileMap);
         } else {
-            //currentTile.AddAttribute(new Model.TileAttribute.EndingPoint());
+            currentTile.AddAttribute(new Model.TileAttribute.EndingPoint());
         }
     }
 

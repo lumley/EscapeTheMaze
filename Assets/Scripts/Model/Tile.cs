@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Model.TileAttribute;
+﻿using System.Collections.Generic;
 
 namespace Model
 {
@@ -11,15 +9,7 @@ namespace Model
 
         public void SetNeighbour(Tile neighbour, Direction directionFromMe) // TODO: Unit test this!
         {
-            Tile alreadyNeighbour;
-            if(!this.neighbourMap.TryGetValue(directionFromMe, out alreadyNeighbour))
-            {
-                this.neighbourMap.Add(directionFromMe, neighbour);
-            }
-            else if(!alreadyNeighbour.Equals(neighbour))
-            {
-                throw new System.ArgumentException("Attempting to add a different neighbour in a direction where there is already one");
-            }
+            this.neighbourMap[directionFromMe] = neighbour;
         }
 
         internal void AddAttribute(TileComponent attribute)
@@ -28,7 +18,7 @@ namespace Model
                 this.attributeMap = new Dictionary<TileAttribute.Type, TileComponent>();
             }
             
-            
+            this.attributeMap[attribute.GetType()] = attribute;
         }
 
         public Tile GetNeighbour(Direction directionFromMe) // TODO: Unit test this!
