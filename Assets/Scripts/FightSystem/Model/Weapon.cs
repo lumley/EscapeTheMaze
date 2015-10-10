@@ -1,9 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿public interface IWeapon {
 
-public abstract class Weapon : MonoBehaviour {
-
-	public abstract List<GameObject> Attack();
+	void Attack();
 
 }
