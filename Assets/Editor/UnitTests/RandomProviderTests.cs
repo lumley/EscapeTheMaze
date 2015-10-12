@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 public class RandomProviderTests {
 
-    private RandomProvider randomProvider;
+    private const int SEED = 0;
     private int seedBefore;
 
     [SetUp]
     public void SetUp()
     {
-        this.randomProvider = new RandomProvider();
-        this.randomProvider.seed = 0;
-
         seedBefore = UnityEngine.Random.seed;
-        UnityEngine.Random.seed = this.randomProvider.seed;
+        UnityEngine.Random.seed = SEED;
     }
 
     [TearDown]
@@ -28,13 +25,67 @@ public class RandomProviderTests {
     {
         int excludedValue = 0;
         int[] elements = { excludedValue, excludedValue+1 };
+
+        // First run we prove that the excluded value would have been selected
+        UnityEngine.Random.seed = SEED;
+        Assert.AreEqual(excludedValue, RandomProvider.GetRandomElementExcluding(elements, null));
+
         int[] excluded = { excludedValue };
 
-        for(int i=0; i< 1000; ++i)
+        // We reset the seed and start again, excluding the value
+        UnityEngine.Random.seed = SEED;
+        for (int i=0; i< 1000; ++i)
         {
-            int element = this.randomProvider.GetRandomElementExcluding(elements, excluded);
+            int element = RandomProvider.GetRandomElementExcluding(elements, excluded);
             Assert.AreNotEqual(excludedValue, element);
         }
     }
+
+    [Test]
+    public void GetRandomElementShouldSelectARandomElementFromWithinTheGivenElementsWhenUsingAnArray()
+    {
+        int[] elements = { 0, 1, 2 };
+
+        for(int i=0; i< 1000; ++i)
+        {
+            int element = RandomProvider.GetRandomElement(elements);
+            Assert.IsTrue(System.Array.IndexOf(elements, element) >= 0);
+        }
+    }
+
+    [Test]
+    public void GetRandomElementShouldSelectARandomElementFromWithinTheGivenElementsWhenUsingAnCollection()
+    {
+        List<int> elements = new List<int>(new int[]{ 0, 1, 2});
+
+        for (int i = 0; i < 1000; ++i)
+        {
+            int element = RandomProvider.GetRandomElement(elements);
+            Assert.IsTrue(elements.Contains(element));
+        }
+    }
+
+    [Test]
+    public void GetRandomElementExcludingShouldGiveSameValuesAsGetRandomElementWhenExclusionsAreNull()
+    {
+        int[] elements = { 0, 1, 2, 3, 4 };
+        UnityEngine.Random.seed = SEED;
+
+        const int numValues = 1000;
+        int[] expectedValues = new int[numValues];
+        for (int i = 0; i < numValues; ++i)
+        {
+            int element = RandomProvider.GetRandomElement(elements);
+            expectedValues[i] = element;
+        }
+
+        UnityEngine.Random.seed = SEED;
+        for (int i = 0; i < numValues; ++i)
+        {
+            int element = RandomProvider.GetRandomElementExcluding(elements);
+            Assert.AreEqual(expectedValues[i], element);
+        }
+    }
+
 
 }

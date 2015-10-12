@@ -7,7 +7,6 @@ public class TileMapGenerator : MonoBehaviour {
     public Vector2 startingPoint;
 	public List<int> endingPointLengthFromStarting;
     public List<int> randomRamificationLength;
-    public RandomProvider seedProvider;
     private Model.Tile startingTile;
     private Dictionary<Vector2, Model.Tile> createdTileMap;
 	public Model.Tile StartingTile{
@@ -31,7 +30,6 @@ public class TileMapGenerator : MonoBehaviour {
 
     public void GenerateMap()
     {
-        Random.seed = seedProvider.seed;
         this.createdTileMap = new Dictionary<Vector2, Model.Tile>();
         this.startingTile = new Model.Tile();
         this.startingTile.AddAttribute(new Model.TileAttribute.SpawningPoint());
@@ -41,7 +39,7 @@ public class TileMapGenerator : MonoBehaviour {
         Model.Direction[] directions = (Model.Direction[]) System.Enum.GetValues(typeof(Model.Direction));
         Vector2 scenePosition = new Vector2(transform.position.x, transform.position.z);
         foreach (int maxSteps in endingPointLengthFromStarting){
-            GenerateRandomPath(seedProvider.GetRandomElement(directions), startingPoint + scenePosition, maxSteps, this.startingTile, createdTileMap);
+            GenerateRandomPath(RandomProvider.GetRandomElement(directions), startingPoint + scenePosition, maxSteps, this.startingTile, createdTileMap);
         }
 
         HashSet<Model.Tile> visitedTileSet = new HashSet<Model.Tile>();
@@ -109,7 +107,7 @@ public class TileMapGenerator : MonoBehaviour {
         if (stepsLeft > 1)
         {
             Model.Direction reversedDirection = Model.Utils.Reverse(directionFromLastGeneratedTile);
-            Model.Direction nextDirection = seedProvider.GetRandomElementExcluding(directions, reversedDirection);
+            Model.Direction nextDirection = RandomProvider.GetRandomElementExcluding(directions, reversedDirection);
             GenerateRandomPath(nextDirection, currentPosition, stepsLeft - 1, currentTile, createdTileMap);
         } else {
             currentTile.AddAttribute(new Model.TileAttribute.EndingPoint());

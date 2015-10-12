@@ -6,7 +6,8 @@ public class RandomProvider : MonoBehaviour
 
     // Use this for initialization
     void Start() {
-
+        // We don't need to call updates on this object, it should probably not even be a mono behavior at all
+        this.enabled = false;
     }
 
     // Update is called once per frame
@@ -14,13 +15,13 @@ public class RandomProvider : MonoBehaviour
 
     }
 
-    public T GetRandomElement<T>(T[] elements)
+    public static T GetRandomElement<T>(T[] elements)
     {
         int index = Random.Range(0, elements.Length);
         return elements[index];
     }
     
-    public T GetRandomElement<T>(System.Collections.Generic.ICollection<T> elements)
+    public static T GetRandomElement<T>(System.Collections.Generic.ICollection<T> elements)
     {
         int index = Random.Range(0, elements.Count);
         foreach (T item in elements)
@@ -33,8 +34,13 @@ public class RandomProvider : MonoBehaviour
         throw new System.ArgumentException("Collection cannot be empty");
     }
 
-    public T GetRandomElementExcluding<T>(T[] elements, params T[] exclusions)
+    public static T GetRandomElementExcluding<T>(T[] elements, params T[] exclusions)
     {
+        if (exclusions == null)
+        {
+            return GetRandomElement(elements);
+        }
+
         int index = Random.Range(0, elements.Length - exclusions.Length);
 
         T element;

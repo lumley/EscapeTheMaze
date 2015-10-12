@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 	public RandomProvider seedProvider;
 
 	void Awake() {
+        Random.seed = seedProvider.seed;
 		tileMap.GenerateMap();
 		
 		List<KeyValuePair<Vector2, Model.Tile>> startingPoints = new List<KeyValuePair<Vector2, Model.Tile>>();
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 		
-		KeyValuePair<Vector2, Model.Tile> selectedStartingTile = seedProvider.GetRandomElement(startingPoints);
+		KeyValuePair<Vector2, Model.Tile> selectedStartingTile = RandomProvider.GetRandomElement(startingPoints);
 		Vector2 selectedStartingPoint = selectedStartingTile.Key;
 		player.transform.position = new Vector3(selectedStartingPoint.x, player.transform.position.y, selectedStartingPoint.y);
 	}
