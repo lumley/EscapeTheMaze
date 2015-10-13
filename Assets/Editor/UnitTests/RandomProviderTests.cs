@@ -10,14 +10,14 @@ public class RandomProviderTests {
     [SetUp]
     public void SetUp()
     {
-        seedBefore = UnityEngine.Random.seed;
-        UnityEngine.Random.seed = SEED;
+        seedBefore = Random.seed;
+        Random.seed = SEED;
     }
 
     [TearDown]
     public void TearDown()
     {
-        UnityEngine.Random.seed = seedBefore;
+        Random.seed = seedBefore;
     }
 
     [Test]
@@ -27,13 +27,13 @@ public class RandomProviderTests {
         int[] elements = { excludedValue, excludedValue+1 };
 
         // First run we prove that the excluded value would have been selected
-        UnityEngine.Random.seed = SEED;
+        Random.seed = SEED;
         Assert.AreEqual(excludedValue, RandomProvider.GetRandomElementExcluding(elements, null));
 
         int[] excluded = { excludedValue };
 
         // We reset the seed and start again, excluding the value
-        UnityEngine.Random.seed = SEED;
+        Random.seed = SEED;
         for (int i=0; i< 1000; ++i)
         {
             int element = RandomProvider.GetRandomElementExcluding(elements, excluded);
@@ -69,7 +69,7 @@ public class RandomProviderTests {
     public void GetRandomElementExcludingShouldGiveSameValuesAsGetRandomElementWhenExclusionsAreNull()
     {
         int[] elements = { 0, 1, 2, 3, 4 };
-        UnityEngine.Random.seed = SEED;
+        Random.seed = SEED;
 
         const int numValues = 1000;
         int[] expectedValues = new int[numValues];
@@ -79,7 +79,7 @@ public class RandomProviderTests {
             expectedValues[i] = element;
         }
 
-        UnityEngine.Random.seed = SEED;
+        Random.seed = SEED;
         for (int i = 0; i < numValues; ++i)
         {
             int element = RandomProvider.GetRandomElementExcluding(elements);

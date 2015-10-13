@@ -7,7 +7,14 @@ namespace Model
         private Dictionary<Direction, Tile> neighbourMap = new Dictionary<Direction,Tile>(4);
         private Dictionary<TileAttribute.Type, TileComponent> attributeMap;
 
-        public void SetNeighbour(Tile neighbour, Direction directionFromMe) // TODO: Unit test this!
+        public void BindNeighbours(Tile neighbour, Direction directionFromMe)
+        {
+            SetNeighbour(neighbour, directionFromMe);
+            Model.Direction reversedDirection = Utils.Reverse(directionFromMe);
+            neighbour.SetNeighbour(this, reversedDirection);
+        }
+
+        private void SetNeighbour(Tile neighbour, Direction directionFromMe)
         {
             this.neighbourMap[directionFromMe] = neighbour;
         }
@@ -21,7 +28,7 @@ namespace Model
             this.attributeMap[attribute.GetType()] = attribute;
         }
 
-        public Tile GetNeighbour(Direction directionFromMe) // TODO: Unit test this!
+        public Tile GetNeighbour(Direction directionFromMe)
         {
             Tile neighbour;
             this.neighbourMap.TryGetValue(directionFromMe, out neighbour);

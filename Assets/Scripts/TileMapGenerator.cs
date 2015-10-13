@@ -98,9 +98,7 @@ public class TileMapGenerator : MonoBehaviour {
             Model.Tile neighbour;
             if(createdTileMap.TryGetValue(neighbourPosition, out neighbour))
             {
-                currentTile.SetNeighbour(neighbour, direction);
-                Model.Direction reversedDirection = Model.Utils.Reverse(direction);
-                neighbour.SetNeighbour(currentTile, reversedDirection);
+                currentTile.BindNeighbours(neighbour, direction);
             }
         }
 
@@ -121,16 +119,16 @@ public class TileMapGenerator : MonoBehaviour {
         switch (direction)
         {
             case Model.Direction.EAST:
-                newPosition.x += 1;
+                newPosition.x += 1.0f;
                 break;
             case Model.Direction.WEST:
-                newPosition.x -= 1;
+                newPosition.x -= 1.0f;
                 break;
             case Model.Direction.NORTH:
-                newPosition.y += 1;
+                newPosition.y += 1.0f;
                 break;
             case Model.Direction.SOUTH:
-                newPosition.y -= 1;
+                newPosition.y -= 1.0f;
                 break;
         }
 
