@@ -1,46 +1,50 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 //[ExecuteInEditMode]
 public class TileMapGenerator : MonoBehaviour {
 
-	private Model.Tile startingTile;
-
     public Vector2 startingPoint;
-	public List<int> endingPointLenghtFromStarting;
-
-    public RandomProvider seedProvider;
-
+	public List<int> endingPointLengthFromStarting;
+    public List<int> randomRamificationLength;
+    private Model.Tile startingTile;
+    private Dictionary<Vector2, Model.Tile> createdTileMap;
 	public Model.Tile StartingTile{
 		get
 		{
 			return startingTile;
 		}
 	}
+    
+    public System.Collections.Generic.IEnumerable<Model.Tile> Tiles{
+        get {
+            return this.createdTileMap.Values;
+        }
+    }
+    
+    public Dictionary<Vector2, Model.Tile> Map2D {
+        get {
+            return this.createdTileMap;
+        }
+    }
 
     public void GenerateMap()
     {
-        Random.seed = seedProvider.seed;
-        Dictionary<Vector2, Model.Tile> createdTileMap = new Dictionary<Vector2, Model.Tile>();
+        this.createdTileMap = new Dictionary<Vector2, Model.Tile>();
         this.startingTile = new Model.Tile();
+        this.startingTile.AddAttribute(new Model.TileAttribute.SpawningPoint());
         createdTileMap.Add(this.startingPoint, this.startingTile);
-
+        
         // For each ending, generate a path to it
         Model.Direction[] directions = (Model.Direction[]) System.Enum.GetValues(typeof(Model.Direction));
-        foreach (int maxSteps in endingPointLenghtFromStarting){
-            GenerateRandomPath(seedProvider.GetRandomElement(directions), startingPoint, maxSteps, this.startingTile, createdTileMap);
+        Vector2 scenePosition = new Vector2(transform.position.x, transform.position.z);
+        foreach (int maxSteps in endingPointLengthFromStarting){
+            GenerateRandomPath(RandomProvider.GetRandomElement(directions), startingPoint + scenePosition, maxSteps, this.startingTile, createdTileMap);
         }
 
         HashSet<Model.Tile> visitedTileSet = new HashSet<Model.Tile>();
         DrawAllTiles(this.startingTile, startingPoint, visitedTileSet);
 
-    }
-
-    // Use this for initialization
-    void Awake()
-    {
-        this.GenerateMap();
     }
 
     // Update is called once per frame
@@ -57,7 +61,7 @@ public class TileMapGenerator : MonoBehaviour {
 
             // Paint myself
             GameObject instantiatedGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y) + transform.position;
+            Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y);
             instantiatedGameObject.transform.position = gameObjectPosition;
 
             // TODO: Remove the direction where we come from!
@@ -94,17 +98,17 @@ public class TileMapGenerator : MonoBehaviour {
             Model.Tile neighbour;
             if(createdTileMap.TryGetValue(neighbourPosition, out neighbour))
             {
-                currentTile.SetNeighbour(neighbour, direction);
-                Model.Direction reversedDirection = Model.Utils.Reverse(direction);
-                neighbour.SetNeighbour(currentTile, reversedDirection);
+                currentTile.BindNeighbours(neighbour, direction);
             }
         }
 
         if (stepsLeft > 1)
         {
             Model.Direction reversedDirection = Model.Utils.Reverse(directionFromLastGeneratedTile);
-            Model.Direction nextDirection = seedProvider.GetRandomElementExcluding(directions, reversedDirection);
+            Model.Direction nextDirection = RandomProvider.GetRandomElementExcluding(directions, reversedDirection);
             GenerateRandomPath(nextDirection, currentPosition, stepsLeft - 1, currentTile, createdTileMap);
+        } else {
+            currentTile.AddAttribute(new Model.TileAttribute.EndingPoint());
         }
     }
 
@@ -115,21 +119,18 @@ public class TileMapGenerator : MonoBehaviour {
         switch (direction)
         {
             case Model.Direction.EAST:
-                newPosition.x += 1;
+                newPosition.x += 1.0f;
                 break;
             case Model.Direction.WEST:
-                newPosition.x -= 1;
+                newPosition.x -= 1.0f;
                 break;
             case Model.Direction.NORTH:
-                newPosition.y += 1;
+                newPosition.y += 1.0f;
                 break;
             case Model.Direction.SOUTH:
-                newPosition.y -= 1;
+                newPosition.y -= 1.0f;
                 break;
         }
-        //int intDirection = (int)direction;
-        //newPosition.x = origin.x + ((intDirection) & 0x1 * (intDirection - 2));
-        //newPosition.y = origin.y + ((intDirection + 1) & 0x1 * (intDirection - 1));
 
         return newPosition;
     }

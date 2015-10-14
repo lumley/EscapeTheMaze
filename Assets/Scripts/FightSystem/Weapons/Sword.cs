@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-public class Sword : Weapon {
 
-	// Use this for initialization
-	void Start () {
+
+public class Sword : MonoBehaviour, IWeapon {
+
+	private Animator animator;
 	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	public void Awake(){
+		animator =GetComponent<Animator>();
 	}
 
-	public override List<GameObject> Attack(){
-		return null;
+	public void Attack(){
+		animator.Play("Attack");
+		Debug.Log("Swing!");
+		RaycastHit raycast;
+		
+		
+	}
+	public void Hit(){
+		Debug.Log("hit!");
 	}
 
 }

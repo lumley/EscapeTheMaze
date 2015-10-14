@@ -18,8 +18,9 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 start=Vector3.zero;
 	private Vector3 finish=Vector3.zero;
 
+    CursorLockMode wantedMode = CursorLockMode.Locked;
 
-	public enum RelativeDirection{
+    public enum RelativeDirection{
 		FORWARD, RIGHT, BACKWARD, LEFT
 	}
 
@@ -30,39 +31,122 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		currentTile = ((TileMapGenerator)tileMap.GetComponent<TileMapGenerator> ()).StartingTile;
-		Cursor.lockState= CursorLockMode.Locked;
-		Cursor.visible=false;
+        SetCursorState();
 	}
 
 
-	// Update is called once per frame
-	void Update () {
-		if (IsMoving()){
-			interpolant += Time.smoothDeltaTime * speed;
-			// the interpolated vector between start and finish is the
-			transform.position=Vector3.Lerp(start, finish, interpolant);
-			//controller.SimpleMove(Vector3.Lerp(start, finish, interpolant));
-		}
+    // Update is called once per frame
+    void Update()
+    {
+        if (IsMoving())
+        {
+            interpolant += Time.smoothDeltaTime * speed;
+            // the interpolated vector between start and finish is the
+            transform.position = Vector3.Lerp(start, finish, interpolant);
+            //controller.SimpleMove(Vector3.Lerp(start, finish, interpolant));
+        }
 
-		if (IsMoving()==false){
-			if (Input.GetAxisRaw("Horizontal")<0) {
-				MoveLeft();
-			} else if (Input.GetAxisRaw("Horizontal")>0){
-				MoveRight();
-			} else if (Input.GetAxisRaw("Vertical")<0) {
-				MoveBackward();
-			} else if (Input.GetAxisRaw("Vertical")>0){
-				MoveForward();
-			} else {
-				interpolant=1.0f;
-			}
-		}
+        if (IsMoving() == false)
+        {
+            if (Input.GetAxisRaw("Horizontal") < 0)
+            {
+                MoveLeft();
+            }
+            else if (Input.GetAxisRaw("Horizontal") > 0)
+            {
+                MoveRight();
+            }
+            else if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                MoveBackward();
+            }
+            else if (Input.GetAxisRaw("Vertical") > 0)
+            {
+                MoveForward();
+            }
+            else
+            {
+                interpolant = 1.0f;
+            }
+        }
 
-		//Rotation
-		float yRotation = Input.GetAxis ("Mouse X") * mouseSensitivity;
-		transform.Rotate (0, yRotation, 0);
+        if (CursorLockMode.Locked == Cursor.lockState)
+        {
+            //Rotation
+            float yRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
+            transform.Rotate(0, yRotation, 0);
+        }
 
-	}
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            wantedMode = CursorLockMode.None;
+            SetCursorState();
+        }else if (Input.touchCount > 0)
+        {
+            wantedMode = CursorLockMode.None;
+            SetCursorState();
+        }
+    }
+
+    void OnGUI()
+    {
+        if(CursorLockMode.Locked != Cursor.lockState)
+        {
+            GUI.Label(new Rect(Screen.width/2 - 75, Screen.height/2 - 15, 150, 30), "Game paused");
+        }
+    }
+
+    void OnApplicationFocus(bool isFocused)
+    {
+        if(isFocused)
+        {
+            wantedMode = CursorLockMode.Locked;
+            SetCursorState();
+        }
+    }
+
+    private void SetCursorState()
+    {
+        Cursor.lockState = wantedMode;
+        // Hide cursor when locking
+        Cursor.visible = (CursorLockMode.Locked != wantedMode);
+    }
+
+    void onGUI()
+    {
+        GUILayout.BeginVertical();
+        // Release cursor on escape keypress
+        
+
+        switch (Cursor.lockState)
+        {
+            case CursorLockMode.None:
+                GUILayout.Label("Cursor is normal");
+                if (GUILayout.Button("Lock cursor"))
+                    wantedMode = CursorLockMode.Locked;
+                if (GUILayout.Button("Confine cursor"))
+                    wantedMode = CursorLockMode.Confined;
+                break;
+            case CursorLockMode.Confined:
+                GUILayout.Label("Cursor is confined");
+                if (GUILayout.Button("Lock cursor"))
+                    wantedMode = CursorLockMode.Locked;
+                if (GUILayout.Button("Release cursor"))
+                    wantedMode = CursorLockMode.None;
+                break;
+            case CursorLockMode.Locked:
+                GUILayout.Label("Cursor is locked");
+                if (GUILayout.Button("Unlock cursor"))
+                    wantedMode = CursorLockMode.None;
+                if (GUILayout.Button("Confine cursor"))
+                    wantedMode = CursorLockMode.Confined;
+                break;
+        }
+
+        GUILayout.EndVertical();
+
+        SetCursorState();
+    }
 
 	private bool IsMoving(){
 		return interpolant<1.0f;
