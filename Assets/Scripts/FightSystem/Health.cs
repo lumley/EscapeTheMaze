@@ -20,6 +20,9 @@ public class Health : MonoBehaviour {
 
 		if (IsDying){
 			//do some dying animation
+			IsDying=false;
+		} else if (HasFinishedDying()){
+			Destroy(this);
 		}
 	}
 
@@ -33,6 +36,7 @@ public class Health : MonoBehaviour {
 
 	public void ApplyDamage(int damage){
 		if (IsAlive()){
+			Debug.Log("Received "+damage+" damage!");
 			health-=damage;
 		}
 	}
