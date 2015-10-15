@@ -57,4 +57,31 @@ public class TileTests
 
         Assert.AreEqual(this.neighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
     }
+
+    [Test]
+    public void HasAttributeShouldReturnFalseWhenTileHasNotTheSpecifiedAttribute()
+    {
+        Assert.IsFalse(this.tile.HasAttribute(Model.TileAttribute.Type.SPAWNING_POINT));
+    }
+
+    [Test]
+    public void HasAttributeShouldReturnTrueWhenTileHasGivenAttribute()
+    {
+        this.tile.AddAttribute(new Model.TileAttribute.SpawningPoint());
+        Assert.IsTrue(this.tile.HasAttribute(Model.TileAttribute.Type.SPAWNING_POINT));
+    }
+
+    [Test]
+    public void GetAtributeShouldReturnNullWhenTileHasNotTheSpecifiedAttribute()
+    {
+        Assert.IsNull(this.tile.GetAttribute<Model.TileAttribute.SpawningPoint>(Model.TileAttribute.Type.SPAWNING_POINT));
+    }
+
+    [Test]
+    public void GetAtributeShouldReturnAttributeWhenTileContainsTheSpecifiedAttribute()
+    {
+        Model.TileAttribute.SpawningPoint expected = new Model.TileAttribute.SpawningPoint();
+        this.tile.AddAttribute(expected);
+        Assert.AreEqual(expected, this.tile.GetAttribute<Model.TileAttribute.SpawningPoint>(Model.TileAttribute.Type.SPAWNING_POINT));
+    }
 }

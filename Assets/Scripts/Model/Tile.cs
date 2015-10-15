@@ -19,7 +19,7 @@ namespace Model
             this.neighbourMap[directionFromMe] = neighbour;
         }
 
-        internal void AddAttribute(TileComponent attribute)
+        public void AddAttribute(TileComponent attribute)
         {
             if (this.attributeMap == null) {
                 this.attributeMap = new Dictionary<TileAttribute.Type, TileComponent>();
