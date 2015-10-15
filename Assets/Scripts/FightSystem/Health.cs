@@ -22,7 +22,7 @@ public class Health : MonoBehaviour {
 			//do some dying animation
 			IsDying=false;
 		} else if (HasFinishedDying()){
-			Destroy(this);
+			Destroy(gameObject);
 		}
 	}
 

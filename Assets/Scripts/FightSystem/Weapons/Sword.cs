@@ -4,6 +4,7 @@
 public class Sword : MonoBehaviour, IWeapon {
 	
 	public int damage=10;
+	private bool enemyHit=false;
 	
 	private bool isHitting=false;
 
@@ -16,11 +17,14 @@ public class Sword : MonoBehaviour, IWeapon {
 	public void Update(){
 		if (isHitting){
 			RaycastHit hit;
-			Debug.Log("Forward "+transform.forward);
-			if (Physics.Raycast(transform.position, transform.forward, out hit, 2.0f)){
-				Debug.Log("Sword hit something!");
-				
-				hit.collider.SendMessageUpwards("ApplyDamage", damage);
+			
+			Debug.Log("Forward "+Camera.main.transform.forward);
+			Debug.Log("Transform position "+transform.parent.position);
+			if (enemyHit==false && Physics.Raycast(transform.parent.position, Camera.main.transform.forward, out hit, 2.0f)){
+				Debug.Log("Sword hit something! collider");
+				Debug.Log("Name "+hit.collider.name);
+				hit.transform.parent.SendMessage("ApplyDamage", damage);
+				enemyHit=true;
 			}
 			
 		}
@@ -43,6 +47,7 @@ public class Sword : MonoBehaviour, IWeapon {
 	public void HitEnd(){
 		Debug.Log("hit end!");
 		isHitting=false;
+		enemyHit=false;
 	}
 
 
