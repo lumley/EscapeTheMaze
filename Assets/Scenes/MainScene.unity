@@ -290,8 +290,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 679215259}
-  - 114: {fileID: 679215260}
+  - 114: {fileID: 679215262}
   - 114: {fileID: 679215261}
+  - 114: {fileID: 679215264}
+  - 114: {fileID: 679215263}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -314,19 +316,6 @@ Transform:
   - {fileID: 1528967277}
   m_Father: {fileID: 0}
   m_RootOrder: 3
---- !u!114 &679215260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 679215258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e14fb33faa6e4dbd9ae40b2e29e78b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileMap: {fileID: 1661069464}
-  mouseSensitivity: 3
 --- !u!114 &679215261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,7 +328,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 1528967276}
-  fireButton: Fire1
+--- !u!114 &679215262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 679215258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740916d905f903347a49ded00108afe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalAxis: Horizontal
+  verticalAxis: Vertical
+  attackButton: Fire1
+  mouseSensitivity: 3
+--- !u!114 &679215263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 679215258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b08672f3c960ee4cb32559c3d28a89c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &679215264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 679215258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 637c38d12e57e704483f8fc46db05fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileMap: {fileID: 1661069464}
 --- !u!1 &785029452
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,7 +780,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1528967276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15bf954df26344b228173537c2bf51c9, type: 3}
+  m_Script: {fileID: 11500000, guid: c295f831b801d7a49ba71042ee8f524e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
@@ -767,7 +793,7 @@ Animator:
   m_GameObject: {fileID: 1528967276}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 523a44fb5e3b149ac8b48a6409106934, type: 2}
+  m_Controller: {fileID: 9100000, guid: 560228b668b9aec44b06ef599e7cb9ad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
