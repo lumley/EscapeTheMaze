@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		currentTile = ((TileMapGenerator)tileMap.GetComponent<TileMapGenerator> ()).StartingTile;
+		currentTile = ((TileMap)tileMap.GetComponent<TileMap> ()).StartingTile;
         SetCursorState();
 	}
 
