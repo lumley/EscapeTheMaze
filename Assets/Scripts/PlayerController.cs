@@ -81,9 +81,10 @@ public class PlayerController : MonoBehaviour {
         {
             wantedMode = CursorLockMode.None;
             SetCursorState();
-        }else if (Input.touchCount > 0)
+        }
+        else if (Input.touchCount > 0)
         {
-            wantedMode = CursorLockMode.None;
+            wantedMode = CursorLockMode.Locked;
             SetCursorState();
         }
     }
@@ -112,47 +113,9 @@ public class PlayerController : MonoBehaviour {
         Cursor.visible = (CursorLockMode.Locked != wantedMode);
     }
 
-    void onGUI()
-    {
-        GUILayout.BeginVertical();
-        // Release cursor on escape keypress
-        
-
-        switch (Cursor.lockState)
-        {
-            case CursorLockMode.None:
-                GUILayout.Label("Cursor is normal");
-                if (GUILayout.Button("Lock cursor"))
-                    wantedMode = CursorLockMode.Locked;
-                if (GUILayout.Button("Confine cursor"))
-                    wantedMode = CursorLockMode.Confined;
-                break;
-            case CursorLockMode.Confined:
-                GUILayout.Label("Cursor is confined");
-                if (GUILayout.Button("Lock cursor"))
-                    wantedMode = CursorLockMode.Locked;
-                if (GUILayout.Button("Release cursor"))
-                    wantedMode = CursorLockMode.None;
-                break;
-            case CursorLockMode.Locked:
-                GUILayout.Label("Cursor is locked");
-                if (GUILayout.Button("Unlock cursor"))
-                    wantedMode = CursorLockMode.None;
-                if (GUILayout.Button("Confine cursor"))
-                    wantedMode = CursorLockMode.Confined;
-                break;
-        }
-
-        GUILayout.EndVertical();
-
-        SetCursorState();
-    }
-
 	private bool IsMoving(){
 		return interpolant<1.0f;
 	}
-
-	
 
 	private void MoveLeft(){
 		Move(RelativeDirection.LEFT);
@@ -184,7 +147,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private Vector3 GetDirectionVector(Direction direction){
-		switch (direction) {
+		switch (direction)
+        {
 			case Direction.NORTH:	return Vector3.forward;
 			case Direction.EAST:	return Vector3.right;
 			case Direction.SOUTH:	return Vector3.back;
@@ -193,8 +157,9 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	private void MoveToTile(Model.Tile tile){
-		if (tile!= null){
+	private void MoveToTile(Tile tile){
+		if (tile!= null)
+        {
 			currentTile=tile;
 		}
 	}

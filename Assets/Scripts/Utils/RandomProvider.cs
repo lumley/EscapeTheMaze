@@ -1,20 +1,7 @@
 ﻿using UnityEngine;
 
-public class RandomProvider : MonoBehaviour
+public class RandomProvider
 {
-    public int seed;
-
-    // Use this for initialization
-    void Start() {
-        // We don't need to call updates on this object, it should probably not even be a mono behavior at all
-        this.enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update() {
-
-    }
-
     public static T GetRandomElement<T>(T[] elements)
     {
         int index = Random.Range(0, elements.Length);

@@ -9,14 +9,17 @@ public class TileMapGenerator : MonoBehaviour {
     public List<int> randomRamificationLength;
     private Model.Tile startingTile;
     private Dictionary<Vector2, Model.Tile> createdTileMap;
-	public Model.Tile StartingTile{
+
+	public Model.Tile StartingTile
+    {
 		get
 		{
 			return startingTile;
 		}
 	}
     
-    public System.Collections.Generic.IEnumerable<Model.Tile> Tiles{
+    public IEnumerable<Model.Tile> Tiles
+    {
         get {
             return this.createdTileMap.Values;
         }

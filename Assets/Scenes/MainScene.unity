@@ -606,7 +606,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1345473397}
   - 114: {fileID: 1345473396}
-  - 114: {fileID: 1345473398}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -627,7 +626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMap: {fileID: 1661069465}
   player: {fileID: 679215258}
-  seedProvider: {fileID: 1345473398}
+  seed: 0
 --- !u!4 &1345473397
 Transform:
   m_ObjectHideFlags: 0
@@ -640,18 +639,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
---- !u!114 &1345473398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1345473395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7807ed62a0f07ed479e2b149b92d7379, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seed: 0
 --- !u!1 &1515480995
 GameObject:
   m_ObjectHideFlags: 0

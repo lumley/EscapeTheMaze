@@ -7,11 +7,12 @@ public class GameManager : MonoBehaviour {
 	
 	[SerializeField]
 	private GameObject player;
-	
-	public RandomProvider seedProvider;
+
+    [SerializeField]
+    private int seed;
 
 	void Awake() {
-        Random.seed = seedProvider.seed;
+        Random.seed = seed;
 		tileMap.GenerateMap();
 		
 		List<KeyValuePair<Vector2, Model.Tile>> startingPoints = new List<KeyValuePair<Vector2, Model.Tile>>();

@@ -50,7 +50,6 @@ public class TileTests
     [Test]
     public void GetNeighbourShouldReturnNeighbourWhenANeighbourWasSetInGivenDirection()
     {
-        Model.Tile newNeighbour = new Model.Tile();
         Model.Direction directionFromTileToNeighbour = Model.Direction.NORTH;
 
         this.tile.BindNeighbours(neighbour, directionFromTileToNeighbour);
