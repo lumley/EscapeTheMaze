@@ -62,7 +62,8 @@ namespace Model
 
         }
 
-        private Corridor[] GenerateCorridors(int roomCount)
+        // Visible for testing
+        public Corridor[] GenerateCorridors(int roomCount)
         {
             int corridorCount = roomCount - 1;
             Corridor[] corridors = new Corridor[corridorCount];
@@ -87,7 +88,7 @@ namespace Model
             return corridors;
         }
 
-        private struct Room
+        public struct Room
         {
             public IntPair size;
 
@@ -97,7 +98,8 @@ namespace Model
             }
         }
 
-        private struct Corridor
+        // Visible for testing
+        public struct Corridor
         {
             public int length;
             public Room entranceRoom;
