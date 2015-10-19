@@ -55,6 +55,37 @@ namespace Model
         private void GenerateTilesForRoom(Room room, IntPair topLeftCorner, Dictionary<IntPair, Tile> allTiles)
         {
             // Start filling up tiles from top left corner using width/height
+            int width = room.size.x;
+            int height = room.size.y;
+
+            for (int i=0; i< width; ++i)
+            {
+                for (int j=0; j< height; ++j)
+                {
+                    CreateOrUpdateTileIn(new IntPair(i + topLeftCorner.x, j + topLeftCorner.y), allTiles);
+                }
+            }
+        }
+
+        private void CreateOrUpdateTileIn(IntPair position, Dictionary<IntPair, Tile> allTiles)
+        {
+            Tile tile;
+            allTiles.TryGetValue(position, out tile);
+            if (tile == null)
+            {
+                tile = new Tile();
+            }
+
+            foreach (Direction direction in Utils.GetAllDirections())
+            {
+                IntPair neighbourPosition = position.Move(direction);
+                Tile neighbour;
+                allTiles.TryGetValue(neighbourPosition, out neighbour);
+                if(neighbour != null)
+                {
+                    tile.BindNeighbours(neighbour, direction);
+                }
+            }
         }
 
         private void DrawTiles(Dictionary<IntPair, Tile> createdTileMap)
