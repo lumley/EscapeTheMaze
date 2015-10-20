@@ -4,19 +4,10 @@ using System.Collections.Generic;
 //[ExecuteInEditMode] // Use this to also awake inside Unity Editor
 public class TileMap : MonoBehaviour {
 
-    private Model.Tile startingTile;
     private Dictionary<IntPair, Model.Tile> createdTileMap;
 
     [SerializeField]
     private Model.BoardCreator boardCreator = new Model.BoardCreator();
-
-	public Model.Tile StartingTile
-    {
-		get
-		{
-			return startingTile;
-		}
-	}
     
     public IEnumerable<Model.Tile> Tiles
     {

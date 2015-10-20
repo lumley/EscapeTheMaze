@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject tileMap;
 	public float mouseSensitivity=3.0f;
 
-	private Model.Tile currentTile;
+	private Tile currentTile;
 
 	// determinates how quick the player should move.
 	// The unit expected here is tiles per second
@@ -30,9 +30,13 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		currentTile = ((TileMap)tileMap.GetComponent<TileMap> ()).StartingTile;
         SetCursorState();
 	}
+
+    public void SetCurrentTile(Tile tile)
+    {
+        this.currentTile = tile;
+    }
 
 
     // Update is called once per frame
