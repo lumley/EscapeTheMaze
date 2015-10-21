@@ -4,7 +4,6 @@ namespace Model
 {
     public class TileTests
     {
-
         private Tile tile;
         private Tile neighbour;
 
