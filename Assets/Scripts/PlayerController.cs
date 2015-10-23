@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour {
     CursorLockMode wantedMode = CursorLockMode.Locked;
 
     public enum RelativeDirection{
-		FORWARD, RIGHT, BACKWARD, LEFT
+        BACKWARD, RIGHT, FORWARD, LEFT
 	}
 
 	void Awake(){

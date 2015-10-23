@@ -74,8 +74,8 @@ public struct IntPair {
     public IntPair Move(Model.Direction direction, int positions)
     {
         int intDirection = (int)direction;
-        int xPosition = ((intDirection & 0x2) >> 1) * (intDirection - 2) * positions;
-        int yPosition = (((intDirection + 1) & 0x2) >> 1) * (intDirection - 1) * positions;
+        int xPosition = (intDirection & 0x1) * (intDirection - 2) * positions;
+        int yPosition = ((intDirection + 1) & 0x1) * (intDirection - 1) * positions;
         return this + new IntPair(xPosition, yPosition);
     }
 
