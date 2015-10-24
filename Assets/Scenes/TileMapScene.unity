@@ -425,7 +425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMap: {fileID: 9902003}
   player: {fileID: 1410962970}
-  seed: 0
+  seed: 1
 --- !u!4 &675944857
 Transform:
   m_ObjectHideFlags: 0
