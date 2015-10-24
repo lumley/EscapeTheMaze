@@ -22,17 +22,12 @@ namespace Model
         [SerializeField]
         private IntRange corridorLength = new IntRange(3, 6);
 
-        [SerializeField]
-        private GameObject boardHolder;
-
         public Dictionary<IntPair, Tile> GenerateMap()
         {
             int roomCount = roomsCount.Random;
             Corridor[] corridors = GenerateCorridors(roomCount);
 
             Dictionary<IntPair, Tile> createdTileMap = GenerateTiles(corridors);
-
-            DrawTiles(createdTileMap);
 
             return createdTileMap;
         }
@@ -55,7 +50,7 @@ namespace Model
                 //  Select wall in the direction and choose one tile to start the corridor
                 position = MovePositionToBorder(position, corridor.entranceRoom, corridor.direction);
                 //  Generate corridor from that tile, in the direction of corridor
-                GenerateTilesForCorridor(corridor, position, allTiles);
+                position = GenerateTilesForCorridor(corridor, position, allTiles);
                 //  At the end of corridor, choose a random x/y position from exit room
                 position = MovePositionFromCorridorBeginningToTopLeftEndRoom(position, corridor);
                 //  Generate room from top-left corner
@@ -65,19 +60,16 @@ namespace Model
             return allTiles;
         }
 
-        // Assumes positon is at beginning of corridor
+        // Assumes positon is at the end of the corridor
         private IntPair MovePositionFromCorridorBeginningToTopLeftEndRoom(IntPair position, Corridor corridor)
         {
-            // Set position at end of corridor
-            position = position.Move(corridor.direction, corridor.length);
-
             int offset;
             switch (corridor.direction)
             {
                 case Direction.EAST:
                     offset = corridor.exitRoom.size.x;
                     break;
-                case Direction.NORTH:
+                case Direction.SOUTH:
                     offset = corridor.exitRoom.size.y;
                     break;
                 default:
@@ -88,14 +80,16 @@ namespace Model
             return position.Move(corridor.direction, offset);
         }
 
-        // Assumes position is at beginning of corridor
-        private void GenerateTilesForCorridor(Corridor corridor, IntPair position, Dictionary<IntPair, Tile> allTiles)
+        // Assumes position is at end of starting room
+        // Returns the position where the corridor ends
+        private IntPair GenerateTilesForCorridor(Corridor corridor, IntPair position, Dictionary<IntPair, Tile> allTiles)
         {
             for(int i=0; i<corridor.length; ++i)
             {
-                CreateOrUpdateTileIn(position, allTiles);
                 position = position.Move(corridor.direction);
+                CreateOrUpdateTileIn(position, allTiles);
             }
+            return position;
         }
 
         // Assumes position is in top-left corner of room
@@ -152,17 +146,6 @@ namespace Model
                 {
                     tile.BindNeighbours(neighbour, direction);
                 }
-            }
-        }
-
-        private void DrawTiles(Dictionary<IntPair, Tile> createdTileMap)
-        {
-            foreach (KeyValuePair<IntPair, Tile> entry in createdTileMap)
-            {
-                IntPair position = entry.Key;
-                GameObject instantiatedGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Vector3 gameObjectPosition = new Vector3(position.x, -1.0f, position.y);
-                instantiatedGameObject.transform.position = gameObjectPosition;
             }
         }
 

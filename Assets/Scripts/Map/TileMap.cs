@@ -4,11 +4,14 @@ using System.Collections.Generic;
 //[ExecuteInEditMode] // Use this to also awake inside Unity Editor
 public class TileMap : MonoBehaviour {
 
-    private Dictionary<IntPair, Model.Tile> createdTileMap;
+    public GameObject floorPrefab;
 
     [SerializeField]
     private Model.BoardCreator boardCreator = new Model.BoardCreator();
-    
+
+    private Dictionary<IntPair, Model.Tile> createdTileMap;
+    private GameObject boardHolder;
+
     public IEnumerable<Model.Tile> Tiles
     {
         get {
@@ -25,6 +28,8 @@ public class TileMap : MonoBehaviour {
     public void GenerateMap()
     {
         createdTileMap = boardCreator.GenerateMap();
+        CreateBoardHolder();
+        DrawTiles(createdTileMap);
     }
 
     // Update is called once per frame
@@ -33,27 +38,19 @@ public class TileMap : MonoBehaviour {
 
     }
 
-    private void DrawAllTiles(Model.Tile tile, Vector2 position, HashSet<Model.Tile> visitedTileSet)
+    private void CreateBoardHolder()
     {
-        if (!visitedTileSet.Contains(tile))
+        boardHolder = new GameObject("boardHolder");
+        boardHolder.transform.position = transform.position;
+    }
+
+    private void DrawTiles(Dictionary<IntPair, Model.Tile> createdTileMap)
+    {
+        foreach (KeyValuePair<IntPair, Model.Tile> entry in createdTileMap)
         {
-            visitedTileSet.Add(tile);
-
-            // Paint myself
-            GameObject instantiatedGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y);
-            instantiatedGameObject.transform.position = gameObjectPosition;
-
-            // TODO: Remove the direction where we come from!
-            foreach (Model.Direction neighbourDirection in Model.Utils.GetAllDirections())
-            {
-                Model.Tile neighbour = tile.GetNeighbour(neighbourDirection);
-                if (neighbour != null)
-                {
-                    Vector2 neighbourPosition = MoveVectorToDirection(position, neighbourDirection);
-                    DrawAllTiles(neighbour, neighbourPosition, visitedTileSet);
-                }
-            }
+            IntPair position = entry.Key;
+            Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y) + transform.position;
+            Instantiate(floorPrefab, gameObjectPosition, Quaternion.identity);
         }
     }
 
