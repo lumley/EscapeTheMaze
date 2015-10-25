@@ -50,7 +50,8 @@ public class TileMap : MonoBehaviour {
         {
             IntPair position = entry.Key;
             Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y) + transform.position;
-            Instantiate(floorPrefab, gameObjectPosition, Quaternion.identity);
+            GameObject tileInstance = Instantiate(floorPrefab, gameObjectPosition, Quaternion.identity) as GameObject;
+            tileInstance.transform.parent = boardHolder.transform;
         }
     }
 

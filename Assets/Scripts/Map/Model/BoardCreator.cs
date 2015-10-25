@@ -48,11 +48,11 @@ namespace Model
             foreach (Corridor corridor in corridors)
             {
                 //  Select wall in the direction and choose one tile to start the corridor
-                position = MovePositionToBorder(position, corridor.entranceRoom, corridor.direction);
+                position = MovePositionToBorderOfRoomInGivenDirection(position, corridor.entranceRoom, corridor.direction);
                 //  Generate corridor from that tile, in the direction of corridor
                 position = GenerateTilesForCorridor(corridor, position, allTiles);
                 //  At the end of corridor, choose a random x/y position from exit room
-                position = MovePositionFromCorridorBeginningToTopLeftEndRoom(position, corridor);
+                position = MovePositionFromCorridorBeginningToBottomLeftEndRoom(position, corridor);
                 //  Generate room from top-left corner
                 GenerateTilesForRoom(corridor.exitRoom, position, allTiles);
             }
@@ -61,12 +61,12 @@ namespace Model
         }
 
         // Assumes positon is at the end of the corridor
-        private IntPair MovePositionFromCorridorBeginningToTopLeftEndRoom(IntPair position, Corridor corridor)
+        private IntPair MovePositionFromCorridorBeginningToBottomLeftEndRoom(IntPair position, Corridor corridor)
         {
             int offset;
             switch (corridor.direction)
             {
-                case Direction.EAST:
+                case Direction.WEST:
                     offset = corridor.exitRoom.size.x;
                     break;
                 case Direction.SOUTH:
@@ -80,36 +80,36 @@ namespace Model
             return position.Move(corridor.direction, offset);
         }
 
-        // Assumes position is at end of starting room
-        // Returns the position where the corridor ends
-        private IntPair GenerateTilesForCorridor(Corridor corridor, IntPair position, Dictionary<IntPair, Tile> allTiles)
-        {
-            for(int i=0; i<corridor.length; ++i)
-            {
-                position = position.Move(corridor.direction);
-                CreateOrUpdateTileIn(position, allTiles);
-            }
-            return position;
-        }
-
         // Assumes position is in top-left corner of room
-        private IntPair MovePositionToBorder(IntPair position, Room room, Direction direction)
+        private IntPair MovePositionToBorderOfRoomInGivenDirection(IntPair position, Room room, Direction direction)
         {
             int offset;
             // TODO: Add some randomized factor so that rooms are not linked always from top-left corner
             switch (direction)
             {
                 case Direction.EAST:
-                    offset = room.size.x;
+                    offset = room.size.x - 1;
                     break;
-                case Direction.SOUTH:
-                    offset = room.size.y;
+                case Direction.NORTH:
+                    offset = room.size.y - 1;
                     break;
                 default:
-                    offset = 1;
+                    offset = 0;
                     break;
             }
             return position.Move(direction, offset);
+        }
+
+        // Assumes position is at end of starting room
+        // Returns the position where the corridor ends
+        private IntPair GenerateTilesForCorridor(Corridor corridor, IntPair position, Dictionary<IntPair, Tile> allTiles)
+        {
+            for(int i=0; i < corridor.length; ++i)
+            {
+                position = position.Move(corridor.direction);
+                CreateOrUpdateTileIn(position, allTiles);
+            }
+            return position;
         }
 
         private void GenerateTilesForRoom(Room room, IntPair topLeftCorner, Dictionary<IntPair, Tile> allTiles)
