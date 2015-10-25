@@ -1,86 +1,86 @@
-﻿using UnityEngine;
-using System.Collections;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-public class TileTests
+namespace Model
 {
-
-    private Model.Tile tile;
-    private Model.Tile neighbour;
-
-    [SetUp]
-    public void SetUp()
+    public class TileTests
     {
-        this.tile = new Model.Tile();
-        this.neighbour = new Model.Tile();
-    }
+        private Tile tile;
+        private Tile neighbour;
 
-    [Test]
-    public void BindNeighboursShouldSetNeighboursInBothDirections()
-    {
-        Model.Direction directionFromTileToNeighbour = Model.Direction.NORTH;
-        Model.Direction directionFromNeighbourToTile = Model.Direction.SOUTH;
+        [SetUp]
+        public void SetUp()
+        {
+            this.tile = new Tile();
+            this.neighbour = new Tile();
+        }
 
-        this.tile.BindNeighbours(neighbour, directionFromTileToNeighbour);
+        [Test]
+        public void BindNeighboursShouldSetNeighboursInBothDirections()
+        {
+            Direction directionFromTileToNeighbour = Direction.NORTH;
+            Direction directionFromNeighbourToTile = Direction.SOUTH;
 
-        Assert.AreEqual(this.neighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
-        Assert.AreEqual(this.tile, this.neighbour.GetNeighbour(directionFromNeighbourToTile));
-    }
+            this.tile.BindNeighbours(neighbour, directionFromTileToNeighbour);
 
-    [Test]
-    public void BindNeighboursShouldOverrideNeighbourWhenAlreadySet()
-    {
-        Model.Tile newNeighbour = new Model.Tile();
-        Model.Direction directionFromTileToNeighbour = Model.Direction.NORTH;
+            Assert.AreEqual(this.neighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
+            Assert.AreEqual(this.tile, this.neighbour.GetNeighbour(directionFromNeighbourToTile));
+        }
 
-        this.tile.BindNeighbours(neighbour, directionFromTileToNeighbour);
+        [Test]
+        public void BindNeighboursShouldOverrideNeighbourWhenAlreadySet()
+        {
+            Tile newNeighbour = new Tile();
+            Direction directionFromTileToNeighbour = Direction.NORTH;
 
-        Assert.AreEqual(this.neighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
+            this.tile.BindNeighbours(neighbour, directionFromTileToNeighbour);
 
-        this.tile.BindNeighbours(newNeighbour, directionFromTileToNeighbour);
-        Assert.AreEqual(newNeighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
-    }
+            Assert.AreEqual(this.neighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
 
-    [Test]
-    public void GetNeighbourShouldReturnNullWhenNoNeighbourWasSetInGivenDirection()
-    {
-        Assert.IsNull(this.tile.GetNeighbour(Model.Direction.NORTH));
-    }
+            this.tile.BindNeighbours(newNeighbour, directionFromTileToNeighbour);
+            Assert.AreEqual(newNeighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
+        }
 
-    [Test]
-    public void GetNeighbourShouldReturnNeighbourWhenANeighbourWasSetInGivenDirection()
-    {
-        Model.Direction directionFromTileToNeighbour = Model.Direction.NORTH;
+        [Test]
+        public void GetNeighbourShouldReturnNullWhenNoNeighbourWasSetInGivenDirection()
+        {
+            Assert.IsNull(this.tile.GetNeighbour(Direction.NORTH));
+        }
 
-        this.tile.BindNeighbours(neighbour, directionFromTileToNeighbour);
+        [Test]
+        public void GetNeighbourShouldReturnNeighbourWhenANeighbourWasSetInGivenDirection()
+        {
+            Direction directionFromTileToNeighbour = Direction.NORTH;
 
-        Assert.AreEqual(this.neighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
-    }
+            this.tile.BindNeighbours(neighbour, directionFromTileToNeighbour);
 
-    [Test]
-    public void HasAttributeShouldReturnFalseWhenTileHasNotTheSpecifiedAttribute()
-    {
-        Assert.IsFalse(this.tile.HasAttribute(Model.TileAttribute.Type.SPAWNING_POINT));
-    }
+            Assert.AreEqual(this.neighbour, this.tile.GetNeighbour(directionFromTileToNeighbour));
+        }
 
-    [Test]
-    public void HasAttributeShouldReturnTrueWhenTileHasGivenAttribute()
-    {
-        this.tile.AddAttribute(new Model.TileAttribute.SpawningPoint());
-        Assert.IsTrue(this.tile.HasAttribute(Model.TileAttribute.Type.SPAWNING_POINT));
-    }
+        [Test]
+        public void HasAttributeShouldReturnFalseWhenTileHasNotTheSpecifiedAttribute()
+        {
+            Assert.IsFalse(this.tile.HasAttribute(TileAttribute.Type.SPAWNING_POINT));
+        }
 
-    [Test]
-    public void GetAtributeShouldReturnNullWhenTileHasNotTheSpecifiedAttribute()
-    {
-        Assert.IsNull(this.tile.GetAttribute<Model.TileAttribute.SpawningPoint>(Model.TileAttribute.Type.SPAWNING_POINT));
-    }
+        [Test]
+        public void HasAttributeShouldReturnTrueWhenTileHasGivenAttribute()
+        {
+            this.tile.AddAttribute(new TileAttribute.SpawningPoint());
+            Assert.IsTrue(this.tile.HasAttribute(TileAttribute.Type.SPAWNING_POINT));
+        }
 
-    [Test]
-    public void GetAtributeShouldReturnAttributeWhenTileContainsTheSpecifiedAttribute()
-    {
-        Model.TileAttribute.SpawningPoint expected = new Model.TileAttribute.SpawningPoint();
-        this.tile.AddAttribute(expected);
-        Assert.AreEqual(expected, this.tile.GetAttribute<Model.TileAttribute.SpawningPoint>(Model.TileAttribute.Type.SPAWNING_POINT));
+        [Test]
+        public void GetAtributeShouldReturnNullWhenTileHasNotTheSpecifiedAttribute()
+        {
+            Assert.IsNull(this.tile.GetAttribute<TileAttribute.SpawningPoint>(TileAttribute.Type.SPAWNING_POINT));
+        }
+
+        [Test]
+        public void GetAtributeShouldReturnAttributeWhenTileContainsTheSpecifiedAttribute()
+        {
+            TileAttribute.SpawningPoint expected = new TileAttribute.SpawningPoint();
+            this.tile.AddAttribute(expected);
+            Assert.AreEqual(expected, this.tile.GetAttribute<TileAttribute.SpawningPoint>(TileAttribute.Type.SPAWNING_POINT));
+        }
     }
 }

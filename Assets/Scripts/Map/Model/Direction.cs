@@ -5,7 +5,7 @@ namespace Model
 {
     public enum Direction
     {
-        NORTH = 0, EAST, SOUTH, WEST
+        SOUTH = 0, WEST, NORTH, EAST
     }
 
     public class Utils
@@ -15,13 +15,18 @@ namespace Model
             return (Direction[])System.Enum.GetValues(typeof(Direction));
         }
 
-        public static Direction[] GetAllDirectionsExcluding(params Direction[] exlusions)
+        public static Direction[] GetAllDirectionsExcluding(params Direction[] exclusions)
         {
-            Direction[] directions = new Direction[4 - exlusions.Length];
+            if(exclusions == null)
+            {
+                return GetAllDirections();
+            }
+
+            Direction[] directions = new Direction[4 - exclusions.Length];
             int directionCount = 0;
             foreach (Direction direction in GetAllDirections())
             {
-                if (System.Array.IndexOf(exlusions, direction) < 0)
+                if (System.Array.IndexOf(exclusions, direction) < 0)
                 {
                     directions[directionCount++] = direction;
                 }

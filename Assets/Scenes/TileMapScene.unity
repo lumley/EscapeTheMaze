@@ -102,7 +102,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470184, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 470184, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: m_LocalPosition.z
@@ -114,7 +114,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470184, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 470184, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: m_LocalRotation.z
@@ -122,7 +122,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470184, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: m_LocalRotation.w
-      value: -1.62920685e-07
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 470184, guid: 11288270950e641ffbab82fa35996a04, type: 2}
       propertyPath: m_RootOrder
@@ -152,6 +152,10 @@ Prefab:
       propertyPath: endingPointLengthFromStarting.Array.data[1]
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: floorPrefab
+      value: 
+      objectReference: {fileID: 127482, guid: 64fe7d5764ebce74298d0524c30426fa, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11288270950e641ffbab82fa35996a04, type: 2}
   m_IsPrefabParent: 0
@@ -161,10 +165,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 9902002}
   m_Script: {fileID: 11500000, guid: a0951d526298a5641af298466bd4d10e, type: 3}
---- !u!1 &9902004 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 182856, guid: 11288270950e641ffbab82fa35996a04, type: 2}
-  m_PrefabInternal: {fileID: 9902002}
 --- !u!1 &194837465
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMap: {fileID: 9902003}
   player: {fileID: 1410962970}
-  seed: 0
+  seed: 1
 --- !u!4 &675944857
 Transform:
   m_ObjectHideFlags: 0
@@ -475,7 +475,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bf954df26344b228173537c2bf51c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
 --- !u!95 &982717867
 Animator:
   serializedVersion: 3
@@ -649,6 +648,7 @@ GameObject:
   - 4: {fileID: 1410962971}
   - 114: {fileID: 1410962973}
   - 114: {fileID: 1410962972}
+  - 114: {fileID: 1410962974}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -683,7 +683,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 982717864}
-  fireButton: Fire1
 --- !u!114 &1410962973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,10 +691,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1410962970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e14fb33faa6e4dbd9ae40b2e29e78b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 637c38d12e57e704483f8fc46db05fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMap: {fileID: 9902004}
+--- !u!114 &1410962974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1410962970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 740916d905f903347a49ded00108afe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalAxis: Horizontal
+  verticalAxis: Vertical
+  attackButton: Fire1
   mouseSensitivity: 3
 --- !u!1001 &2017874683
 Prefab:

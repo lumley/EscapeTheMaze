@@ -4,8 +4,6 @@ using Model;
 
 public class TileMovementController : MonoBehaviour {
 
-	public GameObject tileMap;
-
 	// determinates how quick the player should move.
 	// The unit expected here is tiles per second
 	private float speed=2.0f;
@@ -15,15 +13,20 @@ public class TileMovementController : MonoBehaviour {
 	private Vector3 start=Vector3.zero;
 	private Vector3 finish=Vector3.zero;
 
-	private Model.Tile currentTile;
+	private Tile currentTile;
 
 	public enum RelativeDirection{
 		FORWARD, RIGHT, BACKWARD, LEFT
 	}
 
+    public void SetCurrentTile(Tile tile)
+    {
+        currentTile = tile;
+    }
+
 	// Use this for initialization
 	void Start () {
-		currentTile = ((TileMapGenerator)tileMap.GetComponent<TileMapGenerator> ()).StartingTile;
+		
 	}
 	
 	// Update is called once per frame
