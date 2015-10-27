@@ -23,7 +23,7 @@ public class Sword : MonoBehaviour, IWeapon {
 			if (enemyHit==false && Physics.Raycast(transform.parent.position, Camera.main.transform.forward, out hit, 2.0f)){
 				Debug.Log("Sword hit something! collider");
 				Debug.Log("Name "+hit.collider.name);
-				hit.transform.parent.SendMessage("ApplyDamage", damage);
+				hit.transform.SendMessage("ApplyDamage", damage);
 				enemyHit=true;
 			}
 			

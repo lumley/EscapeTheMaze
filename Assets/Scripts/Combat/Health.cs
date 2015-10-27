@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof (Animator))]
 public class Health : MonoBehaviour {
+
+	
+	private Animator animator;
 
 	public int health=100;
 
 	private bool IsDead{get; set;}
 	private bool IsDying{get;set;}
+	
+	private bool IsDamageable{get;set;}
 
 	public void Awake(){
 		IsDead=false;
 		IsDying=false;
+		IsDamageable=true;
+		animator=GetComponent<Animator>();
 	}
 
 	public void Update(){
@@ -20,7 +28,8 @@ public class Health : MonoBehaviour {
 
 		if (IsDying){
 			//do some dying animation
-			IsDying=false;
+			IsDying=true;
+			animator.Play("Dying");
 		} else if (HasFinishedDying()){
 			Destroy(gameObject);
 		}
@@ -31,12 +40,14 @@ public class Health : MonoBehaviour {
 	}
 
 	public bool HasFinishedDying(){
-		return IsDead && IsDying == false;
+		return IsDead && (IsDying == false);
 	}
 
 	public void ApplyDamage(int damage){
-		if (IsAlive()){
+		if (IsAlive() && IsDamageable){
+			IsDamageable=false;
 			Debug.Log("Received "+damage+" damage!");
+			animator.Play("Damaged");
 			health-=damage;
 		}
 	}
@@ -44,6 +55,15 @@ public class Health : MonoBehaviour {
 	public void Die(){
 		IsDead=true;
 		IsDying=true;
+		IsDamageable=false;
 		health=0;
+	}
+	
+	public void FinishedDying(){
+		IsDying=false;
+	}
+	
+	public void Damageable(){
+		IsDamageable=true;
 	}
 }
