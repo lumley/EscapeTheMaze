@@ -26,11 +26,11 @@ public class Health : MonoBehaviour {
 		}
 	}
 
-	private bool IsAlive(){
+	public bool IsAlive(){
 		return IsDead == false;
 	}
 
-	private bool HasFinishedDying(){
+	public bool HasFinishedDying(){
 		return IsDead && IsDying == false;
 	}
 

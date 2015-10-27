@@ -6,7 +6,7 @@ public class TileMovementController : MonoBehaviour {
 
 	// determinates how quick the player should move.
 	// The unit expected here is tiles per second
-	private float speed=2.0f;
+	public float speed=2.0f;
 	
 	private float interpolant=1.0f;
 	
