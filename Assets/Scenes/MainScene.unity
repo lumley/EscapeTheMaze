@@ -283,6 +283,34 @@ Prefab:
       propertyPath: floorPrefab
       value: 
       objectReference: {fileID: 127482, guid: 64fe7d5764ebce74298d0524c30426fa, type: 2}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: prefabHolder.floor
+      value: 
+      objectReference: {fileID: 127482, guid: 64fe7d5764ebce74298d0524c30426fa, type: 2}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: prefabHolder.ceiling
+      value: 
+      objectReference: {fileID: 127482, guid: c2010b842e1a9d54ea7bb8604a860c74, type: 2}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: prefabHolder.wall
+      value: 
+      objectReference: {fileID: 194096, guid: 26065af134f846545b0e459fef255d7a, type: 2}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: boardCreator.roomsWidth.max
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: boardCreator.roomsHeight.max
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: boardCreator.corridorLength.min
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: boardCreator.corridorLength.max
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11288270950e641ffbab82fa35996a04, type: 2}
   m_IsPrefabParent: 0

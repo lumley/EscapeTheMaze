@@ -1,25 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Model;
+using System;
 
 //[ExecuteInEditMode] // Use this to also awake inside Unity Editor
 public class TileMap : MonoBehaviour {
 
-    public GameObject floorPrefab;
+    public PrefabHolder prefabHolder = new PrefabHolder();
 
     [SerializeField]
-    private Model.BoardCreator boardCreator = new Model.BoardCreator();
+    private BoardCreator boardCreator = new BoardCreator();
 
-    private Dictionary<IntPair, Model.Tile> createdTileMap;
+    private Dictionary<IntPair, Tile> createdTileMap;
     private GameObject boardHolder;
 
-    public IEnumerable<Model.Tile> Tiles
+    public IEnumerable<Tile> Tiles
     {
         get {
             return this.createdTileMap.Values;
         }
     }
     
-    public Dictionary<IntPair, Model.Tile> Map2D {
+    public Dictionary<IntPair, Tile> Map2D {
         get {
             return this.createdTileMap;
         }
@@ -44,37 +46,56 @@ public class TileMap : MonoBehaviour {
         boardHolder.transform.position = transform.position;
     }
 
-    private void DrawTiles(Dictionary<IntPair, Model.Tile> createdTileMap)
+    private void DrawTiles(Dictionary<IntPair, Tile> createdTileMap)
     {
-        foreach (KeyValuePair<IntPair, Model.Tile> entry in createdTileMap)
+        foreach (KeyValuePair<IntPair, Tile> entry in createdTileMap)
         {
             IntPair position = entry.Key;
-            Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y) + transform.position;
-            GameObject tileInstance = Instantiate(floorPrefab, gameObjectPosition, Quaternion.identity) as GameObject;
-            tileInstance.transform.parent = boardHolder.transform;
+            Tile tile = entry.Value;
+            CreateFloor(position);
+            CreateCeiling(position);
+            CreateWalls(position, tile);
+
         }
     }
 
-    private static Vector2 MoveVectorToDirection(Vector2 origin, Model.Direction direction)
+    private void CreateWalls(IntPair position, Tile tile)
     {
-        Vector2 newPosition = new Vector2(origin.x, origin.y);
-
-        switch (direction)
+        foreach (Direction direciton in Utils.GetAllDirections())
         {
-            case Model.Direction.EAST:
-                newPosition.x += 1.0f;
-                break;
-            case Model.Direction.WEST:
-                newPosition.x -= 1.0f;
-                break;
-            case Model.Direction.NORTH:
-                newPosition.y += 1.0f;
-                break;
-            case Model.Direction.SOUTH:
-                newPosition.y -= 1.0f;
-                break;
+            if (tile.GetNeighbour(direciton) == null)
+            {
+                CreateWall(position.Move(direciton));
+            }
         }
+    }
 
-        return newPosition;
+    private void CreateWall(IntPair position)
+    {
+        Vector3 gameObjectPosition = new Vector3(position.x, 1.0f, position.y) + transform.position;
+        GameObject tileInstance = Instantiate(prefabHolder.wall, gameObjectPosition, Quaternion.identity) as GameObject;
+        tileInstance.transform.parent = boardHolder.transform;
+    }
+
+    private void CreateFloor(IntPair position)
+    {
+        Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y) + transform.position;
+        GameObject tileInstance = Instantiate(prefabHolder.floor, gameObjectPosition, Quaternion.identity) as GameObject;
+        tileInstance.transform.parent = boardHolder.transform;
+    }
+
+    private void CreateCeiling(IntPair position)
+    {
+        Vector3 gameObjectPosition = new Vector3(position.x, 2.0f, position.y) + transform.position;
+        GameObject tileInstance = Instantiate(prefabHolder.ceiling, gameObjectPosition, Quaternion.identity) as GameObject;
+        tileInstance.transform.parent = boardHolder.transform;
+    }
+
+    [Serializable]
+    public struct PrefabHolder
+    {
+        public GameObject floor;
+        public GameObject wall;
+        public GameObject ceiling;
     }
 }
