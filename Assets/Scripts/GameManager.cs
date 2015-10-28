@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
 		}
 		
 		KeyValuePair<IntPair, Model.Tile> selectedStartingTile = RandomProvider.GetRandomElement(startingPoints);
-        Vector3 selectedStartingPoint = new Vector3(selectedStartingTile.Key.x, 0, selectedStartingTile.Key.y); ;
+        Vector3 selectedStartingPoint = new Vector3(selectedStartingTile.Key.x, 1.0f, selectedStartingTile.Key.y); ;
         player.transform.position = selectedStartingPoint;
         player.SendMessage("SetCurrentTile", selectedStartingTile.Value);
 	}
