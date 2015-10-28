@@ -324,6 +324,10 @@ Prefab:
       propertyPath: boardCreator.corridorLength.max
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 11403176, guid: 11288270950e641ffbab82fa35996a04, type: 2}
+      propertyPath: prefabHolder.endingPoint
+      value: 
+      objectReference: {fileID: 195746, guid: 76339d1ed156c834dac591155019dde8, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11288270950e641ffbab82fa35996a04, type: 2}
   m_IsPrefabParent: 0

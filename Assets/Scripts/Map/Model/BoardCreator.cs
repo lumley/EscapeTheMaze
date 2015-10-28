@@ -39,11 +39,8 @@ namespace Model
             // Create starting room from first corridor
             IntPair position = this.startingPoint;
             GenerateTilesForRoom(corridors[0].entranceRoom, position, allTiles);
-            // Set any random tile from the first room as a starting point
-            var iterator = allTiles.Values.GetEnumerator();
-            if (iterator.MoveNext()) {
-                iterator.Current.AddAttribute(new TileAttribute.SpawningPoint());
-            }
+            
+            Tile startingTile = SetStartingTile(allTiles);
             
             foreach (Corridor corridor in corridors)
             {
@@ -57,7 +54,34 @@ namespace Model
                 GenerateTilesForRoom(corridor.exitRoom, position, allTiles);
             }
 
+            SetEndingTile(allTiles);
+
             return allTiles;
+        }
+
+        private void SetEndingTile(Dictionary<IntPair, Tile> allTiles)
+        {
+            Tile randomTile = RandomProvider.GetRandomElement(allTiles.Values);
+            if (randomTile.HasAttribute(TileAttribute.Type.SPAWNING_POINT))
+            {
+                randomTile = RandomProvider.GetRandomElementExcluding(allTiles.Values, randomTile);
+            }
+            
+            randomTile.AddAttribute(new TileAttribute.EndingPoint());
+        }
+
+        private Tile SetStartingTile(Dictionary<IntPair, Tile> allTiles)
+        {
+            // Set any random tile from the first room as a starting point
+            var iterator = allTiles.Values.GetEnumerator();
+            Tile startingTile = null;
+            if (iterator.MoveNext())
+            {
+                startingTile = iterator.Current;
+                startingTile.AddAttribute(new TileAttribute.SpawningPoint());
+            }
+
+            return startingTile;
         }
 
         // Assumes positon is at the end of the corridor

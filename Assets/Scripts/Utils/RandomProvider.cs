@@ -10,14 +10,26 @@ public class RandomProvider
     
     public static T GetRandomElement<T>(System.Collections.Generic.ICollection<T> elements)
     {
-        int index = Random.Range(0, elements.Count);
+        return GetRandomElementExcluding(elements, null);
+    }
+
+    public static T GetRandomElementExcluding<T>(System.Collections.Generic.ICollection<T> elements, params T[] exclusions)
+    {
+        int exclusionsLength = exclusions != null ? exclusions.Length : 0;
+        int index = Random.Range(0, elements.Count - exclusionsLength);
         foreach (T item in elements)
         {
-            if (index-- <= 0){
+            if (exclusionsLength != 0 && System.Array.IndexOf(exclusions, item) >= 0)
+            {
+                continue;
+            }
+
+            if (index-- <= 0)
+            {
                 return item;
             }
         }
-        
+
         throw new System.ArgumentException("Collection cannot be empty");
     }
 

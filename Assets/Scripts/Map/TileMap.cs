@@ -56,7 +56,28 @@ public class TileMap : MonoBehaviour {
             CreateCeiling(position);
             CreateWalls(position, tile);
 
+            CreateAttribute(position, tile);
         }
+    }
+
+    private void CreateAttribute(IntPair position, Tile tile)
+    {
+        if (tile.HasAttribute(Model.TileAttribute.Type.ENGING_POINT))
+        {
+            CreateEndingAttribute(position);
+        }
+    }
+
+    private void CreateEndingAttribute(IntPair position)
+    {
+        CreateGameObject(prefabHolder.endingPoint, position, 0.5f);
+    }
+
+    private void CreateGameObject(GameObject what, IntPair where, float y)
+    {
+        Vector3 gameObjectPosition = new Vector3(where.x, y, where.y) + transform.position;
+        GameObject gameObjectInstance = Instantiate(what, gameObjectPosition, Quaternion.identity) as GameObject;
+        gameObjectInstance.transform.parent = boardHolder.transform;
     }
 
     private void CreateWalls(IntPair position, Tile tile)
@@ -72,23 +93,17 @@ public class TileMap : MonoBehaviour {
 
     private void CreateWall(IntPair position)
     {
-        Vector3 gameObjectPosition = new Vector3(position.x, 1.0f, position.y) + transform.position;
-        GameObject tileInstance = Instantiate(prefabHolder.wall, gameObjectPosition, Quaternion.identity) as GameObject;
-        tileInstance.transform.parent = boardHolder.transform;
+        CreateGameObject(prefabHolder.wall, position, 1.0f);
     }
 
     private void CreateFloor(IntPair position)
     {
-        Vector3 gameObjectPosition = new Vector3(position.x, 0.0f, position.y) + transform.position;
-        GameObject tileInstance = Instantiate(prefabHolder.floor, gameObjectPosition, Quaternion.identity) as GameObject;
-        tileInstance.transform.parent = boardHolder.transform;
+        CreateGameObject(prefabHolder.floor, position, 0.0f);
     }
 
     private void CreateCeiling(IntPair position)
     {
-        Vector3 gameObjectPosition = new Vector3(position.x, 2.0f, position.y) + transform.position;
-        GameObject tileInstance = Instantiate(prefabHolder.ceiling, gameObjectPosition, Quaternion.identity) as GameObject;
-        tileInstance.transform.parent = boardHolder.transform;
+        CreateGameObject(prefabHolder.ceiling, position, 2.0f);
     }
 
     [Serializable]
@@ -97,5 +112,6 @@ public class TileMap : MonoBehaviour {
         public GameObject floor;
         public GameObject wall;
         public GameObject ceiling;
+        public GameObject endingPoint;
     }
 }
