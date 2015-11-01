@@ -8,9 +8,10 @@ public class OrientationController : MonoBehaviour {
     private float rotationInterpolation = 1.0f;
     private float  rotationTo;
 
-    public void SetRotation(float rotation){
+	public void SetRotation(float rotation){
         rotationInterpolation = 1.0f; // Stop any interpolation!
-		transform.Rotate(0, rotation, 0);
+        transform.Rotate (0, rotation, 0);
+		GameObject.Find ("Compass").SendMessage ("SetRotation", rotation);
 	}
 
     public void RotateLeft()
