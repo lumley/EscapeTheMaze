@@ -3,12 +3,13 @@ using System.Collections;
 
 public class PlayerInput : MonoBehaviour {
 
-	public string horizontalAxis="Horizontal";
-	public string verticalAxis="Vertical";
-	public string attackButton="Fire1";
+    private const string horizontalAxis = "Horizontal";
+    private const string verticalAxis = "Vertical";
+    private const string attackButton = "Fire1";
+    private const string cancelButton = "Cancel";
+    private const string submitButton = "Submit";
 
-
-	public float mouseSensitivity=3.0f;
+    public float mouseSensitivity=3.0f;
 
 
 	// Use this for initialization
@@ -34,20 +35,21 @@ public class PlayerInput : MonoBehaviour {
 		{
 			gameObject.SendMessage("MoveForward");
 		}
+
 		if (CursorLockMode.Locked == Cursor.lockState)
 		{
-			gameObject.SendMessage("SetRotation", Input.GetAxis("Mouse X")*mouseSensitivity);
+			gameObject.SendMessage("SetRotation", Input.GetAxis("Mouse X") * mouseSensitivity);
 		}
 
 		if (Input.GetButtonDown(attackButton)) {
 			gameObject.SendMessage("Attack");
 		}
 		
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetButtonDown(cancelButton))
 		{
 			SetCursorState(CursorLockMode.None);
 		}
-		else if (Input.touchCount > 0)
+		else if (Input.touchCount > 0 || Input.GetButtonDown(submitButton))
 		{
 			SetCursorState(CursorLockMode.Locked);
 		}
