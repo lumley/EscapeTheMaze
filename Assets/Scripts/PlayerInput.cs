@@ -3,42 +3,62 @@ using System.Collections;
 
 public class PlayerInput : MonoBehaviour {
 
-    private const string horizontalAxis = "Horizontal";
-    private const string verticalAxis = "Vertical";
+    private const string horizontalMovementAxis = "Horizontal";
+    private const string verticalMovementAxis = "Vertical";
+    private const string horizontalOrientationAxis = "Mouse X";
     private const string attackButton = "Fire1";
     private const string cancelButton = "Cancel";
     private const string submitButton = "Submit";
+    private const string rotate90DegreesLeft = "Rotate 90 Left";
+	private const string rotate90DegreesRight = "Rotate 90 Right";
 
     public float mouseSensitivity=3.0f;
 
+    private float lastHorizontalOrientation = 0.0f;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetAxisRaw(horizontalAxis) < 0)
+		if (Input.GetAxisRaw(horizontalMovementAxis) < 0)
 		{
 			gameObject.SendMessage("MoveLeft");
 		}
-		else if (Input.GetAxisRaw(horizontalAxis) > 0)
+		else if (Input.GetAxisRaw(horizontalMovementAxis) > 0)
 		{
 			gameObject.SendMessage("MoveRight");
 		}
-		else if (Input.GetAxisRaw(verticalAxis) < 0)
+
+        if (Input.GetAxisRaw(verticalMovementAxis) < 0)
 		{
 			gameObject.SendMessage("MoveBackward");
 		}
-		else if (Input.GetAxisRaw(verticalAxis) > 0)
+		else if (Input.GetAxisRaw(verticalMovementAxis) > 0)
 		{
 			gameObject.SendMessage("MoveForward");
 		}
 
-		if (CursorLockMode.Locked == Cursor.lockState)
+        if (Input.GetButtonDown(rotate90DegreesLeft))
+        {
+            gameObject.SendMessage("RotateLeft");
+        }
+        else if (Input.GetButtonDown(rotate90DegreesRight))
+        {
+            gameObject.SendMessage("RotateRight");
+        }
+
+        if (CursorLockMode.Locked == Cursor.lockState)
 		{
-			gameObject.SendMessage("SetRotation", Input.GetAxis("Mouse X") * mouseSensitivity);
+            float horizontalOrientation = Input.GetAxis(horizontalOrientationAxis) * mouseSensitivity;
+            if (this.lastHorizontalOrientation != horizontalOrientation)
+            {
+                gameObject.SendMessage("SetRotation", horizontalOrientation);
+                this.lastHorizontalOrientation = horizontalOrientation;
+            }
+            
 		}
 
 		if (Input.GetButtonDown(attackButton)) {

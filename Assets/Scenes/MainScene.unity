@@ -421,9 +421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740916d905f903347a49ded00108afe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalAxis: Horizontal
-  verticalAxis: Vertical
-  attackButton: Fire1
   mouseSensitivity: 3
 --- !u!114 &679215263
 MonoBehaviour:

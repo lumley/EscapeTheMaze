@@ -34,6 +34,16 @@ namespace Model
 
             return directions;
         }
+        
+        public static Direction TurnLeft(Direction direction)
+        {
+            return (Direction)(((int)direction + 3) % 4);
+        }
+
+        public static Direction TurnRight(Direction direction)
+        {
+            return (Direction)(((int)direction + 1) % 4);
+        }
 
         public static Direction Reverse(Direction direction)
         {
