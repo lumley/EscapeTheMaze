@@ -38,6 +38,18 @@ namespace Model
             }
         }
 
+        public static Vector3 GetRotationVector(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.NORTH: return Vector3.zero;
+                case Direction.EAST: return Vector3.up * 90;
+                case Direction.SOUTH: return Vector3.up * 180;
+                case Direction.WEST: return Vector3.up * -90;
+                default: throw new InvalidDirectionException();
+            }
+        }
+
         private static bool IsPlayerFacingIntoTheDirectionOf(Transform transform, Vector3 direction)
         {
             float angle = Vector3.Angle(transform.forward, direction);

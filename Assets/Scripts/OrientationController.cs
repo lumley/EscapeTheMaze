@@ -4,9 +4,11 @@ using Model;
 
 public class OrientationController : MonoBehaviour {
 
-    public float degreesPerSecond = 1.0f;
+    public float maxDegreesPerSecond = 360.0f;
     private float rotationInterpolation = 1.0f;
-    private float  rotationTo;
+    private float actualDegreesPerSecond = 1.0f;
+    private Quaternion rotationFrom;
+    private Quaternion rotationTo;
 
 	public void SetRotation(float rotation){
         rotationInterpolation = 1.0f; // Stop any interpolation!
@@ -18,8 +20,9 @@ public class OrientationController : MonoBehaviour {
     {
         if (!IsRotating())
         {
-            this.rotationTo = -90.0f;
-            this.rotationInterpolation = 0.0f;
+            Direction facingDirection = FacingHelper.GetFacingDirection(transform);
+            Vector3 rotationVector = FacingHelper.GetRotationVector(Utils.TurnLeft(facingDirection));
+            InitializeRotationAnimation(rotationVector);
         }
     }
 
@@ -27,17 +30,31 @@ public class OrientationController : MonoBehaviour {
     {
         if (!IsRotating())
         {
-            this.rotationTo = 90.0f;
-            this.rotationInterpolation = 0.0f;
+            Direction facingDirection = FacingHelper.GetFacingDirection(transform);
+            Vector3 rotationVector = FacingHelper.GetRotationVector(Utils.TurnRight(facingDirection));
+            InitializeRotationAnimation(rotationVector);
         }
     }
-    
+
+    private void InitializeRotationAnimation(Vector3 rotationVector)
+    {
+        Quaternion rotation = Quaternion.identity;
+        rotation.eulerAngles = rotationVector;
+        this.rotationTo = rotation;
+        this.rotationFrom = transform.rotation;
+
+        float angle = Mathf.Abs(Quaternion.Angle(this.rotationFrom, this.rotationTo));
+        this.actualDegreesPerSecond = this.maxDegreesPerSecond / angle;
+
+        this.rotationInterpolation = 0.0f;
+    }
+
     void Update()
     {
         if (IsRotating())
         {
-            this.rotationInterpolation += Time.smoothDeltaTime * this.degreesPerSecond;
-            transform.Rotate(0, this.rotationTo * this.degreesPerSecond * Time.smoothDeltaTime, 0, Space.Self);
+            this.rotationInterpolation += Time.smoothDeltaTime * this.actualDegreesPerSecond;
+            transform.rotation = Quaternion.Lerp(this.rotationFrom, this.rotationTo, this.rotationInterpolation);
         }
     }
 
