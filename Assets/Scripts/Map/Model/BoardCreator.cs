@@ -22,6 +22,8 @@ namespace Model
         [SerializeField]
         private IntRange corridorLength = new IntRange(3, 6);
 
+        public float enemyDensity=5.0f;
+
         public Dictionary<IntPair, Tile> GenerateMap()
         {
             int roomCount = roomsCount.Random;
@@ -52,6 +54,7 @@ namespace Model
                 position = MovePositionFromCorridorBeginningToBottomLeftEndRoom(position, corridor);
                 //  Generate room from top-left corner
                 GenerateTilesForRoom(corridor.exitRoom, position, allTiles);
+                
             }
 
             SetEndingTile(allTiles);
@@ -141,17 +144,21 @@ namespace Model
             // Start filling up tiles from top left corner using width/height
             int width = room.size.x;
             int height = room.size.y;
+            Tile tile;
 
             for (int i=0; i< width; ++i)
             {
                 for (int j=0; j< height; ++j)
                 {
-                    CreateOrUpdateTileIn(new IntPair(i + topLeftCorner.x, j + topLeftCorner.y), allTiles);
+                    tile=CreateOrUpdateTileIn(new IntPair(i + topLeftCorner.x, j + topLeftCorner.y), allTiles);
+                    if (UnityEngine.Random.Range(0.0f, 100.0f) <= enemyDensity){
+                        tile.AddAttribute(new TileAttribute.EnemySpawningPoint());
+                    }
                 }
             }
         }
 
-        private void CreateOrUpdateTileIn(IntPair position, Dictionary<IntPair, Tile> allTiles)
+        private Tile CreateOrUpdateTileIn(IntPair position, Dictionary<IntPair, Tile> allTiles)
         {
             Tile tile;
             allTiles.TryGetValue(position, out tile);
@@ -171,6 +178,7 @@ namespace Model
                     tile.BindNeighbours(neighbour, direction);
                 }
             }
+            return tile;
         }
 
         // Visible for testing

@@ -66,6 +66,10 @@ public class TileMap : MonoBehaviour {
         {
             CreateEndingAttribute(position);
         }
+        if (tile.HasAttribute(Model.TileAttribute.Type.ENEMY_SPAWNING_POINT))
+        {
+            CreateEnemy(position);
+        }
     }
 
     private void CreateEndingAttribute(IntPair position)
@@ -105,6 +109,10 @@ public class TileMap : MonoBehaviour {
     {
         CreateGameObject(prefabHolder.ceiling, position, 2.0f);
     }
+    
+    private void CreateEnemy(IntPair position){
+        CreateGameObject(prefabHolder.enemy, position, 0.0f);
+    }
 
     [Serializable]
     public struct PrefabHolder
@@ -113,5 +121,6 @@ public class TileMap : MonoBehaviour {
         public GameObject wall;
         public GameObject ceiling;
         public GameObject endingPoint;
+        public GameObject enemy;
     }
 }
