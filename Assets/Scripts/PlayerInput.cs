@@ -52,11 +52,11 @@ public class PlayerInput : MonoBehaviour {
 
         if (CursorLockMode.Locked == Cursor.lockState)
 		{
-            float horizontalOrientation = Input.GetAxis(horizontalOrientationAxis) * mouseSensitivity;
-            if (this.lastHorizontalOrientation != horizontalOrientation)
+            float currentHorizontalOrientation = Input.GetAxis(horizontalOrientationAxis) * mouseSensitivity;
+            if (this.lastHorizontalOrientation != currentHorizontalOrientation)
             {
-                gameObject.SendMessage("SetRotation", horizontalOrientation);
-                this.lastHorizontalOrientation = horizontalOrientation;
+                gameObject.SendMessage("SetRotation", currentHorizontalOrientation);
+                this.lastHorizontalOrientation = currentHorizontalOrientation;
             }
             
 		}
