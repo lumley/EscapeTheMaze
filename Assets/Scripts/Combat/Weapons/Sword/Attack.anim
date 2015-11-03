@@ -733,7 +733,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 1
   m_Events:
-  - time: .116666667
+  - time: .0833333358
     functionName: HitStart
     data: 
     objectReferenceParameter: {fileID: 0}
