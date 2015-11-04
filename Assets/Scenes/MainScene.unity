@@ -426,6 +426,8 @@ GameObject:
   - 114: {fileID: 679215264}
   - 114: {fileID: 679215263}
   - 108: {fileID: 679215260}
+  - 95: {fileID: 679215266}
+  - 114: {fileID: 679215265}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -528,6 +530,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+--- !u!114 &679215265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 679215258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3076e7122dc144e419b03039920e7333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+--- !u!95 &679215266
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 679215258}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1126170138 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 117190, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}

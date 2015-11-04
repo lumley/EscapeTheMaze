@@ -16,4 +16,8 @@ public class CombatEvents{
 	{
 		get { return Execute; }
 	}
+	
+	public static void applyDamage(GameObject gameObject,int damage){
+		ExecuteEvents.Execute(gameObject, TakeDamageEventData.create(damage),CombatEvents.takeDamageHandler);
+	}
 }

@@ -7,4 +7,8 @@ public class TakeDamageEventData : BaseEventData {
 	public TakeDamageEventData(EventSystem eventSystem, int damage):base(eventSystem){
 		this.damage=damage;
 	}
+	
+	public static TakeDamageEventData create(int damage){
+		return new TakeDamageEventData(EventSystem.current,damage);
+	}
 }
