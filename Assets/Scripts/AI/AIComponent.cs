@@ -39,10 +39,7 @@ namespace AI
     /// </summary>
     public abstract class Behavior : MonoBehaviour
     {
-        public void Update()
-        {
-            
-        }
+        public abstract void Update();
     }
 
     public abstract class WanderingBehavior : Behavior
