@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent (typeof (Animator))]
-public class Health : MonoBehaviour {
+public class Health : MonoBehaviour, ITakeDamageHandler {
 
 	
 	private Animator animator;
@@ -66,4 +67,9 @@ public class Health : MonoBehaviour {
 	public void Damageable(){
 		IsDamageable=true;
 	}
+
+    public void OnTakeDamage(TakeDamageEventData damage)
+    {
+		ApplyDamage(damage.damage);
+    }
 }
