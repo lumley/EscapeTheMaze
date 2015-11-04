@@ -505,6 +505,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740916d905f903347a49ded00108afe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TakeDamageEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 679215265}
+        m_MethodName: ApplyDamage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: TakeDamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   mouseSensitivity: 3
 --- !u!114 &679215263
 MonoBehaviour:
@@ -551,7 +567,7 @@ Animator:
   m_GameObject: {fileID: 679215258}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e536d2d6f836e46d5890897dbc26d34d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -682,6 +698,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 679215259}
     m_Modifications:
+    - target: {fileID: 11426016, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 487868, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
       propertyPath: m_LocalPosition.x
       value: .623476088
@@ -712,6 +732,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 487868, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
       propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426016, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11426016, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
+      propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []

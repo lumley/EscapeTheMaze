@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
 [RequireComponent (typeof (Animator))]
 public class Health : MonoBehaviour, ITakeDamageHandler {
-
 	
 	private Animator animator;
 

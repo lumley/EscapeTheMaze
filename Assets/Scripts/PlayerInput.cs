@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour {
+	
+	public TakeDamageEvent TakeDamageEvent;
 
     private const string horizontalMovementAxis = "Horizontal";
     private const string verticalMovementAxis = "Vertical";
@@ -64,6 +66,10 @@ public class PlayerInput : MonoBehaviour {
 
 		if (Input.GetButtonDown(attackButton)) {
 			gameObject.SendMessage("Attack");
+		}
+		
+		if (Input.GetButtonDown("Fire2")){
+			TakeDamageEvent.Invoke(TakeDamageEventData.create(2));
 		}
 		
 		if (Input.GetButtonDown(cancelButton))
