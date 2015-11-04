@@ -738,6 +738,7 @@ GameObject:
   - 95: {fileID: 9500000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11484110}
   m_Layer: 0
   m_Name: unitychan
   m_TagString: Untagged
@@ -4339,7 +4340,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100276}
-  m_LocalRotation: {x: -.0937465429, y: .697855175, z: .707469046, w: .060806755}
+  m_LocalRotation: {x: -.0937465355, y: .697855115, z: .707468987, w: .0608067475}
   m_LocalPosition: {x: -.0554340295, y: .00173068431, z: .0986537337}
   m_LocalScale: {x: 1.00000036, y: 1.0000006, z: 1.00000048}
   m_Children:
@@ -4883,6 +4884,19 @@ MonoBehaviour:
   _random: 0
   _threshold: .5
   _interval: 2
+--- !u!114 &11484110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d0cc66810604a4984e888ff6d3316b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wanderingBehavior: {fileID: 0}
+  alertBehavior: {fileID: 0}
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
