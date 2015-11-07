@@ -505,12 +505,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740916d905f903347a49ded00108afe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TakeDamageEvent:
+  takeDamageEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 679215265}
-        m_MethodName: ApplyDamage
-        m_Mode: 3
+        m_MethodName: OnTakeDamage
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Model;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour {
 	
-	public TakeDamageEvent TakeDamageEvent;
+	public TakeDamageEvent takeDamageEvent;
 
     private const string horizontalMovementAxis = "Horizontal";
     private const string verticalMovementAxis = "Vertical";
@@ -28,21 +30,21 @@ public class PlayerInput : MonoBehaviour {
 	void Update () {
 		if (Input.GetAxisRaw(horizontalMovementAxis) < 0)
 		{
-			gameObject.SendMessage("MoveLeft");
-		}
+            MovementEvent.Move(gameObject, RelativeDirection.LEFT);
+        }
 		else if (Input.GetAxisRaw(horizontalMovementAxis) > 0)
 		{
-			gameObject.SendMessage("MoveRight");
-		}
+            MovementEvent.Move(gameObject, RelativeDirection.RIGHT);
+        }
 
         if (Input.GetAxisRaw(verticalMovementAxis) < 0)
 		{
-			gameObject.SendMessage("MoveBackward");
-		}
+            MovementEvent.Move(gameObject, RelativeDirection.BACKWARDS);
+        }
 		else if (Input.GetAxisRaw(verticalMovementAxis) > 0)
 		{
-			gameObject.SendMessage("MoveForward");
-		}
+            MovementEvent.Move(gameObject, RelativeDirection.FORWARDS);
+        }
 
         if (Input.GetButtonDown(rotate90DegreesLeft))
         {
@@ -56,7 +58,7 @@ public class PlayerInput : MonoBehaviour {
         if (CursorLockMode.Locked == Cursor.lockState)
 		{
             float currentHorizontalOrientation = Input.GetAxis(horizontalOrientationAxis) * mouseSensitivity;
-            if (this.lastHorizontalOrientation != currentHorizontalOrientation)
+            if (lastHorizontalOrientation != currentHorizontalOrientation)
             {
                 gameObject.SendMessage("SetRotation", currentHorizontalOrientation);
                 this.lastHorizontalOrientation = currentHorizontalOrientation;
@@ -69,7 +71,7 @@ public class PlayerInput : MonoBehaviour {
 		}
 		
 		if (Input.GetButtonDown("Fire2")){
-			TakeDamageEvent.Invoke(TakeDamageEventData.create(2));
+			takeDamageEvent.Invoke(TakeDamageEventData.Create(2));
 		}
 		
 		if (Input.GetButtonDown(cancelButton))
@@ -88,7 +90,8 @@ public class PlayerInput : MonoBehaviour {
 			GUI.Label(new Rect(Screen.width/2 - 75, Screen.height/2 - 15, 150, 30), "Game paused");
 		}
 	}
-	private void SetCursorState(CursorLockMode lockState)
+
+	private static void SetCursorState(CursorLockMode lockState)
 	{
 		Cursor.lockState = lockState;
 		// Hide cursor when locking

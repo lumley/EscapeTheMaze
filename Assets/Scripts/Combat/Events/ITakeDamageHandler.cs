@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 
-public interface ITakeDamageHandler : IEventSystemHandler {
+public interface ITakeDamageHandler : IEventSystemHandler
+{
 
-	void OnTakeDamage(TakeDamageEventData damage);
+    void OnTakeDamage(TakeDamageEventData damage);
 }

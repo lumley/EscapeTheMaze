@@ -13,14 +13,14 @@ public class Health : MonoBehaviour, ITakeDamageHandler {
 	private bool IsDamageable{get;set;}
 
 	public void Awake(){
-		IsDead=false;
-		IsDying=false;
-		IsDamageable=true;
-		animator=GetComponent<Animator>();
+		IsDead = false;
+		IsDying = false;
+		IsDamageable = true;
+		animator = GetComponent<Animator>();
 	}
 
 	public void Update(){
-		if (health<=0 && IsAlive()){
+		if (health <= 0 && IsAlive()){
 			Die ();
 		}
 
@@ -43,10 +43,10 @@ public class Health : MonoBehaviour, ITakeDamageHandler {
 
 	public void ApplyDamage(int damage){
 		if (IsAlive() && IsDamageable){
-			IsDamageable=false;
+			IsDamageable = false;
 			Debug.Log("Received "+damage+" damage!");
 			animator.Play("Damaged");
-			health-=damage;
+			health -= damage;
 		}
 	}
 

@@ -133,7 +133,7 @@ namespace UnityTest
         {
             if (!s_Instance || s_Instance.m_TestLines == null || EditorApplication.isPlayingOrWillChangePlaymode) return;
 
-            // create a test runner if it doesn't exist
+            // Create a test runner if it doesn't exist
             TestRunner.GetTestRunner();
 
             // make tests are not places under a go that is not a test itself

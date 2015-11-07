@@ -101,9 +101,9 @@ namespace UnityTest
                 if (scriptComponents.Length > 1) Debug.LogWarning("Multiple GameObjects refer to " + typeName);
                 tests.Add(scriptComponents.First().GetComponent<TestComponent>());
             }
-            // create test structure
+            // Create test structure
             m_TestComponents = ParseListForGroups(tests).ToList();
-            // create results for tests
+            // Create results for tests
             m_ResultList = m_TestComponents.Select(component => new TestResult(component)).ToList();
             // init test provider
             m_TestsProvider = new IntegrationTestsProvider(m_ResultList.Select(result => result.TestComponent as ITestComponent));

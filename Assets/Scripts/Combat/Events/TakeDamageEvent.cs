@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
 using System;
 
 [Serializable]
-public class TakeDamageEvent : UnityEvent<TakeDamageEventData> {
+public class TakeDamageEvent : UnityEvent<TakeDamageEventData>
+{
 
 }
