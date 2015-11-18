@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using Model;
+﻿using Input.Events;
+using Map;
+using Map.Model;
+using UnityEngine;
 
 public class OrientationController : MonoBehaviour, IRotationEventHandler
 {
-
     public float maxDegreesPerSecond = 360.0f;
     private float rotationInterpolation = 1.0f;
     private float actualDegreesPerSecond = 1.0f;
@@ -22,7 +23,7 @@ public class OrientationController : MonoBehaviour, IRotationEventHandler
         if (!IsRotating())
         {
             Direction facingDirection = FacingHelper.GetFacingDirection(transform);
-            Vector3 rotationVector = FacingHelper.GetRotationVector(Utils.TurnLeft(facingDirection));
+            Vector3 rotationVector = FacingHelper.GetRotationVector(Map.Model.Utils.TurnLeft(facingDirection));
             InitializeRotationAnimation(rotationVector);
         }
     }
@@ -32,7 +33,7 @@ public class OrientationController : MonoBehaviour, IRotationEventHandler
         if (!IsRotating())
         {
             Direction facingDirection = FacingHelper.GetFacingDirection(transform);
-            Vector3 rotationVector = FacingHelper.GetRotationVector(Utils.TurnRight(facingDirection));
+            Vector3 rotationVector = FacingHelper.GetRotationVector(Map.Model.Utils.TurnRight(facingDirection));
             InitializeRotationAnimation(rotationVector);
         }
     }

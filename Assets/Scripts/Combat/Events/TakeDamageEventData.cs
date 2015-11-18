@@ -1,17 +1,20 @@
 ﻿using UnityEngine.EventSystems;
 
-public class TakeDamageEventData : BaseEventData
+namespace Combat.Events
 {
-
-    public int damage;
-
-    private TakeDamageEventData(EventSystem eventSystem, int damage) : base(eventSystem)
+    public class TakeDamageEventData : BaseEventData
     {
-        this.damage = damage;
-    }
 
-    public static TakeDamageEventData Create(int damage)
-    {
-        return new TakeDamageEventData(EventSystem.current, damage);
+        public int damage;
+
+        private TakeDamageEventData(EventSystem eventSystem, int damage) : base(eventSystem)
+        {
+            this.damage = damage;
+        }
+
+        public static TakeDamageEventData Create(int damage)
+        {
+            return new TakeDamageEventData(EventSystem.current, damage);
+        }
     }
 }

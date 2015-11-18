@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Map.Model;
+using UnityEngine;
 using NUnit.Framework;
 
 namespace Model

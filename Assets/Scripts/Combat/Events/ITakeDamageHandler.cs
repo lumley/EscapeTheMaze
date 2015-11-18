@@ -1,7 +1,10 @@
 ﻿using UnityEngine.EventSystems;
 
-public interface ITakeDamageHandler : IEventSystemHandler
+namespace Combat.Events
 {
+    public interface ITakeDamageHandler : IEventSystemHandler
+    {
 
-    void OnTakeDamage(TakeDamageEventData damage);
+        void OnTakeDamage(TakeDamageEventData damage);
+    }
 }

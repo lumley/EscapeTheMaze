@@ -29,7 +29,7 @@ public class FaceUpdate : MonoBehaviour
 	void Update ()
 	{
 
-		if (Input.GetMouseButton (0)) {
+		if (UnityEngine.Input.GetMouseButton (0)) {
 			current = 1;
 		} else {
 			current = Mathf.Lerp (current, 0, delayWeight);

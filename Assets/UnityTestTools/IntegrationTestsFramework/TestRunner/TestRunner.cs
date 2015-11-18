@@ -95,10 +95,10 @@ namespace UnityTest
                 var scriptComponents = Resources.FindObjectsOfTypeAll(t) as MonoBehaviour[];
                 if (scriptComponents.Length == 0)
                 {
-                    Debug.LogWarning(t + " not found. Skipping.");
+                    UnityEngine.Debug.LogWarning(t + " not found. Skipping.");
                     continue;
                 }
-                if (scriptComponents.Length > 1) Debug.LogWarning("Multiple GameObjects refer to " + typeName);
+                if (scriptComponents.Length > 1) UnityEngine.Debug.LogWarning("Multiple GameObjects refer to " + typeName);
                 tests.Add(scriptComponents.First().GetComponent<TestComponent>());
             }
             // Create test structure
@@ -270,9 +270,9 @@ namespace UnityTest
         private void LogMessage(string message)
         {
             if (currentTest != null)
-                Debug.Log(message + " (" + currentTest.Name + ")", currentTest.gameObject);
+                UnityEngine.Debug.Log(message + " (" + currentTest.Name + ")", currentTest.gameObject);
             else
-                Debug.Log(message);
+                UnityEngine.Debug.Log(message);
         }
 
         private void FinishTestRun()
@@ -289,15 +289,15 @@ namespace UnityTest
             if (m_ResultList.Any(result => result.IsFailure))
             {
                 resultString += " Failed: " + m_ResultList.Count(t => t.IsFailure);
-                Debug.Log("Failed tests: " + string.Join(", ", m_ResultList.Where(t => t.IsFailure).Select(result => result.Name).ToArray()));
+                UnityEngine.Debug.Log("Failed tests: " + string.Join(", ", m_ResultList.Where(t => t.IsFailure).Select(result => result.Name).ToArray()));
             }
             if (m_ResultList.Any(result => result.IsIgnored))
             {
                 resultString += " Ignored: " + m_ResultList.Count(t => t.IsIgnored);
-                Debug.Log("Ignored tests: " + string.Join(", ",
+                UnityEngine.Debug.Log("Ignored tests: " + string.Join(", ",
                                                           m_ResultList.Where(t => t.IsIgnored).Select(result => result.Name).ToArray()));
             }
-            Debug.Log(resultString);
+            UnityEngine.Debug.Log(resultString);
         }
 
         private void LoadNextLevelOrQuit()
@@ -338,7 +338,7 @@ namespace UnityTest
             if (currentTest != null && currentTest.IsExludedOnThisPlatform())
             {
                 m_TestState = TestState.Ignored;
-                Debug.Log(currentTest.gameObject.name + " is excluded on this platform");
+                UnityEngine.Debug.Log(currentTest.gameObject.name + " is excluded on this platform");
             }
 
             // don't ignore test if user initiated it from the runner and it's the only test that is being run
@@ -387,7 +387,7 @@ namespace UnityTest
         {
             var runner = new GameObject("TestRunner");
             runner.AddComponent<TestRunner>();
-            Debug.Log("Created Test Runner");
+            UnityEngine.Debug.Log("Created Test Runner");
             return runner;
         }
 

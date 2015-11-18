@@ -180,7 +180,7 @@ namespace UnityTest
                     }
                     catch (Exception e)
                     {
-                        Debug.LogException(e);
+                        UnityEngine.Debug.LogException(e);
                         sendResultsOverNetwork = false;
                         return null;
                     }
@@ -188,7 +188,7 @@ namespace UnityTest
                 }
                 Thread.Sleep(500);
             }
-            Debug.LogError("Couldn't connect to the server: " + string.Join(", ", m_IPEndPointList.Select(ipep => ipep.Address + ":" + ipep.Port).ToArray()));
+            UnityEngine.Debug.LogError("Couldn't connect to the server: " + string.Join(", ", m_IPEndPointList.Select(ipep => ipep.Address + ":" + ipep.Port).ToArray()));
             sendResultsOverNetwork = false;
 #endif  // if UTT_SOCKETS_SUPPORTED
             return null;

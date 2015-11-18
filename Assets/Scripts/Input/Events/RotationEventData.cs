@@ -1,17 +1,20 @@
-﻿using Model;
+﻿using Map.Model;
 using UnityEngine.EventSystems;
 
-public class RotationEventData : BaseEventData
+namespace Input.Events
 {
-    public RelativeDirection relativeDirection;
-
-    public RotationEventData(EventSystem eventSystem, RelativeDirection relativeDirection) : base(eventSystem)
+    public class RotationEventData : BaseEventData
     {
-        this.relativeDirection = relativeDirection;
-    }
+        public RelativeDirection relativeDirection;
 
-    public static RotationEventData Create(RelativeDirection relativeDirection)
-    {
-        return new RotationEventData(EventSystem.current, relativeDirection);
+        public RotationEventData(EventSystem eventSystem, RelativeDirection relativeDirection) : base(eventSystem)
+        {
+            this.relativeDirection = relativeDirection;
+        }
+
+        public static RotationEventData Create(RelativeDirection relativeDirection)
+        {
+            return new RotationEventData(EventSystem.current, relativeDirection);
+        }
     }
 }

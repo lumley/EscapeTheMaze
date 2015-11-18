@@ -1,8 +1,10 @@
-﻿using Model;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 
-public interface IRotationEventHandler : IEventSystemHandler
+namespace Input.Events
 {
-    void OnRotate(RotationEventData rotationEvent);
+    public interface IRotationEventHandler : IEventSystemHandler
+    {
+        void OnRotate(RotationEventData rotationEvent);
+    }
 }
 

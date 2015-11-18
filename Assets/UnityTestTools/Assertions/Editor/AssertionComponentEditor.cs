@@ -133,7 +133,7 @@ namespace UnityTest
                 }
                 catch (NotImplementedException)
                 {
-                    Debug.LogWarning("This comparer can't compare to static value");
+                    UnityEngine.Debug.LogWarning("This comparer can't compare to static value");
                     comparer.compareToType = ComparerBase.CompareToType.CompareToObject;
                 }
             }

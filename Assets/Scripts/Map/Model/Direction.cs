@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-namespace Model
+﻿namespace Map.Model
 {
     public enum Direction
     {

@@ -10,7 +10,7 @@ public class AssertionStripper
     [PostProcessScene]
     public static void OnPostprocessScene()
     {
-        if (Debug.isDebugBuild) return;
+        if (UnityEngine.Debug.isDebugBuild) return;
         RemoveAssertionsFromGameObjects();
     }
 

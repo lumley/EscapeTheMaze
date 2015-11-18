@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using Map.Model.TileAttribute;
 
-namespace Model
+namespace Map.Model
 {
     public class Tile
     {
         private Dictionary<Direction, Tile> neighbourMap = new Dictionary<Direction,Tile>(4);
-        private Dictionary<TileAttribute.Type, TileComponent> attributeMap;
+        private Dictionary<Type, ITileComponent> attributeMap;
 
         public void BindNeighbours(Tile neighbour, Direction directionFromMe)
         {
             SetNeighbour(neighbour, directionFromMe);
-            Model.Direction reversedDirection = Utils.Reverse(directionFromMe);
+            Direction reversedDirection = Utils.Reverse(directionFromMe);
             neighbour.SetNeighbour(this, reversedDirection);
         }
 
@@ -19,10 +20,10 @@ namespace Model
             this.neighbourMap[directionFromMe] = neighbour;
         }
 
-        public void AddAttribute(TileComponent attribute)
+        public void AddAttribute(ITileComponent attribute)
         {
             if (this.attributeMap == null) {
-                this.attributeMap = new Dictionary<TileAttribute.Type, TileComponent>();
+                this.attributeMap = new Dictionary<Type, ITileComponent>();
             }
             
             this.attributeMap[attribute.GetType()] = attribute;
@@ -35,7 +36,7 @@ namespace Model
             return neighbour;
         }
 
-        public bool HasAttribute(TileAttribute.Type attributeType)
+        public bool HasAttribute(global::Map.Model.TileAttribute.Type attributeType)
         {
             if (this.attributeMap != null)
             {
@@ -44,8 +45,8 @@ namespace Model
             return false;
         }
         
-        public T GetAttribute<T>(TileAttribute.Type attributeType) where T : TileComponent{
-            TileComponent component = null;
+        public T GetAttribute<T>(global::Map.Model.TileAttribute.Type attributeType) where T : ITileComponent{
+            ITileComponent component = null;
             if (this.attributeMap != null)
             {
                 this.attributeMap.TryGetValue(attributeType, out component);

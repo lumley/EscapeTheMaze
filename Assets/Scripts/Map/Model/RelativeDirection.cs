@@ -1,5 +1,5 @@
 ﻿
-namespace Model
+namespace Map.Model
 {
     public enum RelativeDirection
     {

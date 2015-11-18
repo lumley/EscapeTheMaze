@@ -385,9 +385,9 @@ namespace UnityTest
                 }
                 catch (ReflectionTypeLoadException ex)
                 {
-                    Debug.LogError("Failed to load types from: " + assembly.FullName);
+                    UnityEngine.Debug.LogError("Failed to load types from: " + assembly.FullName);
                     foreach (Exception loadEx in ex.LoaderExceptions)
-                        Debug.LogException(loadEx);
+                        UnityEngine.Debug.LogException(loadEx);
                 }
 
                 if (types == null)

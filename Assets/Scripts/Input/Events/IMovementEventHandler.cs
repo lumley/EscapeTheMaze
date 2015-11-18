@@ -1,8 +1,10 @@
-﻿using Model;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 
-public interface IMovementEventHandler : IEventSystemHandler
+namespace Input.Events
 {
-    void OnMove(MovementEventData movementEvent);
+    public interface IMovementEventHandler : IEventSystemHandler
+    {
+        void OnMove(MovementEventData movementEvent);
+    }
 }
 

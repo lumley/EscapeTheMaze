@@ -90,7 +90,7 @@ namespace UnityTest
 
         public virtual void Fail(AssertionComponent assertion)
         {
-            Debug.LogException(new AssertionException(assertion), assertion.GetFailureReferenceObject());
+            UnityEngine.Debug.LogException(new AssertionException(assertion), assertion.GetFailureReferenceObject());
         }
 
         public virtual string GetFailureMessage()

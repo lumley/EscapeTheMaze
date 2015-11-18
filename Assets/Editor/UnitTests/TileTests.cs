@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Map.Model;
+using Map.Model.TileAttribute;
+using NUnit.Framework;
 
 namespace Model
 {
@@ -59,28 +61,28 @@ namespace Model
         [Test]
         public void HasAttributeShouldReturnFalseWhenTileHasNotTheSpecifiedAttribute()
         {
-            Assert.IsFalse(this.tile.HasAttribute(TileAttribute.Type.SPAWNING_POINT));
+            Assert.IsFalse(this.tile.HasAttribute(Type.SPAWNING_POINT));
         }
 
         [Test]
         public void HasAttributeShouldReturnTrueWhenTileHasGivenAttribute()
         {
-            this.tile.AddAttribute(new TileAttribute.SpawningPoint());
-            Assert.IsTrue(this.tile.HasAttribute(TileAttribute.Type.SPAWNING_POINT));
+            this.tile.AddAttribute(new SpawningPoint());
+            Assert.IsTrue(this.tile.HasAttribute(Type.SPAWNING_POINT));
         }
 
         [Test]
         public void GetAtributeShouldReturnNullWhenTileHasNotTheSpecifiedAttribute()
         {
-            Assert.IsNull(this.tile.GetAttribute<TileAttribute.SpawningPoint>(TileAttribute.Type.SPAWNING_POINT));
+            Assert.IsNull(this.tile.GetAttribute<SpawningPoint>(Type.SPAWNING_POINT));
         }
 
         [Test]
         public void GetAtributeShouldReturnAttributeWhenTileContainsTheSpecifiedAttribute()
         {
-            TileAttribute.SpawningPoint expected = new TileAttribute.SpawningPoint();
+            SpawningPoint expected = new SpawningPoint();
             this.tile.AddAttribute(expected);
-            Assert.AreEqual(expected, this.tile.GetAttribute<TileAttribute.SpawningPoint>(TileAttribute.Type.SPAWNING_POINT));
+            Assert.AreEqual(expected, this.tile.GetAttribute<SpawningPoint>(Type.SPAWNING_POINT));
         }
     }
 }

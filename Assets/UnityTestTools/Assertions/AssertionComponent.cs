@@ -63,7 +63,7 @@ namespace UnityTest
 
         public void Awake()
         {
-            if (!Debug.isDebugBuild)
+            if (!UnityEngine.Debug.isDebugBuild)
                 Destroy(this);
             OnComponentCopy();
         }
@@ -82,7 +82,7 @@ namespace UnityTest
             // if it's not a copy but a new component don't do anything
             if (!oldActionList.Any()) return;
             if (oldActionList.Count() > 1)
-                Debug.LogWarning("More than one refence to comparer found. This shouldn't happen");
+                UnityEngine.Debug.LogWarning("More than one refence to comparer found. This shouldn't happen");
 
             var oldAction = oldActionList.First() as AssertionComponent;
             m_ActionBase = oldAction.m_ActionBase.CreateCopy(oldAction.gameObject, gameObject);

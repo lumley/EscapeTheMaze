@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Map;
 using UnityEditor;
+using UnityEngine;
 
-[CustomEditor(typeof(TileMap))]
-public class TileMapGeneratorUI : Editor {
-
+[CustomEditor(typeof (TileMap))]
+public class TileMapGeneratorUI : Editor
+{
     public override void OnInspectorGUI()
     {
         //base.OnInspectorGUI();
@@ -13,7 +13,7 @@ public class TileMapGeneratorUI : Editor {
         if (GUILayout.Button("Regenerate"))
         {
             Resources.UnloadUnusedAssets();
-            ((TileMap)target).GenerateMap();
+            ((TileMap) target).GenerateMap();
         }
     }
 }

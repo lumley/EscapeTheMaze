@@ -25,7 +25,7 @@ namespace UnityTest
 
         public static void CheckAssertions(AssertionComponent[] assertions)
         {
-            if (!Debug.isDebugBuild)
+            if (!UnityEngine.Debug.isDebugBuild)
                 return;
             foreach (var assertion in assertions)
             {

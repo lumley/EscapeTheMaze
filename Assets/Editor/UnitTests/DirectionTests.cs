@@ -1,19 +1,17 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Map.Model;
 using NUnit.Framework;
 
 namespace Model
 {
     public class DirectionTests
     {
-
         [Test]
         public void GetDirectionsExcludingShouldGiveSameValuesAsGetAllDirectionsWhenExclusionsAreNull()
         {
-            Direction[] expectedDirections = Utils.GetAllDirections();
-            Direction[] directions = Utils.GetAllDirectionsExcluding();
+            var expectedDirections = Map.Model.Utils.GetAllDirections();
+            var directions = Map.Model.Utils.GetAllDirectionsExcluding();
 
-            foreach (Direction expectedDirection in expectedDirections)
+            foreach (var expectedDirection in expectedDirections)
             {
                 Assert.Contains(expectedDirection, directions);
             }
@@ -22,10 +20,10 @@ namespace Model
         [Test]
         public void GetAllDirectionsShouldReturnAllDirections()
         {
-            Direction[] expectedDirections = { Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH };
-            Direction[] directions = Utils.GetAllDirections();
+            Direction[] expectedDirections = {Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH};
+            var directions = Map.Model.Utils.GetAllDirections();
 
-            foreach (Direction expectedDirection in expectedDirections)
+            foreach (var expectedDirection in expectedDirections)
             {
                 Assert.Contains(expectedDirection, directions);
             }

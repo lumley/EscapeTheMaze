@@ -39,13 +39,13 @@ public class IdleChanger : MonoBehaviour
 	void  Update ()
 	{
 		// ↑キー/スペースが押されたら、ステートを次に送る処理
-		if (Input.GetKeyDown ("up") || Input.GetButton ("Jump")) {
+		if (UnityEngine.Input.GetKeyDown ("up") || UnityEngine.Input.GetButton ("Jump")) {
 			// ブーリアンNextをtrueにする
 			anim.SetBool ("Next", true);
 		}
 		
 		// ↓キーが押されたら、ステートを前に戻す処理
-				if (Input.GetKeyDown ("down")) {
+				if (UnityEngine.Input.GetKeyDown ("down")) {
 			// ブーリアンBackをtrueにする
 			anim.SetBool ("Back", true);
 		}

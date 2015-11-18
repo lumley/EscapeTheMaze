@@ -1,28 +1,29 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using Commons;
+using UnityEngine;
 
-namespace Model
+namespace Map.Model
 {
     [Serializable]
     public class BoardCreator
     {
         [SerializeField]
-        private IntPair startingPoint = new IntPair(0, 0);
+        private readonly IntPair startingPoint = new IntPair(0, 0);
 
         [SerializeField]
-        private IntRange roomsCount = new IntRange(5, 10);
+        private readonly IntRange roomsCount = new IntRange(5, 10);
 
         [SerializeField]
-        private IntRange roomsWidth = new IntRange(2, 4);
+        private readonly IntRange roomsWidth = new IntRange(2, 4);
 
         [SerializeField]
-        private IntRange roomsHeight = new IntRange(2, 4);
+        private readonly IntRange roomsHeight = new IntRange(2, 4);
 
         [SerializeField]
-        private IntRange corridorLength = new IntRange(3, 6);
+        private readonly IntRange corridorLength = new IntRange(3, 6);
 
-        public float enemyDensity=5.0f;
+        public float enemyDensity = 5.0f;
 
         public Dictionary<IntPair, Tile> GenerateMap()
         {
@@ -41,9 +42,9 @@ namespace Model
             // Create starting room from first corridor
             IntPair position = this.startingPoint;
             GenerateTilesForRoom(corridors[0].entranceRoom, position, allTiles);
-            
+
             Tile startingTile = SetStartingTile(allTiles);
-            
+
             foreach (Corridor corridor in corridors)
             {
                 //  Select wall in the direction and choose one tile to start the corridor
@@ -54,7 +55,7 @@ namespace Model
                 position = MovePositionFromCorridorBeginningToBottomLeftEndRoom(position, corridor);
                 //  Generate room from top-left corner
                 GenerateTilesForRoom(corridor.exitRoom, position, allTiles);
-                
+
             }
 
             SetEndingTile(allTiles);
@@ -65,12 +66,12 @@ namespace Model
         private void SetEndingTile(Dictionary<IntPair, Tile> allTiles)
         {
             Tile randomTile = RandomProvider.GetRandomElement(allTiles.Values);
-            if (randomTile.HasAttribute(TileAttribute.Type.SPAWNING_POINT))
+            if (randomTile.HasAttribute(global::Map.Model.TileAttribute.Type.SPAWNING_POINT))
             {
                 randomTile = RandomProvider.GetRandomElementExcluding(allTiles.Values, randomTile);
             }
-            
-            randomTile.AddAttribute(new TileAttribute.EndingPoint());
+
+            randomTile.AddAttribute(new global::Map.Model.TileAttribute.EndingPoint());
         }
 
         private Tile SetStartingTile(Dictionary<IntPair, Tile> allTiles)
@@ -81,7 +82,7 @@ namespace Model
             if (iterator.MoveNext())
             {
                 startingTile = iterator.Current;
-                startingTile.AddAttribute(new TileAttribute.SpawningPoint());
+                startingTile.AddAttribute(new global::Map.Model.TileAttribute.SpawningPoint());
             }
 
             return startingTile;
@@ -131,7 +132,7 @@ namespace Model
         // Returns the position where the corridor ends
         private IntPair GenerateTilesForCorridor(Corridor corridor, IntPair position, Dictionary<IntPair, Tile> allTiles)
         {
-            for(int i=0; i < corridor.length; ++i)
+            for (int i = 0; i < corridor.length; ++i)
             {
                 position = position.Move(corridor.direction);
                 CreateOrUpdateTileIn(position, allTiles);
@@ -146,13 +147,14 @@ namespace Model
             int height = room.size.y;
             Tile tile;
 
-            for (int i=0; i< width; ++i)
+            for (int i = 0; i < width; ++i)
             {
-                for (int j=0; j< height; ++j)
+                for (int j = 0; j < height; ++j)
                 {
-                    tile=CreateOrUpdateTileIn(new IntPair(i + topLeftCorner.x, j + topLeftCorner.y), allTiles);
-                    if (UnityEngine.Random.Range(0.0f, 100.0f) <= enemyDensity){
-                        tile.AddAttribute(new TileAttribute.EnemySpawningPoint());
+                    tile = CreateOrUpdateTileIn(new IntPair(i + topLeftCorner.x, j + topLeftCorner.y), allTiles);
+                    if (UnityEngine.Random.Range(0.0f, 100.0f) <= enemyDensity)
+                    {
+                        tile.AddAttribute(new global::Map.Model.TileAttribute.EnemySpawningPoint());
                     }
                 }
             }
@@ -173,7 +175,7 @@ namespace Model
                 IntPair neighbourPosition = position.Move(direction);
                 Tile neighbour;
                 allTiles.TryGetValue(neighbourPosition, out neighbour);
-                if(neighbour != null)
+                if (neighbour != null)
                 {
                     tile.BindNeighbours(neighbour, direction);
                 }
@@ -196,8 +198,8 @@ namespace Model
                 Room exitRoom = new Room(this.roomsWidth, this.roomsHeight);
                 corridors[i] = new Corridor(this.corridorLength, lastCreatedRoom, exitRoom, direction);
                 lastCreatedRoom = exitRoom;
-                
-                if(excludedDirections == null)
+
+                if (excludedDirections == null)
                 {
                     excludedDirections = new Direction[1];
                 }

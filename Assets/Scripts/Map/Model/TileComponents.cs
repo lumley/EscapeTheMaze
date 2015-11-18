@@ -1,6 +1,6 @@
-﻿namespace Model
+﻿namespace Map.Model
 {
-    public interface TileComponent
+    public interface ITileComponent
     {
         TileAttribute.Type GetType();
     }
@@ -12,25 +12,25 @@
             SPAWNING_POINT, ENGING_POINT, ENEMY_SPAWNING_POINT
         }
 
-        public class SpawningPoint : TileComponent
+        public class SpawningPoint : ITileComponent
         {
-            Type TileComponent.GetType()
+            Type ITileComponent.GetType()
             {
                 return Type.SPAWNING_POINT;
             }
         }
 
-        public class EndingPoint : TileComponent
+        public class EndingPoint : ITileComponent
         {
-            Type TileComponent.GetType()
+            Type ITileComponent.GetType()
             {
                 return Type.ENGING_POINT;
             }
         }
         
-        public class EnemySpawningPoint : TileComponent
+        public class EnemySpawningPoint : ITileComponent
         {
-            Type TileComponent.GetType()
+            Type ITileComponent.GetType()
             {
                 return Type.ENEMY_SPAWNING_POINT;
             }

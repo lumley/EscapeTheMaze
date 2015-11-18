@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Commons;
 using NUnit.Framework;
 
 public class RandomProviderTests {

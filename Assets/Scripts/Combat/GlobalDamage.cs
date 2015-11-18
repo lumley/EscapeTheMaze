@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class GlobalDamage : MonoBehaviour {
+namespace Combat
+{
+    public class GlobalDamage : MonoBehaviour {
 
-	public int damage;
+        public int damage;
 
-	public void ApplyDamageGlobaly(){
+        public void ApplyDamageGlobaly(){
 		
-	}
+        }
+    }
 }

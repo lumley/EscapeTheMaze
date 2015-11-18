@@ -1,5 +1,8 @@
-﻿public interface IWeapon {
+﻿namespace Combat.Model
+{
+    public interface IWeapon {
 
-	void Attack();
+        void Attack();
 
+    }
 }

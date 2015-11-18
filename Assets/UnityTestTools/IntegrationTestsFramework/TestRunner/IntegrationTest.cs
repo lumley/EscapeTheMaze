@@ -22,13 +22,13 @@ public static class IntegrationTest
     public static void Fail(string reason)
     {
         Fail();
-        if (!string.IsNullOrEmpty(reason)) Debug.Log(reason);
+        if (!string.IsNullOrEmpty(reason)) UnityEngine.Debug.Log(reason);
     }
 
     public static void Fail(GameObject go, string reason)
     {
         Fail(go);
-        if (!string.IsNullOrEmpty(reason)) Debug.Log(reason);
+        if (!string.IsNullOrEmpty(reason)) UnityEngine.Debug.Log(reason);
     }
 
     public static void Fail()
@@ -65,12 +65,12 @@ public static class IntegrationTest
 
     private static void LogResult(string message)
     {
-        Debug.Log(message);
+        UnityEngine.Debug.Log(message);
     }
 
     private static void LogResult(GameObject go, string message)
     {
-        Debug.Log(message + " (" + FindTestObject(go).name + ")", go);
+        UnityEngine.Debug.Log(message + " (" + FindTestObject(go).name + ")", go);
     }
 
     private static GameObject FindTestObject(GameObject go)

@@ -55,7 +55,7 @@ namespace UnityTest.IntegrationTestRunner
             }
             catch (MissingReferenceException e)
             {
-                Debug.LogException(e);
+                UnityEngine.Debug.LogException(e);
             }
         }
 

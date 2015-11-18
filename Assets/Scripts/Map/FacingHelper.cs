@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Map.Model;
+using UnityEngine;
 
-namespace Model
+namespace Map
 {
     public class FacingHelper
     {
