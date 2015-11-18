@@ -8,14 +8,14 @@ public class PlayerInput : MonoBehaviour {
 	
 	public TakeDamageEvent takeDamageEvent;
 
-    private const string horizontalMovementAxis = "Horizontal";
-    private const string verticalMovementAxis = "Vertical";
-    private const string horizontalOrientationAxis = "Mouse X";
-    private const string attackButton = "Fire1";
-    private const string cancelButton = "Cancel";
-    private const string submitButton = "Submit";
-    private const string rotate90DegreesLeft = "Rotate 90 Left";
-	private const string rotate90DegreesRight = "Rotate 90 Right";
+    private const string HorizontalMovementAxis = "Horizontal";
+    private const string VerticalMovementAxis = "Vertical";
+    private const string HorizontalOrientationAxis = "Mouse X";
+    private const string AttackButton = "Fire1";
+    private const string CancelButton = "Cancel";
+    private const string SubmitButton = "Submit";
+    private const string Rotate90DegreesLeft = "Rotate 90 Left";
+	private const string Rotate90DegreesRight = "Rotate 90 Right";
 
     public float mouseSensitivity=3.0f;
 
@@ -28,36 +28,36 @@ public class PlayerInput : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetAxisRaw(horizontalMovementAxis) < 0)
+		if (Input.GetAxisRaw(HorizontalMovementAxis) < 0)
 		{
             MovementEvent.Move(gameObject, RelativeDirection.LEFT);
         }
-		else if (Input.GetAxisRaw(horizontalMovementAxis) > 0)
+		else if (Input.GetAxisRaw(HorizontalMovementAxis) > 0)
 		{
             MovementEvent.Move(gameObject, RelativeDirection.RIGHT);
         }
 
-        if (Input.GetAxisRaw(verticalMovementAxis) < 0)
+        if (Input.GetAxisRaw(VerticalMovementAxis) < 0)
 		{
             MovementEvent.Move(gameObject, RelativeDirection.BACKWARDS);
         }
-		else if (Input.GetAxisRaw(verticalMovementAxis) > 0)
+		else if (Input.GetAxisRaw(VerticalMovementAxis) > 0)
 		{
             MovementEvent.Move(gameObject, RelativeDirection.FORWARDS);
         }
 
-        if (Input.GetButtonDown(rotate90DegreesLeft))
+        if (Input.GetButtonDown(Rotate90DegreesLeft))
         {
-            gameObject.SendMessage("RotateLeft");
+            RotationEvent.Rotate(gameObject, RelativeDirection.LEFT);
         }
-        else if (Input.GetButtonDown(rotate90DegreesRight))
+        else if (Input.GetButtonDown(Rotate90DegreesRight))
         {
-            gameObject.SendMessage("RotateRight");
+            RotationEvent.Rotate(gameObject, RelativeDirection.RIGHT);
         }
 
         if (CursorLockMode.Locked == Cursor.lockState)
 		{
-            float currentHorizontalOrientation = Input.GetAxis(horizontalOrientationAxis) * mouseSensitivity;
+            float currentHorizontalOrientation = Input.GetAxis(HorizontalOrientationAxis) * mouseSensitivity;
             if (lastHorizontalOrientation != currentHorizontalOrientation)
             {
                 gameObject.SendMessage("SetRotation", currentHorizontalOrientation);
@@ -66,7 +66,7 @@ public class PlayerInput : MonoBehaviour {
             
 		}
 
-		if (Input.GetButtonDown(attackButton)) {
+		if (Input.GetButtonDown(AttackButton)) {
 			gameObject.SendMessage("Attack");
 		}
 		
@@ -74,11 +74,11 @@ public class PlayerInput : MonoBehaviour {
 			takeDamageEvent.Invoke(TakeDamageEventData.Create(2));
 		}
 		
-		if (Input.GetButtonDown(cancelButton))
+		if (Input.GetButtonDown(CancelButton))
 		{
 			SetCursorState(CursorLockMode.None);
 		}
-		else if (Input.touchCount > 0 || Input.GetButtonDown(submitButton))
+		else if (Input.touchCount > 0 || Input.GetButtonDown(SubmitButton))
 		{
 			SetCursorState(CursorLockMode.Locked);
 		}

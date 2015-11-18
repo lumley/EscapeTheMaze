@@ -6,11 +6,10 @@ using System;
 public class IntRange
 {
     [SerializeField]
-    private int min;       // The minimum value in this range.
+    private readonly int min;       // The minimum value in this range.
 
     [SerializeField]
-    private int max;       // The maximum value in this range.
-
+    private readonly int max;       // The maximum value in this range.
 
     // Constructor to set the values.
     public IntRange(int min, int max)

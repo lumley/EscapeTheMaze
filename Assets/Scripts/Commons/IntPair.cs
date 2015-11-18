@@ -48,7 +48,7 @@ public struct IntPair {
 
     public static bool operator ==(IntPair first, IntPair second)
     {
-        return object.ReferenceEquals(first, second) || (first != null && second != null && first.x == second.x && first.y == second.y);
+        return first.x == second.x && first.y == second.y;
     }
 
     public static bool operator !=(IntPair first, IntPair second)

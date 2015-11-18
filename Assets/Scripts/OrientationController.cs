@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using Model;
 
-public class OrientationController : MonoBehaviour {
+public class OrientationController : MonoBehaviour, IRotationEventHandler
+{
 
     public float maxDegreesPerSecond = 360.0f;
     private float rotationInterpolation = 1.0f;
@@ -9,13 +10,14 @@ public class OrientationController : MonoBehaviour {
     private Quaternion rotationFrom;
     private Quaternion rotationTo;
 
-	public void SetRotation(float rotation){
+    public void SetRotation(float rotation)
+    {
         rotationInterpolation = 1.0f; // Stop any interpolation!
-        transform.Rotate (0, rotation, 0);
-		GameObject.Find ("Compass").SendMessage ("SetRotation", rotation);
-	}
+        transform.Rotate(0, rotation, 0);
+        GameObject.Find("Compass").SendMessage("SetRotation", rotation);
+    }
 
-    public void RotateLeft()
+    private void RotateLeft()
     {
         if (!IsRotating())
         {
@@ -25,7 +27,7 @@ public class OrientationController : MonoBehaviour {
         }
     }
 
-    public void RotateRight()
+    private void RotateRight()
     {
         if (!IsRotating())
         {
@@ -62,4 +64,16 @@ public class OrientationController : MonoBehaviour {
         return this.rotationInterpolation < 1.0f;
     }
 
+    public void OnRotate(RotationEventData rotationEvent)
+    {
+        switch (rotationEvent.relativeDirection)
+        {
+            case RelativeDirection.LEFT:
+                RotateLeft();
+                break;
+            case RelativeDirection.RIGHT:
+                RotateRight();
+                break;
+        }
+    }
 }
