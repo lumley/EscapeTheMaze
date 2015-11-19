@@ -3,7 +3,7 @@ using Map;
 using Map.Model;
 using UnityEngine;
 
-public class OrientationController : MonoBehaviour, IRotationEventHandler
+public class OrientationController : MonoBehaviour, IRotationEventHandler, IFreeRotationEventHandler
 {
     public float maxDegreesPerSecond = 360.0f;
     private float rotationInterpolation = 1.0f;
@@ -11,7 +11,7 @@ public class OrientationController : MonoBehaviour, IRotationEventHandler
     private Quaternion rotationFrom;
     private Quaternion rotationTo;
 
-    public void SetRotation(float rotation)
+    private void SetRotation(float rotation)
     {
         rotationInterpolation = 1.0f; // Stop any interpolation!
         transform.Rotate(0, rotation, 0);
@@ -76,5 +76,10 @@ public class OrientationController : MonoBehaviour, IRotationEventHandler
                 RotateRight();
                 break;
         }
+    }
+
+    public void OnFreeRotation(FreeRotationEventData rotationEvent)
+    {
+        SetRotation(rotationEvent.horizontalRotation);
     }
 }

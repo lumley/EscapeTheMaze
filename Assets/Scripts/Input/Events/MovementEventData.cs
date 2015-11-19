@@ -5,9 +5,9 @@ namespace Input.Events
 {
     public class MovementEventData : BaseEventData
     {
-        public RelativeDirection relativeDirection;
+        public readonly RelativeDirection relativeDirection;
 
-        public MovementEventData(EventSystem eventSystem, RelativeDirection relativeDirection) : base(eventSystem)
+        private MovementEventData(EventSystem eventSystem, RelativeDirection relativeDirection) : base(eventSystem)
         {
             this.relativeDirection = relativeDirection;
         }

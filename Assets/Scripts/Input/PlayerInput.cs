@@ -20,7 +20,7 @@ namespace Input
 
         public float mouseSensitivity=3.0f;
 
-        private float lastHorizontalOrientation = 0.0f;
+        private float lastHorizontalOrientation;
 
         // Use this for initialization
         void Start () {
@@ -61,7 +61,7 @@ namespace Input
                 float currentHorizontalOrientation = UnityEngine.Input.GetAxis(HorizontalOrientationAxis) * mouseSensitivity;
                 if (!lastHorizontalOrientation.Equals(currentHorizontalOrientation))
                 {
-                    gameObject.SendMessage("SetRotation", currentHorizontalOrientation);
+                    FreeRotationEvent.FreeRotate(gameObject, currentHorizontalOrientation);
                     this.lastHorizontalOrientation = currentHorizontalOrientation;
                 }
             
