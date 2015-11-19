@@ -11,7 +11,7 @@ namespace Input.Events
             handler.OnRotate(ExecuteEvents.ValidateEventData<RotationEventData>(eventData));
         }
 
-        public static ExecuteEvents.EventFunction<IRotationEventHandler> MovementEventHandler
+        private static ExecuteEvents.EventFunction<IRotationEventHandler> MovementEventHandler
         {
             get { return Execute; }
         }

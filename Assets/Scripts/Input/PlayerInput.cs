@@ -23,12 +23,12 @@ namespace Input
         private float lastHorizontalOrientation;
 
         // Use this for initialization
-        void Start () {
+        private void Start () {
 	
         }
 	
         // Update is called once per frame
-        void Update () {
+        private void Update () {
             if (UnityEngine.Input.GetAxisRaw(HorizontalMovementAxis) < 0)
             {
                 MovementEvent.Move(gameObject, RelativeDirection.LEFT);
@@ -84,7 +84,8 @@ namespace Input
                 SetCursorState(CursorLockMode.Locked);
             }
         }
-        void OnGUI()
+
+        private void OnGUI()
         {
             if(CursorLockMode.Locked != Cursor.lockState)
             {
@@ -99,7 +100,7 @@ namespace Input
             Cursor.visible = (CursorLockMode.Locked != lockState);
         }
 
-        void OnApplicationFocus(bool isFocused)
+        private void OnApplicationFocus(bool isFocused)
         {
             if(isFocused)
             {

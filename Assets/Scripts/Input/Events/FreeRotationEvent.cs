@@ -10,7 +10,7 @@ namespace Input.Events
             handler.OnFreeRotation(ExecuteEvents.ValidateEventData<FreeRotationEventData>(eventData));
         }
 
-        public static ExecuteEvents.EventFunction<IFreeRotationEventHandler> FreeRotationEventHandler
+        private static ExecuteEvents.EventFunction<IFreeRotationEventHandler> FreeRotationEventHandler
         {
             get { return Execute; }
         }

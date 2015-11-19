@@ -11,7 +11,7 @@ namespace Input.Events
             handler.OnMove(ExecuteEvents.ValidateEventData<MovementEventData>(eventData));
         }
 
-        public static ExecuteEvents.EventFunction<IMovementEventHandler> MovementEventHandler
+        private static ExecuteEvents.EventFunction<IMovementEventHandler> MovementEventHandler
         {
             get { return Execute; }
         }
