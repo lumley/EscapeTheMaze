@@ -7,7 +7,7 @@ namespace Input.Events
     {
         public RelativeDirection relativeDirection;
 
-        public RotationEventData(EventSystem eventSystem, RelativeDirection relativeDirection) : base(eventSystem)
+        private RotationEventData(EventSystem eventSystem, RelativeDirection relativeDirection) : base(eventSystem)
         {
             this.relativeDirection = relativeDirection;
         }
