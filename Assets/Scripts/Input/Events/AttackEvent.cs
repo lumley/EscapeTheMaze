@@ -21,6 +21,10 @@ namespace Input.Events
             ExecuteEvents.Execute(gameObject, AttackEventData.Create(), AttackEventHandler);
         }
 
+        /// <summary>
+        /// Event system can only go UP the hierarchy with ExecuteHierarchy, to go down, one needs to do that manually
+        /// </summary>
+        /// <param name="gameObject">Root game object from where to start</param>
         public static void SendAttackToAnyChildren(GameObject gameObject)
         {
             var attackEventData = AttackEventData.Create();

@@ -68,7 +68,6 @@ namespace Input
             }
 
             if (UnityEngine.Input.GetButtonDown(AttackButton)) {
-                // gameObject.SendMessage("Attack");
                 AttackEvent.SendAttackToAnyChildren(gameObject);
             }
 		
