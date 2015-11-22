@@ -11,9 +11,7 @@ namespace Combat.Weapons.Sword
 
         public int damage = 10;
         private bool enemyHit;
-
         private bool isHitting;
-
 
         public void OnAttack(AttackEventData attackEvent)
         {

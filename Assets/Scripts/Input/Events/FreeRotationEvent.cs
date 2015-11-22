@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Input.Events
 {
-    class FreeRotationEvent
+    public class FreeRotationEvent
     {
         public static void Execute(IFreeRotationEventHandler handler, BaseEventData eventData)
         {

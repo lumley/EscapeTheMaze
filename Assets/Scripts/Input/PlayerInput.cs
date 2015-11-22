@@ -68,8 +68,8 @@ namespace Input
             }
 
             if (UnityEngine.Input.GetButtonDown(AttackButton)) {
-                gameObject.SendMessage("Attack");
-                // AttackEvent.Attack(gameObject); // TODO: We need to send this to the sword... how?
+                // gameObject.SendMessage("Attack");
+                AttackEvent.SendAttackToAnyChildren(gameObject);
             }
 		
             if (UnityEngine.Input.GetButtonDown("Fire2")){

@@ -2,7 +2,7 @@
 
 namespace Input.Events
 {
-    interface IAttackEventHandler : IEventSystemHandler
+    public interface IAttackEventHandler : IEventSystemHandler
     {
         void OnAttack(AttackEventData attackEvent);
     }

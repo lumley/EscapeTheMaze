@@ -519,7 +519,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: TakeDamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    m_TypeName: Combat.Events.TakeDamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   mouseSensitivity: 3
 --- !u!114 &679215263
@@ -741,6 +741,10 @@ Prefab:
     - target: {fileID: 11426016, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
       propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 117190, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
+      propertyPath: m_Name
+      value: Elven Sword
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}

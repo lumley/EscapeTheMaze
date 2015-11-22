@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Input.Events
 {
-    class AttackEvent
+    public class AttackEvent
     {
         public static void Execute(IAttackEventHandler handler, BaseEventData eventData)
         {
@@ -18,6 +19,14 @@ namespace Input.Events
         public static void Attack(GameObject gameObject)
         {
             ExecuteEvents.Execute(gameObject, AttackEventData.Create(), AttackEventHandler);
+        }
+
+        public static void SendAttackToAnyChildren(GameObject gameObject)
+        {
+            var attackEventData = AttackEventData.Create();
+            (from Transform transform in gameObject.transform
+                select ExecuteEvents.Execute(transform.gameObject, attackEventData, AttackEventHandler)).Any(
+                    hasExecuted => hasExecuted);
         }
     }
 }
