@@ -43,7 +43,7 @@ namespace Map.Model
             IntPair position = this.startingPoint;
             GenerateTilesForRoom(corridors[0].entranceRoom, position, allTiles);
 
-            Tile startingTile = SetStartingTile(allTiles);
+            SetStartingTile(allTiles);
 
             foreach (Corridor corridor in corridors)
             {
