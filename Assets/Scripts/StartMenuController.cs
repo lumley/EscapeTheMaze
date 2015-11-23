@@ -2,6 +2,7 @@
 //#define LOG_EXTRA_INFO
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 //------------------------------------------------------------------------------
@@ -9,11 +10,34 @@ using System.Collections;
 //------------------------------------------------------------------------------
 public class StartMenuController : MonoBehaviour
 {
+	public Canvas quitMenu;
+	public Button startButton;
+	public Button exitButton;
+	
 	private static StartMenuController menuController;
 
 	//--------------------------------------------------------------------------
 	// public static methods
 	//--------------------------------------------------------------------------
+	public void ShowQuitMenu(){
+		quitMenu.enabled=true;
+		startButton.enabled=false;
+		exitButton.enabled=false;
+	}
+	
+	public void LeaveQuitMenu(){
+		quitMenu.enabled=false;
+		startButton.enabled=true;
+		exitButton.enabled=true;
+	}
+	
+	public void StartPlaying(){
+		MainController.SwitchScene("Game Scene");
+	}
+	
+	public void QuitGame(){
+		Application.Quit();
+	}
 	//--------------------------------------------------------------------------
 	// protected mono methods
 	//--------------------------------------------------------------------------
@@ -40,15 +64,12 @@ public class StartMenuController : MonoBehaviour
 	
 	protected void Start()
 	{
+		quitMenu.enabled=false;
 	}
 	
 	protected void Update()
 	{
 		
-		if(UnityEngine.Input.GetButtonDown("Fire1") == true)
-		{
-			MainController.SwitchScene("Game Scene");
-		}
 	}
 
 	//--------------------------------------------------------------------------
