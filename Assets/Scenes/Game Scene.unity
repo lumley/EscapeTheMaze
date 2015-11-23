@@ -159,6 +159,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!1001 &63540157
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 452200, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452200, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 452200, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452200, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452200, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452200, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452200, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452200, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &127058132
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +561,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: TakeDamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    m_TypeName: Combat.Events.TakeDamageEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   mouseSensitivity: 3
 --- !u!114 &679215263
@@ -568,6 +610,27 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e536d2d6f836e46d5890897dbc26d34d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!1 &873081681 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 187078, guid: a8436f513b44b6940ac88a8938f35877, type: 2}
+  m_PrefabInternal: {fileID: 63540157}
+--- !u!95 &873081683
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 873081681}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5b21e579f480aba44bdd16486fa14505, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -741,6 +804,10 @@ Prefab:
     - target: {fileID: 11426016, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
       propertyPath: takeDamageEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 117190, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}
+      propertyPath: m_Name
+      value: Elven Sword
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1c3022cbd5e5b49b99427069f54bd0d3, type: 2}

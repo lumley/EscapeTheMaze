@@ -13,7 +13,7 @@ namespace Map
         public PrefabHolder prefabHolder = new PrefabHolder();
 
         [SerializeField]
-        private BoardCreator boardCreator = new BoardCreator();
+        private readonly BoardCreator boardCreator = new BoardCreator();
 
         private Dictionary<IntPair, Tile> createdTileMap;
         private GameObject boardHolder;
@@ -57,7 +57,7 @@ namespace Map
                 IntPair position = entry.Key;
                 Tile tile = entry.Value;
                 CreateFloor(position);
-                CreateCeiling(position);
+                //CreateCeiling(position);
                 CreateWalls(position, tile);
 
                 CreateAttribute(position, tile);

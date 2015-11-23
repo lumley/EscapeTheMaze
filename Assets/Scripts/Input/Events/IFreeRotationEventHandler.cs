@@ -2,7 +2,7 @@
 
 namespace Input.Events
 {
-    interface IFreeRotationEventHandler : IEventSystemHandler
+    public interface IFreeRotationEventHandler : IEventSystemHandler
     {
         void OnFreeRotation(FreeRotationEventData rotationEvent);
     }
