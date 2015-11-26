@@ -59,7 +59,6 @@ public class MainController : MonoBehaviour
 
 		nextSceneName = "Start Menu";
 		sceneState = SceneState.Reset;
-//		GetComponent<Camera>().orthographicSize = Screen.height/2;
 	}
 	
 	protected void OnDestroy()
@@ -75,10 +74,7 @@ public class MainController : MonoBehaviour
 		}
 
 		//Clean up the singleton instance
-		if(mainController != null)
-		{
-			mainController = null;
-		}
+		mainController = null;
 	}
 	
 	protected void OnDisable()
@@ -123,7 +119,7 @@ public class MainController : MonoBehaviour
 	private void UpdateSceneLoad()
 	{
 		// done loading?
-		if(sceneLoadTask.isDone == true)
+		if(sceneLoadTask.isDone)
 		{
 			sceneState = SceneState.Unload;
 		}
@@ -144,7 +140,7 @@ public class MainController : MonoBehaviour
 		else
 		{
 			// done cleaning up?
-			if(resourceUnloadTask.isDone == true)
+			if(resourceUnloadTask.isDone)
 			{
 				resourceUnloadTask = null;
 				sceneState = SceneState.Postload;
