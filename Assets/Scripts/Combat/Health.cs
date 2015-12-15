@@ -8,7 +8,7 @@ namespace Combat
 	
         private Animator animator;
 
-        public int health=100;
+        public int health = 100;
 
         private bool IsDead{get; set;}
         private bool IsDying{get;set;}

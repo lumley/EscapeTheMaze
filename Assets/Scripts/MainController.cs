@@ -3,6 +3,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 //------------------------------------------------------------------------------
 // class definition
@@ -111,7 +112,7 @@ public class MainController : MonoBehaviour
 	// handle anything that needs to happen before loading
 	private void UpdateScenePreload()
 	{
-		sceneLoadTask = Application.LoadLevelAsync(nextSceneName);
+		sceneLoadTask = SceneManager.LoadSceneAsync(nextSceneName);
 		sceneState = SceneState.Load;
 	}
 	
